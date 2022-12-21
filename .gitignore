@@ -1,0 +1,12 @@
+# Ignore all files in `Clean System File`
+**/Clean System Files/**
+
+# Ignore side products 
+*.exe
+*.prj
+*.prp
+
+
+# Obsidian
+.trash/
+.Obsidian/
