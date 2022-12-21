@@ -1,4 +1,4 @@
-module solution
+module midterm_01_task_01
 
 import StdEnv
 
