@@ -14,11 +14,25 @@ import StdEnv
  Last list [3..6] has only one good number and is not a good list. Therefore, answer for this example is 2.
 */
 
-//goodLists :: [[Int]] [Int] -> Int
+round :: Real -> Int
+round n
+| n < 0.5 = 0
+| otherwise = 1
 
-Start = 1
+goodLists :: [[Int]] [Int] -> Int
+goodLists lists targets = sum (map countGood lists)
+where
+	countGood :: [Int] -> Int
+	countGood [] = 0
+	countGood innerList = round (good / len)
+	where
+		good = toReal (length (filter isGoodNumber innerList))
+		len = toReal (length innerList)
+	
+	isGoodNumber :: Int -> Bool
+	isGoodNumber n = (isMember n targets)
 
-// Start = goodLists [[1,2,3], [1..6], [3..6]] [1,2,3] // 2
-// Start = goodLists [[1], [1..6], [3,8,5]] [1,2,3,8] // 3
-// Start = goodLists [[], [3,2,5], [1,1,2,2]] [1] // 2
-// Start = goodLists [] [1,2,3] // 0
+//Start = goodLists [[1,2,3], [1..6], [3..6]] [1,2,3] // 2
+//Start = goodLists [[1], [1..6], [3,8,5]] [1,2,3,8] // 3
+//Start = goodLists [[], [3,2,5], [1,1,2,2]] [1] // 2 <--  This test case is contradictory.
+Start = goodLists [] [1,2,3] // 0
