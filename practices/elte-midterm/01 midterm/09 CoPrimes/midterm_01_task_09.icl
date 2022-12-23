@@ -7,11 +7,11 @@ import StdEnv
  Numbers are called co-prime if they do not have
  common divisor.
 */
-//coPrimes :: Int Int -> Bool
 
-// Start = coPrimes 12 9 // False
-// Start = coPrimes 12 12 // False
-// Start = coPrimes 12 13 // True
-// Start = coPrimes 5 7 // True
+coPrimes :: Int Int -> Bool
+coPrimes x y = (gcd x y) == 1
 
-Start = 1
+//Start = coPrimes 12 9 // False
+//Start = coPrimes 12 12 // False
+//Start = coPrimes 12 13 // True
+Start = coPrimes 5 7 // True
