@@ -9,11 +9,7 @@ import StdEnv
  then compute the biquadrate of the numbers left in the list.
 */
 
-notN :: Int [Int] -> [Int]
-notN :: N [h:t] = [1]
-
-Start = notN []
-
+//notN :: Int [Int] -> [Int]
 
 
 //Start = notN 3 [1..5] // [1,16]
