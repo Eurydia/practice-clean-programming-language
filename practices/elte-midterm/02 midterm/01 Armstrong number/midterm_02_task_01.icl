@@ -1,6 +1,7 @@
 module midterm_02_task_01
 
-import StdEnv 
+import StdEnv
+import StdChar
 
 /* 1. Armstrong number
 
@@ -11,9 +12,22 @@ import StdEnv
  an Armstrong number or not.
 */
 
-//armstrong :: Int -> Bool
+cube :: Int -> Int
+cube n = n * n * n
+
+toNumber :: Char -> Int
+toNumber d = (toInt d) - 48
+
+toDigits :: Int -> [Char]
+toDigits n = [digit \\ digit <-: (toString n)]
+
+armstrong :: Int -> Bool
+armstrong n = (sum (map getCube (toDigits n))) == n
+where
+	getCube :: Char -> Int
+	getCube d = cube (toNumber d)
 
 //Start = armstrong 153 // True
 //Start = armstrong 370 // True
 //Start = armstrong 0 // True
-//Start = armstrong 12 // False
+Start = armstrong 12 // False
