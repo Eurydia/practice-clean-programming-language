@@ -12,14 +12,16 @@ import StdEnv
  E.g: zipWith addTwoNumbers [1,2,3] [5,6,7] = [1+5,2+6,3+7] = [6,8,10]
 */
 //DON'T DELETE THESE FUNCTIONS !!!
-//addTwoNumber x y = x + y
-//prodTwoNumber x y = x * y
-//niceTwoNumber x y = x rem y
-//
+addTwoNumber x y = x + y
+prodTwoNumber x y = x * y
+niceTwoNumber x y = x rem y
 
-//zipWith :: (Int Int -> Int) [Int] [Int] -> [Int]
+
+zipWith :: (Int Int -> Int) [Int] [Int] -> [Int]
+zipWith fn nas nbs = [fn (nas !! index) (nbs !! index) \\ index <- [0..((length nas) - 1)]]
+
 
 //Start = zipWith addTwoNumber [1,2,3] [5,6,7] // [6,8,10]
 //Start = zipWith prodTwoNumber [1,2,3] [5,6,7] // [5,12,21]
-//Start = zipWith niceTwoNumber [5,6,7] [1,2,3] // [0,0,1]
+Start = zipWith niceTwoNumber [5,6,7] [1,2,3] // [0,0,1]
 
