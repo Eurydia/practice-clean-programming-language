@@ -8,8 +8,9 @@ import StdEnv
  and so on n-th multiple of the number.
 */
 
-//multiple :: Int -> [Int]
+multiple :: Int -> [Int]
+multiple n = [n * m \\ m <- [2..n]]
 
 //Start = multiple 5 // [10,15,20,25]
 //Start = multiple 2 // [2]
-//Start = multiple 1 // []
+Start = multiple 1 // []
