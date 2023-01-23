@@ -12,10 +12,15 @@ import StdEnv
  3 as only [], [1,2,3,4] and [9] are "good".
 */
 
-//isGood :: Int [Int] -> Int
+isGoodList :: [Int] -> Bool
+isGoodList [] = True
+isGoodList l = all (\(index) = isOdd index <> isOdd (l !! index)) [0..((length l) - 1)]
 
-// Start = isGood [[],[1,2,3,4],[8,3,4],[9],[3,4,4]] // 3
-// Start = isGood [[1,2,3,4],[3,4,4],[3,42],[12,2,1,2]] // 2
-// Start = isGood [[],[1,2,3,4],[],[8,3,4],[1],[2],[9],[3,4,4]] // 5
-// Start = isGood [] // 0
+isGood :: [[Int]] -> Int
+isGood ls = length (filter isGoodList ls)
+
+//Start = isGood [[],[1,2,3,4],[8,3,4],[9],[3,4,4]] // 3
+//Start = isGood [[1,2,3,4],[3,4,4],[3,42],[12,2,1,2]] // 2
+//Start = isGood [[],[1,2,3,4],[],[8,3,4],[1],[2],[9],[3,4,4]] // 5
+Start = isGood [] // 0
 
