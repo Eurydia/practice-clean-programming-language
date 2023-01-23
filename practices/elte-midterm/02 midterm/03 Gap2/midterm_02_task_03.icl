@@ -10,8 +10,12 @@ import StdEnv
  e.g: [1,5,8] = [1,3,5,7,9]
 */
 
-//gap2 :: [Int] -> [Int]
+gap2 :: [Int] -> [Int]
+gap2 n_list = [n \\ n <- [list_min..list_max] | isOdd n]
+where
+	list_min = minList n_list
+	list_max = (maxList n_list) + (((maxList n_list) + 1) rem 2)
 
 //Start = gap2 [1,5,8] // [1,3,5,7,9]
 //Start = gap2 [1,5,15] // [1,3,5,7,9,11,13,15]
-//Start = gap2 [] 
+Start = gap2 [] 
