@@ -14,10 +14,16 @@ import StdEnv
  [(3,5),(5,7),(11,13),(17,19),(29,31),(41,43)].
 */
 
-//twinPrimes :: Int Int -> Int
+isPrime :: Int -> Bool
+isPrime 0 = False
+isPrime 1 = False
+isPrime n = all (\(k) = (n rem k) <> 0) [2..(n - 1)]
+
+twinPrimes :: Int Int -> Int
+twinPrimes start end = length ( filter (\(n) = (isPrime n) && (isPrime (n + 2)))  [start..(end - 2)])
 
 //Start = twinPrimes 1 50 // 6
 //Start = twinPrimes 1 1000 // 35
 //Start = twinPrimes 0 2 // 0
-//Start = twinPrimes 0 -5 // 0
+Start = twinPrimes 0 -5 // 0
 
