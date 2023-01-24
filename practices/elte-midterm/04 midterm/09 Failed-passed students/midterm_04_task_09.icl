@@ -17,12 +17,18 @@ Output: ([("Ramesh",23)],[("Vivek",40), ("Harsh",88), ("Mohammad",60)])
 'Ramesh' failed as his marks 23 are less than the given number 30, all others passed.
 */
 
-//group_by_marks :: [(String, Int)] Int -> ([(String,Int)], [(String,Int)])
+getPassed :: [(String, Int)] Int -> [(String, Int)]
+getPassed ts n = filter (\(t) = (snd t) > n) ts
+		
+getFailed :: [(String, Int)] Int -> [(String, Int)]
+getFailed ts n = filter (\(t) = (snd t) < n) ts
 
+group_by_marks :: [(String, Int)] Int -> ([(String,Int)], [(String,Int)])
+group_by_marks ts n = (getFailed ts n, getPassed ts n)
 
 //Start = group_by_marks [("Ramesh",23), ("Vivek",40), ("Harsh",88), ("Mohammad",60)] 30
 // ([("Ramesh",23)],[("Vivek",40),("Harsh",88),("Mohammad",60)])
 //Start = group_by_marks [("Ramesh",50),("Vivek",20),("Harsh",10),("Abdullah",90),("Mohammed",30),("Ahmed",0),("Othman",70)] 50
 // ([("Vivek",20),("Harsh",10),("Mohammed",30),("Ahmed",0)],[("Abdullah",90),("Othman",70)])
-//Start = group_by_marks [] 1 // ([],[])
+Start = group_by_marks [] 1 // ([],[])
 
