@@ -1,6 +1,6 @@
 module midterm_03_task_08
 
-import StdEnv 
+import StdEnv
 
 /* 8. Super Digit
 
@@ -21,9 +21,18 @@ import StdEnv
  of every number in the list.  
 */
 
-//super_digit :: [Int] -> [Int]
+getSuper :: Int -> Int
+getSuper n
+| size == 1 = n
+| otherwise = getSuper (sum n_digits)
+where 
+	n_digits = [((toInt d) - 48) \\ d <-: (toString n)]
+	size = length n_digits
 
-//Start = super_digit [148148148 , 9875 ] // [3,2]
+super_digit :: [Int] -> [Int]
+super_digit ns = map getSuper ns
+
+//Start = super_digit [148148148 , 9875] // [3,2]
 //Start = super_digit [884555 , 456 , 2351 , 21587 , 88 ] // [8,6,2,5,7]
-//Start = super_digit [] // [] 
+Start = super_digit [] // [] 
 
