@@ -9,8 +9,13 @@ import StdEnv
  [(2,1),(2,3),(4,1)] = True
 */
 
-//holdsTrue :: [(Int, Int)] -> Bool
+checkTuple :: (Int, Int) -> Bool
+checkTuple t = isEven (fst t) && isOdd (snd t)
+
+holdsTrue :: [(Int, Int)] -> Bool
+holdsTrue [] = False
+holdsTrue ts = all checkTuple ts
 
 //Start = holdsTrue [(2,1),(2,3),(4,1)] // True
 //Start = holdsTrue [(1,3),(2,3),(3,4)] // False
-//Start = holdsTrue [] // False
+Start = holdsTrue [] // False
