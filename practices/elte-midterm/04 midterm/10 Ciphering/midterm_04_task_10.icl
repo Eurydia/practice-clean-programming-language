@@ -16,10 +16,18 @@ For the input ['m', 'o', 'h', 'i','d','o'] count of vowels is 3 o,i,o.
 Cipher of the list: ['m', 'o', 'h', 'i','d','o']->['p','r','k','l','g','r'].
 */
 
-//cipherList :: [Char] -> [Char]
+isVowel :: Char -> Bool
+isVowel c = c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'
 
+countVowels :: [Char] -> Int
+countVowels cs = length (filter isVowel cs)
+
+cipherList :: [Char] -> [Char]
+cipherList cs = [toChar ((toInt c) + shift) \\ c <- cs ]
+where
+	shift = countVowels cs
 
 //Start = cipherList ['m', 'o', 'h', 'i','d','o'] // ['p','r','k','l','g','r']
 //Start = cipherList ['t', 'a', 'r', 'i', 'q'] // ['v','c','t','k','s']
 //Start = cipherList ['b', 'e', 'k', 'a'] // ['d','g','m','c']
-//Start = cipherList ['a','b','d','u','l','l','a','h'] // ['d','e','g','x','o','o','d','k']
+Start = cipherList ['a','b','d','u','l','l','a','h'] // ['d','e','g','x','o','o','d','k']
