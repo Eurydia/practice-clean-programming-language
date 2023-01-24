@@ -11,11 +11,13 @@ Example: [1,3,8,6,2], K=3 -> [1,2,2]
 1,8,2 are replaced with 1, 2, 2 reminders.
 */
 
-//filteredRem :: Int [Int] -> [Int]
+isDivisibleBy :: Int Int -> Bool
+isDivisibleBy n k = n rem k == 0
+
+filteredRem :: Int [Int] -> [Int]
+filteredRem k ns =  [n rem k \\ n <- (filter (\(n) = not (isDivisibleBy n k)) ns)]
 
 //Start = filteredRem 3 [1,3,8,6,2] // [1,2,2]
 //Start = filteredRem 5 [5,10,30] // []
 //Start = filteredRem 2 [2,8,3,4,1] // [1,1]
-//Start = filteredRem 100 [20,17] // [20,17]
-
-
+Start = filteredRem 100 [20,17] // [20,17]
