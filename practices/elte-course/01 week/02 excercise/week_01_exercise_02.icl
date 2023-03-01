@@ -1,4 +1,4 @@
-module ex2_todo
+module week_01_exercise_02
 
 
 import StdEnv
@@ -84,41 +84,45 @@ l7 = [1..]
 // 2. Generate lists 
 
 // from -10 to 10
-//Start = 
+//Start = [-10..10]
 
 
 // even numbers from 1 to 100
-//Start = 
+//Start = filter isEven [1..100]
 
 
 // every 10th element from 0 to 100
-//Start = 
+//Start = filter (\(n) = (n rem 10) == 0) [0..100]
 
 
 // Generate a list with every fifth element form 0 to 500.
-//Start = 
+//Start = filter (\(n) = (n rem 5) == 0) [0..500]
 
 
 // Generate a list with every 500th element form -10000 to 10000.
-//Start =
+//Start = filter (\(n) = (n rem 500) == 0) [-10000..10000]
 
 
 
 // 3. sumsq n returns 1*1 + 2*2 + ... + n*n - with a pattern for 0
-//sumsq :: Int -> Int
+sumsq :: Int -> Int
+sumsq n = sum [x * x \\ x <- [0..n]]
 
 //Start = sumsq 3 // 14
 
 
 // version 2. - without pattern for 0
-//sums :: Int -> Int
+sums :: Int -> Int
+sums n = sum [x * x \\ x <- [1..n]]
 
 //Start = sums 3
   
 
 
 // 4. Compute for a given positive n the sum of 2i*(2i+1), for i from 1 to n. E.g. for n=3 the sum is 68.
-//f :: Int -> Int
+f :: Int -> Int
+f 1 = 6
+f n = (2 * n * ((2 * n) + 1)) + (f (n - 1))
 
 //Start = f 3
 
@@ -133,7 +137,8 @@ l7 = [1..]
 
 // 5. Compute the sum 1+ 2*2+ 3*3*3+ 4*4*4*4+ 5*5*5*5*5+ ...+n*n*n*...*n 
 // where n is a positive number.
-//sumpowers :: Int -> Int
+sumpowers :: Int -> Int
+sumpowers n = sum [x ^ x \\ x <- [1..n]]
 
 //Start = sumpowers 3
 
@@ -150,14 +155,16 @@ l7 = [1..]
 
 
 // 6. write a funtion which returns true if a is divisible by b
-//div_by :: Int Int -> Bool
+div_by :: Int Int -> Bool
+div_by a b = (a rem b) == 0
 
 //Start = div_by 16 4      // True
 
 
 
 // 7. write a funtion which returns true if a is divisible by b or vice versa
-//div_any :: Int Int -> Bool
+div_any :: Int Int -> Bool
+div_any a b = ((a rem b) == 0) || ((b rem a) == 0)
 
 //a rem b == 0 || b rem a == 0
 
@@ -168,7 +175,17 @@ l7 = [1..]
 // 8. Cut a list in two parts at the middle. 
 // E.g. cut [1..10] -> [[1,2,3,4,5],[6,7,8,9,10]]
 // and for cut [1..11] the result is [[1,2,3,4,5],[6,7,8,9,10,11]].
-//cut :: [Int] -> [[Int]]
+splice :: [Int] Int Int -> [Int]
+splice ns first last = [ns !! index \\ index <- [first..last]]
+
+cut :: [Int] -> [[Int]]
+cut ns = [left, right]
+
+where
+	size = length ns
+	left = splice ns 0 ((size / 2) - 1)
+	right = splice ns (size / 2) (size - 1)
+
 
 //Start = cut [1..10]
 //Start = cut [1..11]
@@ -178,7 +195,11 @@ l7 = [1..]
 
 
 // 9. Test if a list is symmetrical
-//sim :: [Int] -> Bool
+sim :: [Int] -> Bool
+sim ns = all (\(b) = b) [ns !! index == ns_reverse !! index \\ index <- [0..((size / 2) + 1)]] 
+where
+	size = length ns
+	ns_reverse = reverse ns
 
 //Start = sim [1, 2, 1]
 //Start = sim [1, 2, 3,4,5]
@@ -186,7 +207,12 @@ l7 = [1..]
 
 
 // 10. Extract the middle element of a non-empty list. E.g. for [1..5] is 3, for [1..4] is 3.
-//middle :: [Int] -> Int
+middle :: [Int] -> Int
+middle [] = 0
+middle ns = ns !! (size / 2)
+where
+	size = length ns
+	
 
 //Start = middle [1..5] 
 //Start = middle [1..4] 
@@ -196,15 +222,16 @@ l7 = [1..]
 
 
 // 11. add 3 to every element of a list
-//f1 :: [Int] -> [Int]
+f1 :: [Int] -> [Int]
+f1 ns = [n + 3 \\ n <- ns]
 
 //Start = f1 [1,5,3,1,6]  // [4,8,6,4,9]  
 
 
 
 // 12. compute the double of the positive elements of a list [1, 2, -2, 3, -4] -> [2, 4, 6]
-//f2 :: [Int] -> [Int]
-
+f2 :: [Int] -> [Int]
+f2 ns = [n * 2 \\ n <- (filter (\(x) = x > 0) ns)]
 //Start = f2 [1, 2, -2, 3, -4] // [2, 4, 6]
 
 
@@ -212,7 +239,10 @@ l7 = [1..]
 // 13. write a function that keeps the integers of a list up to the first 0 encounterred 
 // and then divides by 2 every element [1, 2, -2, 3, 0, -4] -> [0, 1, -1, 1]
 // hints: use takeWhile then map
-//f3 :: [Int] -> [Int]
+f3 :: [Int] -> [Int]
+f3 ns = [(n / 2) \\ n <- filtered_ns]
+where
+	filtered_ns =  takeWhile (\(n) = n <> 0) ns 
 
 //Start = f3 [1, 2, -2, 3, 0, -4] // [0, 1, -1, 1]
 
@@ -220,41 +250,50 @@ l7 = [1..]
 
 // 14. write a function for the square of every element of a list and sublists
 // [[1,2],[3,4,5,6],[7,8]]  -> [[1,4],[9,16,25,36],[49,64]]  
-//sq :: [Int] -> [Int]
+
+sq :: [Int] -> [Int]
+sq ns = [n * n \\ n <- ns]
 
 //Start = sq [1..5]
 
-//f4 :: [[Int]] -> [[Int]]
+
+f4 :: [[Int]] -> [[Int]]
+f4 nss = map sq nss
 
 //Start = f4 [[1,2],[3,4,5,6],[7,8]] // [[1,4],[9,16,25,36],[49,64]]
 
 
 
+
+
 // 15. Replicate n>0 times the element of a list e.g. n=3 [3..6] ->
 // [[3,3,3],[4,4,4],[5,5,5],[6,6,6]]
-//faux :: Int Int -> [Int]
-
+faux :: Int Int -> [Int]
+faux n times = [n \\ k <- [1..times]]
 //Start = faux 3 4
 
-//f5 :: Int [Int] -> [[Int]]
-
+f5 :: Int [Int] -> [[Int]]
+f5 times ns = map (\(n) -> faux n times) ns
 //Start = f5 3 [3..6]
 
 
 
 // 16. Compute the product of the elements of a list
-//product :: [Int] -> Int
+product :: [Int] -> Int
+product ns = prod ns
 
 //Start = product [1..5] // 120
 
 
 
 // 17. delete the elements equal to 5
-//not_five :: [Int] -> [Int]
+not_five :: [Int] -> [Int]
+not_five ns = filter (\(n) -> n <> 5) ns
 
 //Start = not_five [5,4,5,4,3]  // [4,4,3]
 
 //not_five2 :: [Int] -> [Int]
+
 
 //Start = not_five2 [5,4,5,4,3]  // [4,4,3]
 
@@ -271,14 +310,20 @@ l7 = [1..]
 
 
 // 18. Delete an element n from a list
-//del :: Int [Int] -> [Int]
+del :: Int [Int] -> [Int]
+del x ns = filter (\(n) = n <> x) ns
 
 //Start = del 5 [1, 5, 6, 7, 5, 8, 5] // [1, 6, 7, 8]
 
 
 
 // 19. Keep the first 2 and the last 2 elements of a list
-//droptake2 :: [Int] -> [Int]
+droptake2 :: [Int] -> [Int]
+droptake2 ns
+| size <= 4 = ns
+= [(ns !! 0), (ns !! 1), (ns !! (size - 2)), (ns !! (size - 1))]
+where
+	size = length ns
 
 //Start = droptake2 [1, 2, 3, 4, 5, 6, 7, 8, 9]
 //Start = droptake2 [1, 2]
@@ -286,7 +331,12 @@ l7 = [1..]
 
 
 // 20. Delete the first and the last element of a list.
-//del_firstlast :: [Int] -> [Int]
+del_firstlast :: [Int] -> [Int]
+del_firstlast ns
+| size <= 2 = []
+= [ns !! index \\ index <- [1..(size - 2)]]
+where
+	size = length ns
 
 //Start = del_firstlast [1..10]
 
@@ -424,9 +474,10 @@ l7 = [1..]
 // 31. using notempty eliminate the empty lists: 
 // [[1,2,3],[],[3,4,5],[2,2],[],[],[]] -> [[1,2,3], [3,4,5], [2,2]]
 
-notempty :: [Int] -> Bool
-notempty x = not (x == [])
+//notempty :: [Int] -> Bool
+//notempty x = not (x == [])
 
 //f8 :: [[Int]] -> [[Int]]
 
 //Start = f8 [[1,2,3],[],[3,4,5],[2,2],[],[],[]]
+
