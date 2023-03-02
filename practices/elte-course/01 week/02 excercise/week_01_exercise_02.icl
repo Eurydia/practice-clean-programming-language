@@ -349,6 +349,10 @@ where
 
 
 // 21. Rewrite flatten with ++
+flatten :: [[Int]] -> [Int]
+flatten [] = []
+flatten [h:t] = h ++ (flatten t)
+
 //Start = flatten [[1, 2, 3], [3, 4], [5, 7, 8, 9]]
 
 //lc :: [[Int]] -> [Int]
@@ -367,7 +371,8 @@ where
 
 // 22. Operations with lists: write functions for the followings
 // keep the head of every sublist e.g. [[1, 2, 3], [3, 4], [5, 7, 8, 9]] -> [1, 3, 5]
-//heads :: [[Int]] -> [Int]
+heads :: [[Int]] -> [Int]
+heads nss = [h \\ [h:_] <- nss]
 
 //Start = heads [[1, 2, 3], [3, 4], [5, 7, 8, 9]]
 
@@ -385,18 +390,20 @@ where
 
 // 23. Keep the tails of a list in 2 versions 
 // e.g. [[1, 2, 3], [3, 4], [5, 7, 8, 9]] -> [[2, 3], [4], [7, 8, 9]] 
-//tails :: [[Int]] -> [[Int]]
+tails :: [[Int]] -> [[Int]]
+tails nss = [t \\ [_:t] <- nss]
 
 //Start = tails [[1, 2, 3], [3, 4], [5, 7, 8, 9]]
 
-//tailsd :: [[Int]] -> [[Int]]
-
+tailsd :: [[Int]] -> [[Int]]
+tailsd nss = map tl nss
 //Start = tailsd [[1, 2, 3], [3, 4], [5, 7, 8, 9]]
 
 
 
 // 24. Reverse every sublist of a list 
-//revsub :: [[Int]] ->  [[Int]]
+revsub :: [[Int]] ->  [[Int]]
+revsub nss = map reverse nss
 
 //Start = revsub [[1,2,3],[5,6],[],[7,8,9,10]]
 
@@ -404,7 +411,8 @@ where
 
 // 25. Keep the last elements of the sublists of a list in one list (the sublists are not empty).
 // [[1,2,3],[5,6],[1],[7,8,9,10]] -> [3,6,1,10]
-//lasts :: [[Int]] -> [Int]
+lasts :: [[Int]] -> [Int]
+lasts nss = [last ns \\ ns <- nss]
 
 //Start = lasts [[1,2,3],[5,6],[1],[7,8,9,10]]
 
@@ -412,8 +420,8 @@ where
 
 // 26. Insert 0 in front of every sublist of a list.
 // E.g. for [[1,2,3],[5,6],[],[7,8,9,10]] the result is [[0,1,2,3],[0,5,6],[0],[0,7,8,9,10]]
-//ins0 :: [[Int]] -> [[Int]]
-
+ins0 :: [[Int]] -> [[Int]]
+ins0 nss = [[0] ++ ns \\ ns <- nss]
 //Start = ins0 [[1,2,3],[5,6],[],[7,8,9,10]]
 
 //ins02 :: [[Int]] -> [[Int]]
@@ -424,7 +432,8 @@ where
 
 // 27. Delete the last element of each sublist of a list.
 // E.g. for [[1,2,3],[5,6],[],[7,8,9,10]] the result is [[1,2],[5],[],[7,8,9]]
-//lastdel :: [[Int]] -> [[Int]]
+lastdel :: [[Int]] -> [[Int]]
+lastdel nss = [splice ns 0 ((length ns) - 2) \\ ns <- nss]
 
 //Start = lastdel [[1,2,3],[5,6],[],[7,8,9,10]]
 
@@ -434,7 +443,12 @@ where
 // if the param is [] then is equal to 20, if is a two element list starting with 4 then is 30
 // if is a two element list ending with 5 then is 40, in all other cases is 50, 
 // the order of the patterns is important
-//gp :: [Int] -> Int
+gp :: [Int] -> Int
+gp ns
+| (length ns) == 0 = 20
+| ((length ns) == 2) && ((ns !! 0) == 4) = 30
+| ((length ns) == 2) && ((ns !! 1) == 5) = 40
+= 50
 
 //Start = gp [4, 6] // 30
 //Start = gp [4, 5] // 30
@@ -457,7 +471,11 @@ where
 // digits 0 [1,2,3,2,1]
 // [1,2,3,2,1]
 
-//pali :: Int -> Bool
+pali :: Int -> Bool
+pali n = all (\(index) = (n_digits !! index) == (n_digits_rev !! index)) [0..((length n_digits) - 1)]
+where
+	n_digits = [c \\ c <-: (toString n)]
+	n_digits_rev = reverse n_digits
 
 //Start = pali 12321 // True
 //Start = pali 12345
@@ -465,8 +483,8 @@ where
 
 
 // 30. filter the elements smaller then n, e.g. n=3 [1,5,3,2,1,6,4,3,2,1] -> [1,2,1,2,1]
-//f7 :: Int [Int] -> [Int]
-
+f7 :: Int [Int] -> [Int]
+f7 x ns = filter (\(n) -> n >= x) ns
 //Start = f7 3 [1,5,3,2,1,6,4,3,2,1] 
 
 
@@ -475,9 +493,9 @@ where
 // [[1,2,3],[],[3,4,5],[2,2],[],[],[]] -> [[1,2,3], [3,4,5], [2,2]]
 
 //notempty :: [Int] -> Bool
-//notempty x = not (x == [])
 
-//f8 :: [[Int]] -> [[Int]]
 
-//Start = f8 [[1,2,3],[],[3,4,5],[2,2],[],[],[]]
+f8 :: [[Int]] -> [[Int]]
+f8 nss = filter (\(ns) -> (length ns) > 0) nss
+Start = f8 [[1,2,3],[],[3,4,5],[2,2],[],[],[]]
 
