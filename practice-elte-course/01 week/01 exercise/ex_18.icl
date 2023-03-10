@@ -1,4 +1,4 @@
-module week_01_exercise_18
+module ex_18
 import StdEnv
 
 // 18. Write a function that takes two arguments, say n and x, and computes their power,

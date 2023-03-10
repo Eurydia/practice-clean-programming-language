@@ -1,4 +1,4 @@
-module week_01_exercise_15
+module ex_15
 import StdEnv
 
 // 15. Compute the cube of a number.

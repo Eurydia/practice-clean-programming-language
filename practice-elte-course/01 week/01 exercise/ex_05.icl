@@ -1,4 +1,4 @@
-module week_01_exercise_05
+module ex_05
 import StdEnv
 
 // 5. Check if a number is the sum of two other given numbers in any order.

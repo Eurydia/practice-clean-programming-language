@@ -1,4 +1,4 @@
-module week_01_exercise_20
+module ex_20
 import StdEnv
 
 // 20. Compute factorial n recursively, where n! = n*(n-1)! .

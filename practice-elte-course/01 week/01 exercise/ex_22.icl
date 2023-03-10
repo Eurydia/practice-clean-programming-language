@@ -1,4 +1,4 @@
-module week_01_exercise_22
+module ex_22
 import StdEnv
 
 // 22. Given a positive integer, find the sum of the odd numbers up to that number starting from 1.

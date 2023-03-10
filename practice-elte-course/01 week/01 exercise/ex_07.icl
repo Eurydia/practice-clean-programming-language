@@ -1,4 +1,4 @@
-module week_01_exercise_07
+module ex_07
 import StdEnv
 
 // 7. Check if a number is multiple of 10.

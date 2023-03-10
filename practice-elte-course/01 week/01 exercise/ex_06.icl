@@ -1,4 +1,4 @@
-module week_01_exercise_06
+module ex_06
 import StdEnv
 
 // 6. Add 100 to a number.

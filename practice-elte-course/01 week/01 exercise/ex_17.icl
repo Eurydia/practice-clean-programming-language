@@ -1,4 +1,4 @@
-module week_01_exercise_17
+module ex_17
 import StdEnv
 
 // 17. Check if a number is divisible by 9! (using sumDigits)

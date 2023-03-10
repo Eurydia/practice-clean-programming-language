@@ -1,4 +1,4 @@
-module week_01_exercise_13
+module ex_13
 import StdEnv
 
 // 13. Given two integers and a boolean value. 

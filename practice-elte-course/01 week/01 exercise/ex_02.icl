@@ -1,4 +1,4 @@
-module week_01_exercise_02
+module ex_02
 import StdEnv
 
 // 2. Define a function mini that has two arguments that delivers the minimum of the two.

@@ -1,4 +1,4 @@
-module week_01_exercise_11
+module ex_11
 import StdEnv
 
 // 11. Given an integer, write a function that returns the last digit.

@@ -1,4 +1,4 @@
-module week_01_exercise_19
+module ex_19
 import StdEnv
 
 // 19. Use 18. to write a function that squares its argument.

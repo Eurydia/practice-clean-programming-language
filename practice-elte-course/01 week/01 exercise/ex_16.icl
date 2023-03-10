@@ -1,4 +1,4 @@
-module week_01_exercise_16
+module ex_16
 import StdEnv
 
 // 16. Add the digits of a number e.g. for 123 is 6.

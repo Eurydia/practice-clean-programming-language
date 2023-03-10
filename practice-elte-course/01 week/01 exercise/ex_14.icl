@@ -1,4 +1,4 @@
-module week_01_exercise_14
+module ex_14
 import StdEnv
 
 // 14. Add the numbers from 1..N in a recursive function, where N is positive.

@@ -1,4 +1,4 @@
-module week_01_exercise_12
+module ex_12
 import StdEnv
 
 // 12. Given three integer numbers a, b and c. 

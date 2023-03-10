@@ -1,4 +1,4 @@
-module week_01_exercise_08
+module ex_08
 import StdEnv
 
 // 8. Say Hello to the World!

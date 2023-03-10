@@ -1,4 +1,4 @@
-module week_01_exercise_10
+module ex_10
 import StdEnv
 
 // 10. Write a function to compute the absolute value of an integer number.

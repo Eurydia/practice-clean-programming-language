@@ -1,4 +1,4 @@
-module week_01_exercise_04
+module ex_04
 import StdEnv
 
 // 4. Check if a number is odd.

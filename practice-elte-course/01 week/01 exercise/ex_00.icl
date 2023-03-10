@@ -1,4 +1,4 @@
-module week_01_exercise_00
+module ex_00
 
 import StdEnv
 

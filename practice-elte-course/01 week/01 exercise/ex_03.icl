@@ -1,4 +1,4 @@
-module week_01_exercise_03
+module ex_03
 import StdEnv
 
 // 3. Triple a number.

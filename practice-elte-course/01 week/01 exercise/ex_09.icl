@@ -1,4 +1,4 @@
-module week_01_exercise_09
+module ex_09
 import StdEnv
 
 // 9. Change a character if is small letter to uppercase and vice versa,
