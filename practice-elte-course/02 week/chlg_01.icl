@@ -22,7 +22,8 @@ where
     find_largest :: [Int] -> Int
     find_largest [] = -1
     find_largest c = hd c
-
+    
+    candidates :: [Int]
     candidates = filter pred (reverse [(10 ^ (k - 1))..((10 ^ k) - 1)])
 
 

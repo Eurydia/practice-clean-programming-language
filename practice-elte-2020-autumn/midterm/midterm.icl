@@ -86,7 +86,6 @@ where
 //Start = selectiveSum (\(a,b) ->  isEven a && isOdd b) [(1,2),(2,3),(3,4),(4,3),(2,1),(3,2),(1,1),(0,10),(45,-152)] // (8,7)
 //Start = selectiveSum (\(a,b) -> a > 0 && a < 20 && b > 0 && b < 20)  [(1,2),(2,3),(3,4),(4,3),(2,1),(3,2),(1,1),(0,10),(45,-152)] // (16,16)
 
-
 /* 5.
 Given a list of points, represented as tuple of real numbers, create a list
 containing all the unique distances between them. (Here by unique we mean for two points a and b we only have to calculate the distance from A to B
@@ -96,13 +95,31 @@ Distance between two points A and B can be found by the formula : square root of
 Here a point A is represented as a tuple (x,y) where first element is the coordinate x and the second is the coordinate y
 */
 
-//findDistance :: [(Real,Real)] -> [Real]
+// Strategy: 
+// -> create a list of non-unique distance
+// -> filter unique distance 
 
-//Start = findDistance [(1.0,1.0),(4.0,5.0)]//[5]
+findDistance :: [(Real, Real)] -> [Real]
+findDistance ts
+| (length ts) < 2 = [] 
+| otherwise = find_distance [] zero 
+where
+	find_distance :: [Real] Int -> [Real]
+	find_distance accum index
+	| index > ((length ts) - 2) = accum
+	| otherwise = find_distance (accum ++ distances) (index + 1)
+	where
+		distances :: [Real]
+		distances = [compute_distance (ts !! index) (ts !! d_index) \\ d_index <- [(index + 1)..((length ts) - 1)]]
+			
+	compute_distance :: (Real, Real) (Real, Real) -> Real
+	compute_distance (ax, ay) (bx, by) = (((ax - bx) ^ 2.0) + ((ay - by) ^ 2.0))^ 0.5 
+
+//Start = findDistance [(1.0,1.0),(4.0,5.0)] //[5]
 //Start = findDistance [(1.0,1.0),(4.0,5.0),(1.0, ~6.0),(~1.0,~3.0)]
 //[5,7,11.4017542509914,4.47213595499958,9.4339811320566,3.60555127546399]
 //Start = findDistance [] // []
-//Start = findDistance [(1.0,1.0)] //[]
+Start = findDistance [(1.0,1.0)] //[]
 
 /*6.
 Given a list of lists of Integers and an Integer.
