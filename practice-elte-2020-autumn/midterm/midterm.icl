@@ -116,10 +116,10 @@ where
 	compute_distance (ax, ay) (bx, by) = (((ax - bx) ^ 2.0) + ((ay - by) ^ 2.0))^ 0.5 
 
 //Start = findDistance [(1.0,1.0),(4.0,5.0)] //[5]
-//Start = findDistance [(1.0,1.0),(4.0,5.0),(1.0, ~6.0),(~1.0,~3.0)]
+Start = findDistance [(1.0,1.0),(4.0,5.0),(1.0, ~6.0),(~1.0,~3.0)]
 //[5,7,11.4017542509914,4.47213595499958,9.4339811320566,3.60555127546399]
 //Start = findDistance [] // []
-Start = findDistance [(1.0,1.0)] //[]
+//Start = findDistance [(1.0,1.0)] //[]
 
 /*6.
 Given a list of lists of Integers and an Integer.
