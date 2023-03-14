@@ -197,19 +197,10 @@ f4 [x:xs] = [ sq x : f4 xs ]
 
 // 15. Replicate n>0 times the element of a list e.g. n=3 [3..6] ->
 // [[3,3,3],[4,4,4],[5,5,5],[6,6,6]]
-//faux :: Int Int -> [Int]
-
-
-
-//Start = faux 3 4
-
-//f5 :: Int [Int] -> [[Int]]
-
-
+f5 :: Int [Int] -> [[Int]]
+f5 n xs = [[l \\ _ <- [1..n]] \\  l <- xs]
 
 //Start = f5 3 [3..6]
-
-
 
 // 16. Compute the product of the elements of a list (built-in is prod)
 product :: [Int] -> Int
@@ -217,8 +208,6 @@ product [] =  1
 product [x:xs] = x * product xs
 
 //Start = product [1..5] // 120
-
-
 
 // 17. delete the elements equal to 5
 not_five :: [Int] -> [Int]
@@ -249,19 +238,19 @@ not_five2 [x:xs] = [ x : not_five2 xs]
 
 
 // 18. Delete an element n from a list
-//del :: Int [Int] -> [Int]
-
-
+del :: Int [Int] -> [Int]
+del n xs = filter pred xs
+where
+	pred :: Int -> Bool
+	pred v = not (v == n)
 
 //Start = del 5 [1, 5, 6, 7, 5, 8, 5] // [1, 6, 7, 8]
-
-
 
 // 19. Keep the first 2 and the last 2 elements of a list
 droptake2 :: [Int] -> [Int]
 droptake2 x 
 | length x > 3  = (take 2 x) ++ (drop ((length x)-2) x)
-= []
+| otherwise = []
 
 //Start = droptake2 [1, 2, 3, 4, 5, 6, 7, 8, 9]
 //Start = droptake2 [1, 2]
@@ -269,8 +258,10 @@ droptake2 x
 
 
 // 20. Delete the first and the last element of a list.
-//del_firstlast :: [Int] -> [Int]
-
+del_firstlast :: [Int] -> [Int]
+del_firstlast ns = 
+| length ns < 2 = ns
+| otherwise = [ns !! index \\ index <- [1..((length ns) - 2)]
 
 
 //Start = del_firstlast [1..10]
@@ -287,6 +278,9 @@ del_firstlast2 x
 
 
 // 21. Rewrite flatten with ++
+flatten :: [[Int]] -> [Int]
+flatten [] = []
+flatten [h:t] = h ++ (flatten t)
 //Start = flatten [[1, 2, 3], [3, 4], [5, 7, 8, 9]]
 
 lc :: [[Int]] -> [Int]
@@ -320,10 +314,6 @@ heads [x:xs] = [hd x : heads xs]
 // [1 : [3 : [5 : heads []]]]
 // [1 : [3 : [5 : []]]]
 // [1,3,5]
-
-
-
-
 
 // 23. Keep the tails of a list in 2 versions 
 // e.g. [[1, 2, 3], [3, 4], [5, 7, 8, 9]] -> [[2, 3], [4], [7, 8, 9]] 
@@ -375,13 +365,10 @@ ins02 [x:xs] = [ [0:x] : ins02 xs]
 //Start = ins02 [[1,2,3],[5,6],[],[7,8,9,10]]
 
 
-
 // 27. Delete the last element of each sublist of a list.
 // E.g. for [[1,2,3],[5,6],[],[7,8,9,10]] the result is [[1,2],[5],[],[7,8,9]]
-//lastdel :: [[Int]] -> [[Int]]
-
-
-
+lastdel :: [[Int]] -> [[Int]]
+lastdel nss = map init nss
 
 //Start = lastdel [[1,2,3],[5,6],[],[7,8,9,10]]
 
@@ -423,7 +410,8 @@ digits n x = digits (n/10) [n rem 10 : x]
 
 pali :: Int -> Bool
 pali x = y == reverse y
-where y = p x
+where
+	y = p x
 
 //Start = pali 12321 // True
 //Start = pali 12345
@@ -447,7 +435,8 @@ f7 n [x:xs]
 notempty :: [Int] -> Bool
 notempty x = not (x == [])
 
-//f8 :: [[Int]] -> [[Int]]
+f8 :: [[Int]] -> [[Int]]
+f8 nss = filter notempty nss 
 
 
 //Start = f8 [[1,2,3],[],[3,4,5],[2,2],[],[],[]]
