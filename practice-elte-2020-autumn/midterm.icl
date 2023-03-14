@@ -116,7 +116,7 @@ where
 	compute_distance (ax, ay) (bx, by) = (((ax - bx) ^ 2.0) + ((ay - by) ^ 2.0))^ 0.5 
 
 //Start = findDistance [(1.0,1.0),(4.0,5.0)] //[5]
-Start = findDistance [(1.0,1.0),(4.0,5.0),(1.0, ~6.0),(~1.0,~3.0)]
+//Start = findDistance [(1.0,1.0),(4.0,5.0),(1.0, ~6.0),(~1.0,~3.0)]
 //[5,7,11.4017542509914,4.47213595499958,9.4339811320566,3.60555127546399]
 //Start = findDistance [] // []
 //Start = findDistance [(1.0,1.0)] //[]
@@ -127,10 +127,17 @@ Write a function which will return a list of the maximal elements of each list w
 It is guaranteed that each list has at least one element less than the given Int
 NOTE: [[1,3],[1,4]] 2  = [1,1] and not []
 */
-//maxLessThanN::[[Int]] Int ->[Int]
+maxLessThanN::[[Int]] Int -> [Int]
+maxLessThanN nss x = map getSmaller nss
+where
+	getSmaller :: [Int] -> Int
+	getSmaller ns = maxList (filter pred ns)
+	where
+		pred :: Int -> Bool
+		pred n = n < x
 
 //Start =  maxLessThanN [[1,3],[1,4]] 2//[1,1]
-//Start = maxLessThanN [[5,2,3,5,2,3,7],[2],[2,3,2,1],[-12,5,7]] 3//[2,2,2,-12]
+//Start =  maxLessThanN [[5,2,3,5,2,3,7],[2],[2,3,2,1],[-12,5,7]] 3//[2,2,2,-12]
 //Start =  maxLessThanN [[6,2,9],[1,3,1,4],[1..10]] 9//[6,4,8]
 //Start =  maxLessThanN [] 4 //[]
 
@@ -143,7 +150,16 @@ and the second element is the product of all previous Fibonnaci numbers
 Example [0,1,2] -> [(1,1),(1,1),(2,2)]
 */
 
-//generateFib :: [Int] -> [(Int, Int)]
+generateFib :: [Int] -> [(Int, Int)]
+generateFib ns = [(getFib n, prod (getFibList n))  \\ n <- ns]
+where
+	getFib :: Int -> Int
+	getFib 0 = 1
+	getFib 1 = 1
+	getFib n = getFib (n - 1) + getFib (n - 2)
+	
+	getFibList :: Int -> [Int]
+	getFibList n = [getFib index \\ index <- [0..n]]
 
 //Start = generateFib [0,1,2] // [(1,1),(1,1),(2,2)]
 //Start = generateFib [3,7,11] //[(3,6),(21,65520),(144,1570247078400)]
@@ -157,12 +173,25 @@ A prime number is a number which is divisible only by 1 and itself.
 1 is not a prime number
 */
 
-//listOfPrimes :: Int Int -> [Int]
+isPrime :: Int -> Bool
+isPrime 1 = False
+isPrime n = and [(n rem d) <> 0 \\ d <- [2..(n - 1)]]
+
+listOfPrimes :: Int Int -> [Int]
+listOfPrimes x n
+| x < 0 || n < 0 = []
+| otherwise = generatePrimes x []
+where
+	generatePrimes :: Int [Int] -> [Int]
+	generatePrimes curr accum
+	| (length accum) == n = accum
+	| isPrime curr = generatePrimes (curr + 1) (accum ++ [curr])
+	| otherwise = generatePrimes (curr + 1) accum
 
 //Start = listOfPrimes 10 5 // [11,13,17,19,23]
 //Start = listOfPrimes 1000 10 // [1009,1013,1019,1021,1031,1033,1039,1049,1051,1061]
 //Start = listOfPrimes -10 3 // []
-//Start = listOfPimes 100 -4 // []
+//Start = listOfPrimes 100 -4 // []
 //Start = listOfPrimes 100 0 // []
 
 
@@ -178,8 +207,15 @@ For example, the aliquot sequence of 10 is 10, 8, 7, 1, 0 because:
  divisors of 1 = 0        their sum = 0
 */
 
-//getSeq :: Int -> [Int]
-
+getSeq :: Int -> [Int]
+getSeq 0 = [0]
+getSeq n = [n:(getSeq (getDivisorSum n))]
+where
+	getDivisorSum :: Int -> Int 
+	getDivisorSum x = sum (filter pred [1..(x / 2)])
+	where
+		pred :: Int -> Bool
+		pred d = (x rem d) == 0
 //Start = getSeq 10 //[10,8,7,1,0]
 //Start = getSeq 11 // [11,1,0]
 //Start = getSeq 9 //[9,4,3,1,0]
@@ -201,7 +237,13 @@ lvl4: 1 3 3 1
 lvl5: 1 4 6 4 1
 */
 
-//pascalLine :: [Int] -> [Int]
+pascalLine :: [Int] -> [Int]
+pascalLine [] = [1]
+pascalLine [1] = [1,1]
+pascalLine ns = [1] ++ (createLine [0..((length ns) - 2)]) ++ [1]
+where
+	createLine :: [Int] -> [Int]
+	createLine indexes = [(ns !! i) + (ns !! (i + 1)) \\ i <- indexes]
 
 //Start = pascalLine [] // [1]
 //Start = pascalLine [1] // [1,1]
@@ -218,8 +260,22 @@ Example: multiplicity of 3 in 9 is two, since we can divide 9 by 3 two times.
 Another example: multiplicity of 2 in 24 is 3, since 24 can be divided by 2 three times.
 */
 
-//primeFactors :: Int -> [(Int, Int)]
-
+primeFactors :: Int -> [(Int, Int)]
+primeFactors n = [(d, getMul n d) \\ d <- (getDivisors n)]
+where
+	getDivisors :: Int -> [Int]
+	getDivisors t
+	| t < 0 = filter pred [2..(t * -1)]
+	| otherwise = filter pred [2..t]	
+	where
+		pred :: Int -> Bool
+		pred d = (isPrime d) && ((t rem d) == 0)	
+	
+	getMul :: Int Int -> Int
+	getMul t d
+	| t rem d <> 0 = 0
+	| otherwise = 1 + getMul (t / d) d
+	
 //Start = primeFactors 13 // [(13, 1)]
 //Start = primeFactors 9 // [(3, 2)]
 //Start = primeFactors 315 // [(3,2),(5,1),(7,1)]
@@ -234,7 +290,12 @@ We all know that there are C(12,3) = 220 possibilities (C(N,K) denotes the well-
 We want to really generate all the possibilities in a list.
 */
 
-//combinations :: Int [a] -> [[a]]
+combinations :: Int [a] -> [[a]]
+combinations 0 _ = [[]]
+combinations _ [] = []
+combinations n [x:xs] = (map (\(n) -> [x:n]) (combinations (n - 1) xs)) ++ (combinations n xs)
+
+// Diffucult*
 
 //Start = combinations 5 [1,2,3,4,5] // [[1,2,3,4,5]]
 //Start = combinations 5 [1,2,3] // []
