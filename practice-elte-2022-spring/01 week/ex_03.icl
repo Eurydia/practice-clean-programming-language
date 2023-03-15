@@ -1,4 +1,4 @@
-module practice1
+module ex_03
 import StdEnv
 
 // Start = 5
