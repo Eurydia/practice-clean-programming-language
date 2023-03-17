@@ -50,16 +50,10 @@ where
 	digits = [(toInt d) - 48 \\ d <-: (toString a)]
 	
 	sumEvenDigits :: Int
-	sumEvenDigits = sum (filter pred digits) 
-	where
-		pred :: Int -> Bool
-		pred n = (n rem 2) == 0
+	sumEvenDigits = sum (filter isEven digits) 
 	
 	sumOddDigits :: Int
-	sumOddDigits = sum (filter pred digits)
-	where
-		pred :: Int -> Bool
-		pred n = (n rem 2) == 1
+	sumOddDigits = sum (filter isOdd digits)
 
 //Start  = sumOfEvenDigitsMinusSumOfOddDigits  123 // -2
 //Start  = sumOfEvenDigitsMinusSumOfOddDigits  222 // 6
@@ -79,7 +73,7 @@ where
 */
 
 largestDigit :: Int -> Int
-largestDigit n = reverse (sort [(toInt d) - 48 \\ d <-: (toString n)]) !! 0
+largestDigit n = (reverse (sort [(toInt d) - 48 \\ d <-: (toString n)])) !! 0
 
 //Start = largestDigit 154 // 5
 //Start = largestDigit 12487 // 8
@@ -112,4 +106,4 @@ where
 //Start = task3 123 's' // 6
 //Start = task3 124 'm' // 8
 //Start = task3 12345 'm' // 120
-Start = task3 1234 's' // 10
+//Start = task3 1234 's' // 10
