@@ -1,4 +1,4 @@
-module ex_00
+module ex_02
 
 
 import StdEnv
@@ -198,8 +198,12 @@ f4 [x:xs] = [ sq x : f4 xs ]
 // 15. Replicate n>0 times the element of a list e.g. n=3 [3..6] ->
 // [[3,3,3],[4,4,4],[5,5,5],[6,6,6]]
 f5 :: Int [Int] -> [[Int]]
-f5 n xs = [[l \\ _ <- [1..n]] \\  l <- xs]
-
+f5 count [] = []
+f5 count [x:xs] = [(repeatN x count): (f5 count xs)]
+where
+	repeatN :: Int Int -> [Int]
+	repeatN n count = [n \\ _ <- [1..count]]
+	
 //Start = f5 3 [3..6]
 
 // 16. Compute the product of the elements of a list (built-in is prod)
@@ -317,8 +321,8 @@ heads [x:xs] = [hd x : heads xs]
 
 // 23. Keep the tails of a list in 2 versions 
 // e.g. [[1, 2, 3], [3, 4], [5, 7, 8, 9]] -> [[2, 3], [4], [7, 8, 9]] 
-//tails :: [[Int]] -> [[Int]]
-
+_tails :: [[Int]] -> [[Int]]
+tails xss = map tail xss 
 
 
 //Start = tails [[1, 2, 3], [3, 4], [5, 7, 8, 9]]
@@ -342,8 +346,8 @@ revsub [x:xs] = [reverse x : revsub xs]
 
 // 25. Keep the last elements of the sublists of a list in one list (the sublists are not empty).
 // [[1,2,3],[5,6],[1],[7,8,9,10]] -> [3,6,1,10]
-//lasts :: [[Int]] -> [Int]
-
+lasts :: [[Int]] -> [Int]
+lasts xss = map tl xss
 
 
 //Start = lasts [[1,2,3],[5,6],[1],[7,8,9,10]]
@@ -354,7 +358,7 @@ revsub [x:xs] = [reverse x : revsub xs]
 // E.g. for [[1,2,3],[5,6],[],[7,8,9,10]] the result is [[0,1,2,3],[0,5,6],[0],[0,7,8,9,10]]
 ins0 :: [[Int]] -> [[Int]]
 ins0 [] = []
-ins0 [x:xs] = [ [0]++x : ins0 xs]
+ins0 [x:xs] = [ [0:x] : ins0 xs]
 
 //Start = ins0 [[1,2,3],[5,6],[],[7,8,9,10]]
 

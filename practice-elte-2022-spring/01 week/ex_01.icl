@@ -296,8 +296,11 @@ sumOdd n = sum (filter isOdd [1..n])
 //Start = sumOdd 10 // 25 = 9+7+5+3+1
 Start = sumOdd -13 // n has to be positive
 
-//sumOdd2 :: Int -> Int
-//sumOdd2 n 
+sumOdd2 :: Int -> Int
+sumOdd2 0 = 0
+sumOdd2 n
+| isOdd (n rem 10) = (n rem 10) + sumOdd2 (n / 10)
+| otherwise = sumOdd2 (n / 10)  
 
 //Start = sumOdd2 5 // 9 
 //Start = sumOdd2 21 // 121

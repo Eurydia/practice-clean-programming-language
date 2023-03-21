@@ -1,4 +1,4 @@
-module ex_00
+module ex_01
 import StdEnv
 
 // ***
