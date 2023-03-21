@@ -44,6 +44,10 @@ where
 	isNotX :: Int -> Bool
 	isNotX n = n <> x
 
+// NOTE:
+// There is a builtin function called `removeDup`
+// which does the same thing as `unique` in this case
+
 freq :: [Int] Int -> Int
 freq ns x = length (filter isX ns)
 where

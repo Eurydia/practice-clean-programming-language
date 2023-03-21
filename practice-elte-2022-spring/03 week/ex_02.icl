@@ -372,7 +372,11 @@ ins02 [x:xs] = [ [0:x] : ins02 xs]
 // 27. Delete the last element of each sublist of a list.
 // E.g. for [[1,2,3],[5,6],[],[7,8,9,10]] the result is [[1,2],[5],[],[7,8,9]]
 lastdel :: [[Int]] -> [[Int]]
-lastdel nss = map init nss
+lastdel [] = []
+lastdel [x:xs] = [(init x) : (lastdel xs)]
+
+// using map
+// lastdel l = map init l 
 
 //Start = lastdel [[1,2,3],[5,6],[],[7,8,9,10]]
 
@@ -384,7 +388,7 @@ lastdel nss = map init nss
 // the order of the patterns is important
 gp :: [Int] -> Int
 gp [] = 20
-gp [4 ,_ ] = 30
+gp [4, _ ] = 30
 gp [ _, 5] = 40
 gp _ = 50
 
@@ -395,27 +399,12 @@ gp _ = 50
 
 
 // 29. check if a number is palindrom e.g.12321
-p :: Int -> [Int]
-p n = digits n []
-
-digits :: Int [Int] -> [Int]
-digits 0 x = x
-digits n x = digits (n/10) [n rem 10 : x]
-
-//Start = digits 12321 []
-// digits 12321 []
-// digits 1232 [1:[]]
-// digits 123 [2:[1:[]]]
-// digits 12 [3:[2:[1:[]]]]
-// digits 1  [2:[3:[2:[1:[]]]]]
-// digits 0  [1:[2:[3:[2:[1:[]]]]]]
-// digits 0 [1,2,3,2,1]
-// [1,2,3,2,1]
 
 pali :: Int -> Bool
-pali x = y == reverse y
+pali x = digits == (reverse digits)
 where
-	y = p x
+	digits :: [Char]
+	digits = [d \\ d <-: (toString x)]
 
 //Start = pali 12321 // True
 //Start = pali 12345
@@ -424,10 +413,11 @@ where
 
 // 30. filter the elements smaller then n, e.g. n=3 [1,5,3,2,1,6,4,3,2,1] -> [1,2,1,2,1]
 f7 :: Int [Int] -> [Int]
-f7 n [] = []
-f7 n [x:xs]
-| x < n = [x: f7 n xs]
-= f7 n xs
+f7 n xs = filter isGreaterThanN xs
+where
+	isGreaterThanN :: Int -> Bool
+	isGreaterThanN x = >= n
+
 
 //Start = f7 3 [1,5,3,2,1,6,4,3,2,1] 
 
@@ -436,11 +426,11 @@ f7 n [x:xs]
 // 31. using notempty eliminate the empty lists: 
 // [[1,2,3],[],[3,4,5],[2,2],[],[],[]] -> [[1,2,3], [3,4,5], [2,2]]
 
-notempty :: [Int] -> Bool
-notempty x = not (x == [])
-
 f8 :: [[Int]] -> [[Int]]
-f8 nss = filter notempty nss 
+f8 nss = filter notempty nss
+where
+	notempty :: [Int] -> Bool
+	notempty x = not (x == [])
 
 
 //Start = f8 [[1,2,3],[],[3,4,5],[2,2],[],[],[]]
