@@ -65,37 +65,33 @@ ismult10 n = (n rem 10) == 0
 
 // 8. Say Hello to the World!
 st :: String String String -> String
-st str_a str_b str_c = str_a +++ str_b +++ str_c
+st a b c = a +++ b +++ c
 //Start = st "Hello" " World!" " from FP class"
 
 
 // 9. Change a character if is small letter to uppercase and vice versa,
 // if is a special sign, leave as it is.
 ch :: Char -> Char
-ch c = toUpper c 
+ch char = 
+| isUpper char = toLower char
+| otherwise = toUpper char
+
 //Start = (ch 'a', ch 'z', ch 'A', ch 'Z', ch 'x', ch '%') // ('A','Z','a','z','X','%')
 
 
 // 10. Write a function to compute the absolute value of an integer number.
-abs n
-| n < 0 = n * (-1)
-= n
-
-//Start = abs -4   // 4  abs built-in function
-
 myabs :: Int -> Int
 myabs x
 | x < 0 = x * (-1)
-= x
+| otherwise = x
 
 //Start = myabs -4 // 4
 //Start = myabs 8 // 8
 
 
 // 11. Given an integer, write a function that returns the last digit.
-
 lastDigit :: Int -> Int
-lastDigit n = last [toInt(c) - 48 \\ c <-: (toString n)]
+lastDigit n = (toInt (hd (last [c \\ c <-: (toString n)]))) - 48
 
 //Start = lastDigit 124 // 4
 //Start = lastDigit 4000 // 0
@@ -132,13 +128,7 @@ check a b bool = bool && ((a rem 2) == 0) && ((b rem 13) == 0)
 
 // 14. Add the numbers from 1..N in a recursive function, where N is positive.
 addn :: Int -> Int
-addn n = addn_inner n 0
-where
-	addn_inner :: Int Int -> Int
-	addn_inner curr accu
-	| curr == 0 = accu
-	| curr > 0 = addn_inner (curr - 1) (accu + curr)
-	
+addn n = n + (addn (n - 1))
 
 //Start = addn 5
 // 5 + addn 4
@@ -165,11 +155,7 @@ cube2 n = n * n * n
 
 // 16. Add the digits of a number e.g. for 123 is 6.
 sumDigits :: Int -> Int
-sumDigits n = sum [toInt(c) - 48 \\ c <-: toString(n_inner)]
-where 
-	n_inner
-	| n < 0 = n * (-1)
-	= n
+sumDigits n = sum [toInt(c) - 48 \\ c <-: toString(abs n)]
 
 //Start = sumDigits 12345 // 15
 // 5 + sumDigits 12345/10  =  5 + sumDigits 1234
@@ -240,7 +226,7 @@ factor n = n * factor (n - 1)
 
 //(???????)
 countDigits :: Int -> Int
-countDigits x = sum [1 \\ c <-: toString(x)]
+countDigits x = sum [1 \\ _ <-: toString(x)]
 
 //Start = countDigits 456 // 3
 

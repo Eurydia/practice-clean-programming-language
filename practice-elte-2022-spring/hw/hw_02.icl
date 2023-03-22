@@ -37,12 +37,12 @@ Hints:
     meaning that for example, you won't get [1,1,1] 3 or [1,1,1,3,4,5] 2.
 */
 
-unique :: [Int] -> [Int]
-unique [] = []
-unique [x:xs] = [x : unique (filter isNotX xs)]
-where
-	isNotX :: Int -> Bool
-	isNotX n = n <> x
+// unique :: [Int] -> [Int]
+// unique [] = []
+// unique [x:xs] = [x : unique (filter isNotX xs)]
+// where
+// 	isNotX :: Int -> Bool
+// 	isNotX n = n <> x
 
 // NOTE:
 // There is a builtin function called `removeDup`
@@ -60,11 +60,11 @@ where
 	result :: [Int]
 	result = [fst t \\ t <- freq_arr]
 	
-	freq_arr :: [(Int, Int)]
-	freq_arr = sortBy orderFreq [(n, freq ns n) \\ n <- unique ns]
+	freq_arr :: [[Int, Int]]
+	freq_arr = sortBy orderFreq [[n, freq ns n] \\ n <- removeDup ns]
 	
-	orderFreq :: (Int, Int) (Int, Int) -> Bool
-	orderFreq (na, freqa) (nb, freqb) = freqa > freqb	
+	orderFreq :: [Int, Int] [Int, Int] -> Bool
+	orderFreq [na, freqa] [nb, freqb] = freqa > freqb	
 
 //Start = top_k_freq_elems [1,1,1,2,2,3] 2 // [1,2]
 //Start = top_k_freq_elems  [1,1,2,1,2,3,3,3,3] 3 // [3,2,1] ??
@@ -111,10 +111,10 @@ findGreater chars t
 | otherwise = hd candidates
 where
 	candidates :: [Char]
-	candidates = filter gt chars
+	candidates = filter isGreater chars
 
-	gt :: Char -> Bool
-	gt c = c > t
+	isGreater :: Char -> Bool
+	isGreater c = c > t
 
 //Start = findGreater ['c','f','j'] 'c' // 'f'
 //Start = findGreater ['x','x','y','y'] 'z' // 'x'
