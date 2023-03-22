@@ -26,16 +26,19 @@ where
 // (0, 3 + 0) -> [1, 2, 3]
 // (1, 3 + 1) -> [2, 3, 4]
 
+
+
+lcsSub :: [Int] [Int] ([Int] -> [Int]) -> [Int]
+lcsSub m c fn
+| isSubSeq m c = c
+| otherwise = lcsSub m (fn c) fn
+	
+
 lcs :: [Int] [Int] -> [Int]
 lcs main comp
 | (length resR) > (length resL) = resR
 | otherwise = resL
 where
-	lcsSub :: [Int] [Int] ([Int] -> [Int]) -> [Int]
-	lcsSub m c fn
-	| isSubSeq m c = c
-	| otherwise = lcsSub m (fn c) fn
-	
 	// `resR` and `resL` for storing the 
 	// result of comparison
 	resR :: [Int] 
