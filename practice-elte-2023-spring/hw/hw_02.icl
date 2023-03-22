@@ -131,13 +131,16 @@ where
 */
 
 nFirstFib :: Int -> [Int]
-nFirstFib n = [nFib i \\ i <- [1..n]]
+nFirstFib 1 = [1]
+nFirstFib 2 = [1, 1]
+nFirstFib n = reverse (nFib [1, 1])
 where
-	nFib :: Int -> Int
-	nFib 1 = 1
-	nFib 2 = 1
-	nFib n = (nFib (n - 1)) + (nFib (n - 2))
-
+	nFib :: [Int] -> [Int]
+    nFib x
+    | (length x) == n = x
+    | otherwise = nFib [(a + b) : x] 
+    where
+        [a:[b:_]] = x
 
 fibList::[Int] -> [[Int]]
 fibList ns = parti ns fib_seq
