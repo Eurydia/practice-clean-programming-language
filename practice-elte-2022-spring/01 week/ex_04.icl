@@ -9,18 +9,11 @@ import StdEnv
 
 // x^n = x * x^(n-1)
 
-// exp :: Int Int -> Int
-// exp x n
-// | n == 0 = 1
-// = x * exp x (n-1)
+exp :: Int Int -> Int
+exp x 0 = 1
+exp x n = x * (exp x (n - 1))
 
 // Start = exp 2 2
-
-
-// exp :: Int Int -> Int
-// exp x 0 = 1
-// exp x n = exp x (n-1)
-
 
 f1 :: Int -> Int
 f1 x = x + 1

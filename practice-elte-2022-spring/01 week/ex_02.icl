@@ -67,8 +67,6 @@ l7 = [1..]
 // Exercises
 // All the exercises are to be solved without map
 
-// ***
-
 
 // 1. Evaluate the following expressions:
 
@@ -79,8 +77,6 @@ l7 = [1..]
 //Start = isMember (length [1..5]) [7..10]
 
 //Start = [1..5] ++ [0] ++ reverse [1..5]
-
-// ***
 
 
 // 2. Generate lists 
@@ -104,12 +100,11 @@ l7 = [1..]
 // Generate a list with every 500th element form -10000 to 10000.
 //Start = filter (\(n) = (n rem 500) == 0) [-10000..10000]
 
-// ***
-
 
 // 3. sumsq n returns 1*1 + 2*2 + ... + n*n - with a pattern for 0
 sumsq :: Int -> Int
-sumsq n = sum [x * x \\ x <- [0..n]]
+sumsq 0 = 1
+sumsq n = sum [x * x \\ x <- [1..n]]
 
 //Start = sumsq 3 // 14
 
@@ -119,15 +114,16 @@ sums :: Int -> Int
 sums n = sum [x * x \\ x <- [1..n]]
 
 //Start = sums 3
-  
-// ***
+
 
 
 // 4. Compute for a given positive n the sum of 2i*(2i+1), for i from 1 to n. E.g. for n=3 the sum is 68.
 f :: Int -> Int
 f 1 = 6
-f n = (2 * n * ((2 * n) + 1)) + (f (n - 1))
-
+f n = res  + (f (n - 1))
+where
+	res :: Int
+	res = 2 * n * ((2 * n) + 1) 
 //Start = f 3
 
 // f 3
@@ -136,8 +132,6 @@ f n = (2 * n * ((2 * n) + 1)) + (f (n - 1))
 // 2*3*(2*3+1) + 2*2*(2*2+1) + 2*1*(2*1+1) + f 0
 // 2*3*(2*3+1) + 2*2*(2*2+1) + 2*1*(2*1+1) + 0
 // 68
-
-// ***
 
 
 // 5. Compute the sum 1+ 2*2+ 3*3*3+ 4*4*4*4+ 5*5*5*5*5+ ...+n*n*n*...*n 
@@ -157,16 +151,12 @@ sumpowers n = sum [x ^ x \\ x <- [1..n]]
 //Start = sumpowers 5
 //Start = sumpowers 0
 
-// ***
-
 
 // 6. write a funtion which returns true if a is divisible by b
 div_by :: Int Int -> Bool
 div_by a b = (a rem b) == 0
 
 //Start = div_by 16 4      // True
-
-// ***
 
 
 // 7. write a funtion which returns true if a is divisible by b or vice versa
@@ -176,8 +166,6 @@ div_any a b = ((a rem b) == 0) || ((b rem a) == 0)
 //a rem b == 0 || b rem a == 0
 
 //Start = div_any 4 16     // True
-
-// ***
 
 
 // 8. Cut a list in two parts at the middle. 
@@ -200,8 +188,6 @@ where
 //Start = cut []
 //Start = cut [1]
 
-// ***
-
 
 // 9. Test if a list is symmetrical
 sim :: [Int] -> Bool
@@ -212,8 +198,6 @@ where
 
 //Start = sim [1, 2, 1]
 //Start = sim [1, 2, 3,4,5]
-
-// ***
 
 
 // 10. Extract the middle element of a non-empty list. E.g. for [1..5] is 3, for [1..4] is 3.
@@ -229,8 +213,6 @@ where
 //Start = middle [1]
 //Start = middle []
 
-// ***
-
 
 // 11. add 3 to every element of a list
 f1 :: [Int] -> [Int]
@@ -238,15 +220,11 @@ f1 ns = [n + 3 \\ n <- ns]
 
 //Start = f1 [1,5,3,1,6]  // [4,8,6,4,9]  
 
-// ***
-
 
 // 12. compute the double of the positive elements of a list [1, 2, -2, 3, -4] -> [2, 4, 6]
 f2 :: [Int] -> [Int]
 f2 ns = [n * 2 \\ n <- (filter (\(x) = x > 0) ns)]
 //Start = f2 [1, 2, -2, 3, -4] // [2, 4, 6]
-
-// ***
 
 
 // 13. write a function that keeps the integers of a list up to the first 0 encounterred 
@@ -258,8 +236,6 @@ where
 	filtered_ns =  takeWhile (\(n) = n <> 0) ns 
 
 //Start = f3 [1, 2, -2, 3, 0, -4] // [0, 1, -1, 1]
-
-// ***
 
 
 // 14. write a function for the square of every element of a list and sublists
@@ -277,8 +253,6 @@ f4 nss = map sq nss
 //Start = f4 [[1,2],[3,4,5,6],[7,8]] // [[1,4],[9,16,25,36],[49,64]]
 
 
-// ***
-
 
 
 // 15. Replicate n>0 times the element of a list e.g. n=3 [3..6] ->
@@ -291,16 +265,12 @@ f5 :: Int [Int] -> [[Int]]
 f5 times ns = map (\(n) -> faux n times) ns
 //Start = f5 3 [3..6]
 
-// ***
-
 
 // 16. Compute the product of the elements of a list
 product :: [Int] -> Int
 product ns = prod ns
 
 //Start = product [1..5] // 120
-
-// ***
 
 
 // 17. delete the elements equal to 5
@@ -324,16 +294,12 @@ not_five ns = filter (\(n) -> n <> 5) ns
 // [4 : [ 4: [3 :  []]]
 // [4,4,3]
 
-// ***
-
 
 // 18. Delete an element n from a list
 del :: Int [Int] -> [Int]
 del x ns = filter (\(n) = n <> x) ns
 
 //Start = del 5 [1, 5, 6, 7, 5, 8, 5] // [1, 6, 7, 8]
-
-// ***
 
 
 // 19. Keep the first 2 and the last 2 elements of a list
@@ -346,8 +312,6 @@ where
 
 //Start = droptake2 [1, 2, 3, 4, 5, 6, 7, 8, 9]
 //Start = droptake2 [1, 2]
-
-// ***
 
 
 // 20. Delete the first and the last element of a list.
@@ -365,8 +329,6 @@ where
 //Start = del_firstlast2 [1..10]
 //Start = del_firstlast2 []
 //Start = del_firstlast2 [1]
-
-// ***
 
 
 // 21. Rewrite flatten with ++
@@ -388,8 +350,6 @@ flatten [h:t] = h ++ (flatten t)
 // [1, 2, 3, 3, 4, 5, 7, 8, 9]
 
 
-// ***
-
 
 // 22. Operations with lists: write functions for the followings
 // keep the head of every sublist e.g. [[1, 2, 3], [3, 4], [5, 7, 8, 9]] -> [1, 3, 5]
@@ -407,8 +367,6 @@ heads nss = [h \\ [h:_] <- nss]
 // [1,3,5]
 
 
-// ***
-
 
 
 // 23. Keep the tails of a list in 2 versions 
@@ -422,16 +380,12 @@ tailsd :: [[Int]] -> [[Int]]
 tailsd nss = map tl nss
 //Start = tailsd [[1, 2, 3], [3, 4], [5, 7, 8, 9]]
 
-// ***
-
 
 // 24. Reverse every sublist of a list 
 revsub :: [[Int]] ->  [[Int]]
 revsub nss = map reverse nss
 
 //Start = revsub [[1,2,3],[5,6],[],[7,8,9,10]]
-
-// ***
 
 
 // 25. Keep the last elements of the sublists of a list in one list (the sublists are not empty).
@@ -440,8 +394,6 @@ lasts :: [[Int]] -> [Int]
 lasts nss = [last ns \\ ns <- nss]
 
 //Start = lasts [[1,2,3],[5,6],[1],[7,8,9,10]]
-
-// ***
 
 
 // 26. Insert 0 in front of every sublist of a list.
@@ -454,8 +406,6 @@ ins0 nss = [[0] ++ ns \\ ns <- nss]
 
 //Start = ins02 [[1,2,3],[5,6],[],[7,8,9,10]]
 
-// ***
-
 
 // 27. Delete the last element of each sublist of a list.
 // E.g. for [[1,2,3],[5,6],[],[7,8,9,10]] the result is [[1,2],[5],[],[7,8,9]]
@@ -463,8 +413,6 @@ lastdel :: [[Int]] -> [[Int]]
 lastdel nss = [splice ns 0 ((length ns) - 2) \\ ns <- nss]
 
 //Start = lastdel [[1,2,3],[5,6],[],[7,8,9,10]]
-
-// ***
 
 
 // 28. write a funtion with the patterns depending on the parameter:
@@ -481,8 +429,6 @@ gp ns
 //Start = gp [4, 6] // 30
 //Start = gp [4, 5] // 30
 //Start = gp [1..10]
-
-// ***
 
 
 // 29. check if a number is palindrom e.g.12321
@@ -509,15 +455,11 @@ where
 //Start = pali 12321 // True
 //Start = pali 12345
 
-// ***
-
 
 // 30. filter the elements smaller then n, e.g. n=3 [1,5,3,2,1,6,4,3,2,1] -> [1,2,1,2,1]
 f7 :: Int [Int] -> [Int]
 f7 x ns = filter (\(n) -> n >= x) ns
 //Start = f7 3 [1,5,3,2,1,6,4,3,2,1] 
-
-// ***
 
 
 // 31. using notempty eliminate the empty lists: 
