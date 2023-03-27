@@ -58,7 +58,7 @@ top_k_freq_elems :: [Int] Int -> [Int]
 top_k_freq_elems ns x = result % (0, (x - 1))
 where
 	result :: [Int]
-	result = [fst t \\ t <- freq_arr]
+	result = [hd t \\ t <- freq_arr]
 	
 	freq_arr :: [[Int, Int]]
 	freq_arr = sortBy orderFreq [[n, freq ns n] \\ n <- removeDup ns]
