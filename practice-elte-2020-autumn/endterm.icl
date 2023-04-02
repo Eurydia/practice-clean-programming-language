@@ -24,6 +24,10 @@ Emilia2={firstName="Emilia",age=15,height=180}
 	attributes are the same
 */
 
+instance == Human
+where
+	(==) a b = a.firstName == b.firstName && a.age == b.age && a.height == b.height
+
 
 //Start = Leo == Rose // False
 //Start = Harry == Harry // True
@@ -36,6 +40,18 @@ Emilia2={firstName="Emilia",age=15,height=180}
 	[(a*a2,b*a2),(a*b2,b*b2),(c*c2,d*c2),(c*d2,d*d2)]
 */
 
+instance * [(Int, Int)]
+where
+	(*) _ [] = []
+	(*) [] _ = []
+	(*) a b = flatten [cross (a !! i) (b !! i) \\ i <- [0..size]]
+	where
+		size :: Int
+		size = (min (length a) (length b))- 1
+		
+		cross :: (Int, Int) (Int, Int) -> [(Int, Int)]
+		cross (ax, bx) (ay, by) = [(ax * ay, bx * ay), (ax * by, bx * by)]
+		
 //Start = [(1,2)]*[] //[]
 //Start = [(1,2),(3,4),(5,6)]*[(3,5)]//[(3,6),(5,10)]
 //Start = [(1,2),(3,4),(5,6)]*[(3,5),(6,2),(4,5),(9,7)]//[(3,6),(5,10),(18,24),(6,8),(20,24),(25,30)]
@@ -48,6 +64,11 @@ Emilia2={firstName="Emilia",age=15,height=180}
 */
 
 minMaxDiff :: {[Int]} Int -> {[Int]}
+minMaxDiff arr diff = {l \\ l <-: arr | (compute_diff l) < diff}
+where
+	compute_diff :: [Int] -> Int
+	compute_diff ns = abs ((maxList ns) - (minList ns))
+
 
 //Start = minMaxDiff {[1,21,2],[1,1,1,1,1],[1]} 5//{[1,1,1,1,1],[1]}
 //Start = minMaxDiff {[1,21],[1..10],[4,3]} 5//{[4,3]}
@@ -59,25 +80,35 @@ minMaxDiff :: {[Int]} Int -> {[Int]}
 	For example, if given array is {1,4,5,3,3,2,4,5,1,3,4}, minimum is 1, so answer should be {4,5,3,3,2,4,5,3,4}.
 */
 
-// rem_min :: {Int} -> {Int}
 
-// Start = rem_min {1,4,5,3,3,2,4,5,1,3,4} // {4,5,3,3,2,4,5,3,4}
-// Start = rem_min {1,42,42,52,452,4} // {42,42,52,452,4}
-// Start = rem_min {5} // {}
-// Start = rem_min {} // {}
+
+rem_min :: {Int} -> {Int}
+rem_min arr = {el \\ el <-: arr | el <> min_of_arr}
+where
+	min_of_arr :: Int
+	min_of_arr = minList [n \\ n <-: arr]
+
+//Start = rem_min {1,4,5,3,3,2,4,5,1,3,4} // {4,5,3,3,2,4,5,3,4}
+//Start = rem_min {1,42,42,52,452,4} // {42,42,52,452,4}
+//Start = rem_min {5} // {}
+//Start = rem_min {} // {}
 
 
 /*
 	5. Given two Strings as parameters, remove all characters of second string from the first one.
 */
 
-//remove_from_first_string :: String String -> String
+remove_from_first_string :: String String -> String
+remove_from_first_string a b = toString [ch \\ ch <-: a | not (isMember ch b_list)]
+where
+	b_list :: [Char]
+	b_list = removeDup [ch \\ ch <-: b]
 
-// Start = remove_from_first_string "Zuka" "z"// "Zuka"
-// Start = remove_from_first_string "XccEcxacXmXs aXcrccXe hXaXccXbrXd" "Xbc"// "Exams are hard"
-// Start = remove_from_first_string "Clean is the best" " "// "Cleanisthebest"
-// Start = remove_from_first_string "It's a nice weather outside" ""// "It's a nice weather outside"
-// Start = remove_from_first_string "" ""// ""
+//Start = remove_from_first_string "Zuka" "z"// "Zuka"
+//Start = remove_from_first_string "XccEcxacXmXs aXcrccXe hXaXccXbrXd" "Xbc"// "Exams are hard"
+//Start = remove_from_first_string "Clean is the best" " "// "Cleanisthebest"
+//Start = remove_from_first_string "It's a nice weather outside" ""// "It's a nice weather outside"
+//Start = remove_from_first_string "" ""// ""
 
 
 /*
@@ -92,18 +123,35 @@ minMaxDiff :: {[Int]} Int -> {[Int]}
         | Triangle Real
         | Rectangle Real Real
 
-
-//calc :: {Shape} -> {(Real, Real)}
-
-
+calc :: {Shape} -> {(Real, Real)}
+calc shapes = {t \\ t <- (map compute shape_list)}
+where
+	compute :: Shape -> (Real, Real)
+	compute s = (areaOf s, circumOf s)
+	
+	shape_list :: [Shape]
+	shape_list = [s \\ s <-: shapes]
+	
+	areaOf :: Shape -> Real
+	areaOf (Circle r) = 3.14 * r * r
+	areaOf (Square l) = l * l
+	areaOf (Triangle l) = (sqrt 3.0) * l * l * 0.25
+	areaOf (Rectangle w l) = w * l
+	
+	circumOf :: Shape -> Real
+	circumOf (Circle r) = 2.0 * 3.14 * r
+	circumOf (Square l) = 4.0 * l
+	circumOf (Triangle l) = 3.0 * l
+	circumOf (Rectangle w l) = 2.0 * (w + l)
+	
 //Start = calc {(Circle 3.0), (Square 2.5)} // {(28.26,18.84),(6.25,10)}
-// Start = calc {(Triangle 4.3), (Rectangle 5.4 7.2), (Circle 2.45)} // {(8.00640485798713,12.9),(38.88,25.2),(18.84785,15.386)}
-// Start = calc {(Triangle 7.6), (Circle 1.75), (Square 0.95)} // {(25.0108136612946,22.8),(9.61625,10.99),(0.9025,3.8)}
+//Start = calc {(Triangle 4.3), (Rectangle 5.4 7.2), (Circle 2.45)} // {(8.00640485798713,12.9),(38.88,25.2),(18.84785,15.386)}
+//Start = calc {(Triangle 7.6), (Circle 1.75), (Square 0.95)} // {(25.0108136612946,22.8),(9.61625,10.99),(0.9025,3.8)}
 
 
-::Moral = Happy | Sad
+// ::Moral = Happy | Sad
 
-::Player = {player_name :: String, goals :: [Int], moral :: Moral}
+//::Player = {player_name :: String, goals :: [Int], moral :: Moral}
 
 /*
 	7. A coach was choosing the starting team for his important game, unfortunately he/she has an issue
@@ -139,7 +187,7 @@ minMaxDiff :: {[Int]} Int -> {[Int]}
 */
 
 
-:: Fighter = {fighter_name :: String, health_points :: Int, attacking_points :: Int, defending_points :: Int}
+// :: Fighter = {fighter_name :: String, health_points :: Int, attacking_points :: Int, defending_points :: Int}
 
 //getWinnerRound :: Fighter Fighter -> (String, Int)
 
