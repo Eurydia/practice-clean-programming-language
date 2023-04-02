@@ -149,9 +149,9 @@ where
 //Start = calc {(Triangle 7.6), (Circle 1.75), (Square 0.95)} // {(25.0108136612946,22.8),(9.61625,10.99),(0.9025,3.8)}
 
 
-// ::Moral = Happy | Sad
+::Moral = Happy | Sad
 
-//::Player = {player_name :: String, goals :: [Int], moral :: Moral}
+::Player = {player_name :: String, goals :: [Int], moral :: Moral}
 
 /*
 	7. A coach was choosing the starting team for his important game, unfortunately he/she has an issue
@@ -161,10 +161,35 @@ where
 	NOTE: If there are 2 players with the same average (after considiring the moral of course) return any of them.
 */
 
-//bestStriker :: [Player] -> String
+instance == Moral
+where
+	(==) Happy Happy = True
+	(==) Happy Sad = False
+	(==) Sad Happy = False
+	(==) Sad Sad = True
+
+bestStriker :: [Player] -> String
+bestStriker players = fst (hd sorted_data)
+where
+	data :: [(String, Real)]
+	data = map toData players
+
+	toData :: Player -> (String, Real)
+	toData p = (p.player_name, compute_avg p)
+	
+	compute_avg :: Player -> Real
+	compute_avg p
+	| p.moral == Happy = (toReal (avg p.goals)) + 0.1
+	| otherwise = toReal (avg p.goals)
+
+	sorted_data :: [(String, Real)]
+	sorted_data = sortBy sortScore data
+
+	sortScore :: (String, Real) (String, Real) -> Bool
+	sortScore (na, ga) (nb, gb) = ga > gb
 
 //Start = bestStriker [{player_name = "Abo Trika", goals = [1,1,0,0,2], moral = Happy}, {player_name = "Ronaldo", goals = [1,1,2,0,2], moral = Sad}, {player_name = "Messi", goals = [1,1,2,1,2,2,0], moral = Happy} ] // Messi
-// Start = bestStriker [{player_name = "Abo Trika", goals = [2,2], moral = Sad}, {player_name = "Ronaldo", goals = [2,2], moral = Happy}, {player_name = "Messi", goals = [1,1,2,1,2,2,0], moral = Sad} ] //Ronaldo
+//Start = bestStriker [{player_name = "Abo Trika", goals = [2,2], moral = Sad}, {player_name = "Ronaldo", goals = [2,2], moral = Happy}, {player_name = "Messi", goals = [1,1,2,1,2,2,0], moral = Sad} ] //Ronaldo
 
 
 
@@ -187,13 +212,22 @@ where
 */
 
 
-// :: Fighter = {fighter_name :: String, health_points :: Int, attacking_points :: Int, defending_points :: Int}
+:: Fighter = {fighter_name :: String, health_points :: Int, attacking_points :: Int, defending_points :: Int}
 
-//getWinnerRound :: Fighter Fighter -> (String, Int)
+getWinnerRound :: Fighter Fighter -> (String, Int)
+getWinnerRound a b = getWinner a b 1
+where
+	getWinner :: Fighter Fighter Int -> (String, Int)
+	getWinner odd even round
+	| round == 11 && odd.health_points > 0 && even.health_points > 0 = ("No winner", 22)
+	| odd.health_points <= 0 = (even.fighter_name, round - 1)
+	| even.health_points <= 0 = (odd.fighter_name, round - 1)
+	| isOdd round = getWinner odd {even & health_points=(even.health_points - (odd.attacking_points - even.defending_points))} (round + 1)
+	| isEven round = getWinner {odd & health_points=(odd.health_points - (even.attacking_points - odd.defending_points))} even (round + 1)
 
 //Start = getWinnerRound {fighter_name = "Ali", health_points = 100, attacking_points = 30, defending_points = 40} {fighter_name = "Tayson", health_points = 90, attacking_points = 50, defending_points = 20} // ("No winner", 22)
-// Start = getWinnerRound {fighter_name = "Ali", health_points = 100, attacking_points = 70, defending_points = 40} {fighter_name = "Tayson", health_points = 100, attacking_points = 50, defending_points = 20} // ("Ali",3)
-// Start = getWinnerRound {fighter_name = "Ali", health_points = 50, attacking_points = 70, defending_points = 40} {fighter_name = "Tayson", health_points = 150, attacking_points = 80, defending_points = 20} // ("Tayson",4)
+//Start = getWinnerRound {fighter_name = "Ali", health_points = 100, attacking_points = 70, defending_points = 40} {fighter_name = "Tayson", health_points = 100, attacking_points = 50, defending_points = 20} // ("Ali",3)
+Start = getWinnerRound {fighter_name = "Ali", health_points = 50, attacking_points = 70, defending_points = 40} {fighter_name = "Tayson", health_points = 150, attacking_points = 80, defending_points = 20} // ("Tayson",4)
 
 
 
