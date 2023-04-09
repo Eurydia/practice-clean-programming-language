@@ -16,28 +16,40 @@ Strategy:
 	3. If a number appears less than five times,
 		remove all of it.
 */
-countFreq :: Int [Int] -> Int
-countFreq target list = length (filter pred list)
-where 
-	pred :: Int -> Bool
-	pred value = value == target
 
-famousNum :: [Int] -> [Int]
-famousNum list = remove_infamous list (removeDup list)
+
+// countFreq :: Int [Int] -> Int
+// countFreq target list = length (filter pred list)
+// where 
+// 	pred :: Int -> Bool
+// 	pred value = value == target
+
+// famousNum :: [Int] -> [Int]
+// famousNum list = remove_infamous list (removeDup list)
+// where
+// 	do_remove :: Int [Int] -> [Int]
+// 	do_remove target res
+// 	| (countFreq target res) > 4 = res
+// 	| otherwise = filter pred res
+// 	where
+// 		pred i = i <> target
+// 	remove_infamous :: [Int] [Int] -> [Int]
+// 	remove_infamous res targets
+// 	| targets == [] = res
+// 	| otherwise = remove_infamous (do_remove tar_h res) tar_t
+// 	where 
+// 		[tar_h:tar_t] = targets
+
+getInfamous :: [Int] -> [Int]
+getInfamous ns = [n \\ n <- (removeDup ns) | (countT n) > 4]
 where
-	do_remove :: Int [Int] -> [Int]
-	do_remove target res
-	| (countFreq target res) > 4 = res
-	| otherwise = filter pred res
-	where
-		pred i = i <> target
-	remove_infamous :: [Int] [Int] -> [Int]
-	remove_infamous res targets
-	| targets == [] = res
-	| otherwise = remove_infamous (do_remove tar_h res) tar_t
-	where 
-		[tar_h:tar_t] = targets
-	
+	countT :: Int -> Int
+	countT t = sum [1 \\ n <- ns | n == t]
+
+
+
+countFreq :: [Int] -> [Int]
+countFreq ns = removeMembers ns (getInfamous ns)
 
 Start = famousNum [1,1,1,1,1,1,2,3,4,4,4,4,5,5,5,5,5] // [1,1,1,1,1,1,5,5,5,5,5]
 //Start = famousNum [] // []
