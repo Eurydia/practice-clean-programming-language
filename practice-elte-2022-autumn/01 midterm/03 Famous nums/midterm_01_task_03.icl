@@ -17,6 +17,8 @@ Strategy:
 		remove all of it.
 */
 
+// -----------------------------
+// SOLUTION #1
 
 // countFreq :: Int [Int] -> Int
 // countFreq target list = length (filter pred list)
@@ -40,8 +42,11 @@ Strategy:
 // 	where 
 // 		[tar_h:tar_t] = targets
 
+// -----------------------------
+// SOLUTION #2
+
 getInfamous :: [Int] -> [Int]
-getInfamous ns = [n \\ n <- (removeDup ns) | (countT n) > 4]
+getInfamous ns = [t \\ t <- (removeDup ns) | (countT t) > 4]
 where
 	countT :: Int -> Int
 	countT t = sum [1 \\ n <- ns | n == t]
