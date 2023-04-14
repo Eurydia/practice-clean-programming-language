@@ -46,7 +46,7 @@ Strategy:
 // SOLUTION #2
 
 getInfamous :: [Int] -> [Int]
-getInfamous ns = [t \\ t <- (removeDup ns) | (countT t) > 4]
+getInfamous ns = [t \\ t <- (removeDup ns) | (countT t) < 5]
 where
 	countT :: Int -> Int
 	countT t = sum [1 \\ n <- ns | n == t]
