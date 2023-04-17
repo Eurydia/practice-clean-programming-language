@@ -11,7 +11,7 @@ import StdEnv
 */
 
 gap2 :: [Int] -> [Int]
-gap2 n_list = [n \\ n <- [list_min..list_max] | isOdd n]
+gap2 n_list = [list_min,(list_min + 2)..list_max]
 where
 	list_min = minList n_list
 	list_max = (maxList n_list) + (((maxList n_list) + 1) rem 2)
