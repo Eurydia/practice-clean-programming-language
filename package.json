@@ -7,16 +7,12 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "deploy": "astro build && gh-pages -d dist/"
+    "astro": "astro"
   },
   "dependencies": {
     "astro": "^2.3.0",
     "astro-relative-links": "^0.3.3",
     "rehype-katex": "^6.0.2",
     "remark-math": "^5.1.1"
-  },
-  "devDependencies": {
-    "gh-pages": "^5.0.0"
   }
 }

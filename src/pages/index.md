@@ -126,7 +126,6 @@ D =  4.2E10    // scientific notation
 toInt ::  Int   -> Int    // does nothing
 toInt ::  Real  -> Int    
 toInt ::  Char  -> Int    // 'A' -> 65
-toInt :: {Char} -> Int    // from string
 ```
 
 #### Real number type
