@@ -904,8 +904,6 @@ Definitions:
 
 ---
 
----
-
 ## Appendix B: Common errors
 
 ### Multiple entry points error
