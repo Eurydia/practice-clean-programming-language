@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+    <meta name="generator" content="Astro v2.3.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css" integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ" crossorigin="anonymous">
+    <title>Cleanpedia</title>
+  <link rel="stylesheet" href="./_astro/index.d9fe69b7.css" /></head>
+  <body>
+    <main>
+      <h1 id="cleanpedia">Cleanpedia</h1>
+<h2 id="table-of-contents">Table of contents</h2>
+<ol>
+<li>Introduction</li>
+<li>Types
+<ol>
+<li>Type specification</li>
+<li>Primitive types
+<ol>
+<li>Integer type</li>
+<li>Real number type</li>
+<li>Character type</li>
+<li>Boolean type</li>
+</ol>
+</li>
+<li>Structured types
+<ol>
+<li>Lists</li>
+<li>Arrays</li>
+<li>Tuples</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Comprehensions</li>
+<li>Functions
+<ol>
+<li>Definitions</li>
+<li>Invocation</li>
+<li>Symbolic functions</li>
+<li>Lambda functions</li>
+</ol>
+</li>
+<li>Scoping
+<ol>
+<li>Function-local definition</li>
+<li>Guard-local definition</li>
+</ol>
+</li>
+<li>Pattern matching</li>
+<li>Appendix A: Built-in methods and functions</li>
+<li>Appendix B: Error troubleshooting</li>
+<li>Appendix C: CRU (Code Ready to Use)</li>
+</ol>
+<h2 id="introduction">Introduction</h2>
+<p>My <strong>motivation</strong> is to create an accessible, concise, and clear documentation which can be used by those who wishes to learn Clean.</p>
+<p>The same information can be found on:</p>
+<ul>
+<li><a href="https://cloogle.org/">Cloogle</a> which is the language’s search engine, and</li>
+<li><a href="https://cloogle.org/doc/">language report</a> which describes the syntax and BNF of Clean.</li>
+</ul>
+<h2 id="types">Types</h2>
+<p>Types define the kind of data used in a program and the operations that can be performed on it.
+Correct usage is important for program functionality and efficiency.</p>
+<p>Types can only interact with themselves due to lack of implicit type conversion.</p>
+<h3 id="type-specification">Type specification</h3>
+<p>The syntax for variable annotation is as follow:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">var :: T</span></span></code></pre>
+<p>The syntax for function signature is as follow:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_x :: T -> K</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y :: T K -> V</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_z :: T1 T2 ... Tn -> K</span></span></code></pre>
+<p>The <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></span>-th parameter of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>func_z</mtext></mrow><annotation encoding="application/x-tex">\text{func\_z}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0044em;vertical-align:-0.31em;"></span><span class="mord text"><span class="mord">func_z</span></span></span></span></span></span> has the type of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">T_{n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span>.</p>
+<p>To add class context to a function signature, use the following syntax:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_x :: T K -> V | + T          // T must have +</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y :: T K -> V | +, / T       // T must have + and /</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_z :: T K -> V | + T &#x26; ^ K    // T must have + and K must have ^</span></span></code></pre>
+<h3 id="primitive-types">Primitive types</h3>
+<h4 id="integer-type">Integer type</h4>
+<p><strong>Type annotation</strong>: <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Int</mtext></mrow><annotation encoding="application/x-tex">\text{Int}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">Int</span></span></span></span></span></span></p>
+<p><strong>Constructios</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A :: Int</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A =  42        // decimal notation</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">B :: Int</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">B =  052       // octal notation</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">C :: Int</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">C =  0x2a      // hexadecimal notation</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">    </span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">D :: Int</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">D =  4.2E10    // scientific notation</span></span></code></pre>
+<p><strong>Operations</strong>:</p>
+<ul>
+<li>[[#Integers: Arithmetic operations]]</li>
+<li>[[#Integers: Relational operations]]</li>
+<li>[[#Integers: Bitwise operations]]</li>
+<li>[[#Integers: Methods]]</li>
+</ul>
+<p><strong>Explicit type conversion</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">toInt ::  Int   -> Int    // does nothing</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">toInt ::  Real  -> Int    </span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">toInt ::  Char  -> Int    // 'A' -> 65</span></span></code></pre>
+<h4 id="real-number-type">Real number type</h4>
+<p><strong>Type annotation</strong>: <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Real</mtext></mrow><annotation encoding="application/x-tex">\text{Real}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Real</span></span></span></span></span></span></p>
+<p><strong>Constructions</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A :: Real</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A =  42.0    // decimal notation</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">B :: Int</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">B =  4E-3    // scientific notation</span></span></code></pre>
+<p>Reals cannot be constructed using octal and hexadecimal notations.</p>
+<p><strong>Operations</strong>:</p>
+<ul>
+<li>[[#Reals: Arithmetic operations]]</li>
+<li>[[#Reals: Relational operations]]</li>
+<li>[[#Reals: Methods]]</li>
+<li>[[#Reals: Trigonometic methods]]</li>
+</ul>
+<p><strong>Explicit type conversion</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">toReal :: Real   -> Real    // does nothing</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">toReal :: Int    -> Real</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">toReal :: {Char} -> Real    // from string</span></span></code></pre>
+<h4 id="character-type">Character type</h4>
+<p><strong>Type annotation</strong>: <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Char</mtext></mrow><annotation encoding="application/x-tex">\text{Char}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Char</span></span></span></span></span></span></p>
+<p><strong>Constructions</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A :: Char</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A =  'a'</span></span></code></pre>
+<p><strong>Operations</strong>:</p>
+<ul>
+<li>[[#Characters: Arithmetic operations]]</li>
+<li>[[#Characters: Relational operations]]</li>
+<li>[[#Characters: Methods]]</li>
+<li>[[#Charcters: Validator methods]]</li>
+</ul>
+<p><strong>Explicit type conversion</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">toChar :: Char -> Char    // does nothing</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">toChar :: Int  -> Char    // 49 -> '1'</span></span></code></pre>
+<h3 id="boolean-type">Boolean type</h3>
+<p><strong>Type annotation</strong>: <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Bool</mtext></mrow><annotation encoding="application/x-tex">\text{Bool}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Bool</span></span></span></span></span></span></p>
+<p><strong>Constructions</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A :: Bool</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A =  True     // literal 'True'</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">B :: Bool</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">B =  False    // literal 'False'</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">C :: Bool</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">C = 1 == 2</span></span></code></pre>
+<p><strong>Operations</strong>:</p>
+<ul>
+<li>[[#Booleans: Logical operators]]</li>
+</ul>
+<p><strong>Explicit type conversion</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">toBool :: Bool -> Bool    // does nothing</span></span></code></pre>
+<h3 id="structured-types">Structured types</h3>
+<h4 id="lists">Lists</h4>
+<p><strong>Characteristics</strong>:</p>
+<ul>
+<li>holds one type, and</li>
+<li>can have infinite length.</li>
+</ul>
+<p><strong>Annotation</strong>: <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>[T]</mtext></mrow><annotation encoding="application/x-tex">\text{[T]}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">[T]</span></span></span></span></span></span></p>
+<p><strong>Constructions</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A :: [Char] </span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A =  ['a', 'b', 'c']            // individual elements</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">B :: [Char]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">B =  ['a' : ['b', 'c']]         // from head and tail</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">C :: [Char]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">C =  ['a' : ['b' : ['c' : []]]] </span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">D :: [Char] </span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">D =  ['abc']                    // shorthand for [Char] lists</span></span></code></pre>
+<p><strong>Operations</strong>:</p>
+<ul>
+<li>[[#Lists: Standard operators]]</li>
+<li>[[#Lists: Relational operators]]</li>
+<li>[[#Lists: Methods]]</li>
+<li>[[#Lists: Manipulation methods]]</li>
+<li>[[#Lists: Set-like methods]]</li>
+<li>[[#Lists: Logical methods]]</li>
+</ul>
+<h4 id="arrays">Arrays</h4>
+<p><strong>Characteristcs</strong>:</p>
+<ul>
+<li>holds one type, and</li>
+<li>has finite length.</li>
+</ul>
+<p><strong>Annotation</strong>: <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>{T}</mtext></mrow><annotation encoding="application/x-tex">\text{\{T\}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">{T}</span></span></span></span></span></span></p>
+<p><strong>Constructions</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A :: {Char}</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A =  {'a', 'b', 'c'}</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">B :: String</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">B =  "abc"             // also an array of characters</span></span></code></pre>
+<p><strong>Operations</strong>:</p>
+<ul>
+<li>[[#Arrays: Standard operators]]</li>
+<li>[[#Arrays: Methods]]</li>
+</ul>
+<h4 id="tuples">Tuples</h4>
+<p><strong>Characteristcs</strong>:</p>
+<ul>
+<li>can hold multiple type,</li>
+<li>must hold at least two items, and</li>
+<li>has finite length.</li>
+</ul>
+<p><strong>Annotation</strong>: <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><msub><mtext>T</mtext><mn>1</mn></msub><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><msub><mtext>T</mtext><mi>n</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(\text{T}_{1}, ..., \text{T}_{n})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord text"><span class="mord">T</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord text"><span class="mord">T</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
+<p><strong>Constructions</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A :: (Int, Char)</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A =  (49, '1')</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">B :: (Real, Bool, String)</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">B =  (0.2, False, "Hi")</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">C :: (Int)</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">C =  (2, 6)                // NOT OK should be (Int, Int)</span></span></code></pre>
+<p><strong>Operations</strong>:</p>
+<ul>
+<li>[[#Tuples: Relational operators]]</li>
+<li>[[#Tuples: Methods]]</li>
+</ul>
+<h2 id="comprehensions">Comprehensions</h2>
+<p>Both arrays and lists can be constructed with comprehension.
+Use <strong><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[...]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">...</span><span class="mclose">]</span></span></span></span></span></strong> to construct a list and <strong><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">{</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\{...\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord">...</span><span class="mclose">}</span></span></span></span></span></strong> to construct an array.</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A :: [T]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A =  [el \\ el &#x3C;- list]                  // extract from a list</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">B :: [T]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">B =  [el \\ el &#x3C;-: array]                // extract from an array</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">C :: [(T, K)]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">C =  [(x, y) \\ x &#x3C;- xs , y &#x3C;- ys]       // cartesian product</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">D :: [(T, K)]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">D =  [(x, y) \\ x &#x3C;- xs &#x26; y &#x3C;- ys]       // pair-wise zip</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">F :: [T]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">F =  [x \\ x &#x3C;- xs | P x]                // same as filter</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">G :: [(T, K)]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">G =  [(x, y) \\ x &#x3C;- xs, y &#x3C;- [1..x]]    // nested</span></span></code></pre>
+<h2 id="functions">Functions</h2>
+<h3 id="definition">Definition</h3>
+<p>A Syntax for function can be as minimal as shown below.</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_x :: T   -> K</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_x    ... =  ...</span></span></code></pre>
+<p>Conditional branches in functions can be defined as shown below.</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">// using guards</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y :: Int Int -> Int</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y    x   y</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">| y == 0          = abort "Division by zero"</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">| otherwise       = x / y</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">// using patterns</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_z :: Int Int -> Int</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_z    _   0   =  abort "Division by zero"</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_z    x   y   =  x / y </span></span></code></pre>
+<h3 id="invocation">Invocation</h3>
+<p>Invoking a function in Clean differs slightly from traditional languages.</p>
+<p>In traditional languages, such as Python, a pair of parentheses is used to <strong>invoke</strong> a function.
+They can be omitted entirely.</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">f argA ... argZ</span></span></code></pre>
+<h3 id="symbolic-functions">Symbolic functions</h3>
+<p>By using prentheses, special symbols can be used as function names .</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">(^^) :: T K -> V</span></span></code></pre>
+<p>Any function can be converted into an operator.
+However, it must have an arity of exactly two.</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">(^^) infix  0 :: T K -> V</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">(^^) infixl 0 :: T K -> V  // left-associated</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">(^^) infixr 0 :: T K -> V  // right-associated</span></span></code></pre>
+<p>The <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>infix</mtext></mrow><annotation encoding="application/x-tex">\text {infix}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">infix</span></span></span></span></span></span> macros allows the function to be place between its arguments.</p>
+<p>The number succeeding the macro represents the precedence from <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span></span> to <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>9</mn></mrow><annotation encoding="application/x-tex">9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">9</span></span></span></span></span>.
+Higher precedence means the operator binds more tightly to its arguments.</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">A ^^ B   // invoked as operator</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">(^^) A B // invoked as regular function</span></span></code></pre>
+<h3 id="lambda-functions">Lambda functions</h3>
+<p>The basic syntax for lambda function is shown below.</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">\(paramA, ..., paramZ) = ...</span></span></code></pre>
+<p>Conditional branches is also supported by lambda functions using <code>case ... of</code> expression.</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">\(x, y, z) = case x of </span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">3 -> y</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">_ -> z</span></span></code></pre>
+<h2 id="scoping">Scoping</h2>
+<p>There are two levels of local definitions:</p>
+<h3 id="function-local-definitions">Function-local definitions</h3>
+<p>Using <strong><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>where</mtext></mrow><annotation encoding="application/x-tex">\text{where}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">where</span></span></span></span></span></span></strong> keyword, functions and variables can be scoped to a function.</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_x :: T   -> K</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_x    ... =  ...</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">where</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">	...</span></span></code></pre>
+<h3 id="guard-local-definitions">Guard-local definitions</h3>
+<p>Using <strong><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>with</mtext></mrow><annotation encoding="application/x-tex">\text{with}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">with</span></span></span></span></span></span></strong> keyword, functions and variables can be scoped to guards of a function.</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y :: T   -> K</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y    ... =  ...</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">| ... = ...</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">with</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">	...</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">| otherwise = ...</span></span></code></pre>
+<h2 id="pattern-matching">Pattern matching</h2>
+<p>Destructing an iterator can be done using <strong><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>x , y</mtext></mrow><annotation encoding="application/x-tex">\text{x , y}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord text"><span class="mord">x , y</span></span></span></span></span></span></strong> and <strong><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>x : rest</mtext></mrow><annotation encoding="application/x-tex">\text{x : rest}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord text"><span class="mord">x : rest</span></span></span></span></span></span></strong> pattern.</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_x :: [T]       -> K</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_x    [x, y, z] =  ...</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_x [3, 5 ,6]       // x=3; y=5; z=6</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_x [1, 2]          // run-time error</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_x [3, 5, 6, 7]    // run-time error</span></span></code></pre>
+<p>Without the greedy operator, the pattern must be an exact match, otherwise a run-time error is thrown.</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y :: [T]      -> K</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y    [x : rest] =  ...</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y [3, 5, 6]   // x=3; rest=[5, 6]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y [1]         // x=1; rest=[]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y []          // run-time error</span></span></code></pre>
+<p>Attempting to destucture an empty iterator will thrown a run-time error.
+To avoid this pitfall, a function pattern should defined.</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y :: [T]      -> K</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y    []       =  ...</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y    [x : rest] =  ...</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y [3, 5, 6]   // x=3; rest=[5, 6]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y [1]         // x=1; rest=[]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y []          // destructuring did not occur</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">                   // and no error is thrown</span></span></code></pre>
+<p>A complex destructuring pattern can be done as follow:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_z :: [T]      -> K</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_z    [x, y : rest] =  ...</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y [1, 2, 3, 4] // x=1; y=2; rest=[3, 4]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y [3, 5, 6]    // x=3; y=5; rest=[6]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">func_y [1]          // run-time error</span></span></code></pre>
+<h2 id="appendix-a-built-in-functions-and-methods">Appendix A: Built-in functions and methods</h2>
+<p>This part will be referred to by other parts of the reference to increase readability and clarity.</p>
+<p>Futhermore, it should be accepted that operators <strong>must</strong> return the same type as their arguments, except relational operators.</p>
+<p>Simply put, operators must have one of the following signatures:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>→</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">T\rightarrow T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span></span>, or</li>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mphantom><mi>X</mi></mphantom><mi>T</mi><mo>→</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">T\phantom{X}T\rightarrow T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal" style="margin-right:0.07847em;color:transparent;">X</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span></span>.</li>
+</ul>
+<h3 id="integers-operations-methods-and-functions">Integers operations, methods, and functions</h3>
+<h4 id="arithmetic-operations">Arithmetic operations</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operator</th><th>Meaning</th></tr></thead><tbody><tr><td><nobr><code>-X</code></nobr></td><td>Negation</td></tr><tr><td><nobr><code>X + Y</code></nobr></td><td>Addition</td></tr><tr><td><nobr><code>X - Y</code></nobr></td><td>Substraction</td></tr><tr><td><nobr><code>X * Y</code></nobr></td><td>Multiplication</td></tr><tr><td><nobr><code>X / Y</code></nobr></td><td>Floor division</td></tr><tr><td><nobr><code>X ^ Y</code></nobr></td><td>Exponentiation<sup><a href="#user-content-fn-1" id="user-content-fnref-1" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></td></tr><tr><td><nobr><code>X rem Y</code></nobr></td><td>Modulus</td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo separator="true">,</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X, Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> are integers.</li>
+</ul>
+<h4 id="relational-operations">Relational operations</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operator</th><th>Meaning</th></tr></thead><tbody><tr><td><nobr><code>X == Y</code></nobr></td><td>Equals to</td></tr><tr><td><nobr><code>X &#x3C;> Y</code></nobr></td><td>Not equal to</td></tr><tr><td><nobr><code>X > Y</code></nobr></td><td>Greater than</td></tr><tr><td><nobr><code>X &#x3C; Y</code></nobr></td><td>Less than</td></tr><tr><td><nobr><code>X > Y</code></nobr></td><td>Greater than or equal to</td></tr><tr><td><nobr><code>X &#x3C;= Y</code></nobr></td><td>Less than or equal to</td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo separator="true">,</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X, Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> are integers.</li>
+</ul>
+<h4 id="bitwise-operations">Bitwise operations</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operator</th><th>Meaning</th></tr></thead><tbody><tr><td><nobr><code>bitnot X</code></nobr></td><td>Bit inversion</td></tr><tr><td><nobr><code>X bitor Y</code></nobr></td><td>Bitwise OR</td></tr><tr><td><nobr><code>X bitand Y</code></nobr></td><td>Bitwise AND</td></tr><tr><td><nobr><code>X bitxor Y</code></nobr></td><td>Bitwise XOR</td></tr><tr><td><nobr><code>X &#x3C;&#x3C; Y</code></nobr></td><td>Left shift <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> by <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> bits</td></tr><tr><td><nobr><code>X >> Y</code></nobr></td><td>right shift <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> by <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> bits</td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo separator="true">,</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X, Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> are integers.</li>
+</ul>
+<h4 id="methods">Methods</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>Meaning</th><th>Signature</th></tr></thead><tbody><tr><td><nobr><code>sign X </code></nobr></td><td>Signum of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr> <code>Int -> Int</code></nobr></td></tr><tr><td><nobr><code>abs X</code></nobr></td><td>Absolute value of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr> <code>Int -> Int</code></nobr></td></tr><tr><td><nobr><code>gcd X Y</code></nobr></td><td>GCD of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> and <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span></td><td><nobr> <code>Int Int -> Int</code></nobr></td></tr><tr><td><nobr><code>lcm X Y</code></nobr></td><td>LCM of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> and <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span></td><td><nobr> <code>Int Int -> Int</code></nobr></td></tr><tr><td><nobr><code>isEven X</code></nobr></td><td>Even check on <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr> <code>Int -> Bool</code></nobr></td></tr><tr><td><nobr><code>isOdd X</code></nobr></td><td>Odd check on <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr> <code>Int -> Bool</code></nobr></td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo separator="true">,</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X, Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> are integers.</li>
+</ul>
+<hr>
+<h3 id="reals-operations-methods-and-functions">Reals operations, methods and functions</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operator</th><th>Meaning</th></tr></thead><tbody><tr><td><nobr><code>-X</code></nobr></td><td>Negation</td></tr><tr><td><nobr><code>X + Y</code></nobr></td><td>Addition</td></tr><tr><td><nobr><code>X - Y</code></nobr></td><td>Substraction</td></tr><tr><td><nobr><code>X * Y</code></nobr></td><td>Multiplication</td></tr><tr><td><nobr><code>X / Y</code></nobr></td><td>Division</td></tr><tr><td><nobr><code>X ^ Y</code></nobr></td><td>Exponentiation<sup><a href="#user-content-fn-2" id="user-content-fnref-2" data-footnote-ref="" aria-describedby="footnote-label">2</a></sup></td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo separator="true">,</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X, Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> are real numbers.</li>
+</ul>
+<h4 id="relational-operations-1">Relational operations</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operator</th><th>Meaning</th></tr></thead><tbody><tr><td><nobr><code>X == Y</code></nobr></td><td>Equals to</td></tr><tr><td><nobr><code>X &#x3C;> Y</code></nobr></td><td>Not equal to</td></tr><tr><td><nobr><code>X > Y</code></nobr></td><td>Greater than</td></tr><tr><td><nobr><code>X &#x3C; Y</code></nobr></td><td>Less than</td></tr><tr><td><nobr><code>X > Y</code></nobr></td><td>Greater than or equal to</td></tr><tr><td><nobr><code>X &#x3C;= Y</code></nobr></td><td>Less than or equal to</td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo separator="true">,</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X, Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> are integers</li>
+</ul>
+<h4 id="methods-1">Methods</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>Meaning</th><th>Signature</th></tr></thead><tbody><tr><td><nobr><code>sign X</code></nobr></td><td>Signum of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>Real -> Int</code></nobr></td></tr><tr><td><nobr><code>entier X</code></nobr></td><td>Floor of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>Real -> Int</code></nobr></td></tr><tr><td><nobr><code>abs X</code></nobr></td><td>Absolute value of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>Real -> Real</code></nobr></td></tr><tr><td><nobr><code>ln X</code></nobr></td><td>Natural log of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>Real -> Real</code></nobr></td></tr><tr><td><nobr><code>log10 X</code></nobr></td><td>Log base 10 of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>Real -> Real</code></nobr></td></tr><tr><td><nobr><code>exp X</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi></mrow><annotation encoding="application/x-tex">e</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">e</span></span></span></span></span> to the power of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>Real -> Real</code></nobr></td></tr><tr><td><nobr><code>sqrt X</code></nobr></td><td>Square root of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>Real -> Real</code></nobr></td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> is a real number.</li>
+</ul>
+<h4 id="trigonometic-methods">Trigonometic methods</h4>
+<p>The methods below have the same <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Real</mtext><mo>→</mo><mtext>Real</mtext></mrow><annotation encoding="application/x-tex">\text {Real}\rightarrow\text {Real}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Real</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Real</span></span></span></span></span></span> signature.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>Meaning</th></tr></thead><tbody><tr><td><nobr><code>sin X</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>sin</mi><mo>⁡</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">\sin X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mop">sin</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>cos X</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>cos</mi><mo>⁡</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">\cos X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mop">cos</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>tan X</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>tan</mi><mo>⁡</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">\tan X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mop">tan</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>asin X</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>arcsin</mi><mo>⁡</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">\arcsin X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mop">arcsin</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>acos X</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>arccos</mi><mo>⁡</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">\arccos X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mop">arccos</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>atan X</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>arctan</mi><mo>⁡</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">\arctan X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mop">arctan</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>sinh X</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>sinh</mi><mo>⁡</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">\sinh X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mop">sinh</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>cosh X</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>cosh</mi><mo>⁡</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">\cosh X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mop">cosh</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>tanh X</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>tanh</mi><mo>⁡</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">\tanh X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mop">tanh</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>asinh X</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>arcsinh </mtext><mi>X</mi></mrow><annotation encoding="application/x-tex">\text {arcsinh } X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">arcsinh </span></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>acosh X</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>arccosh </mtext><mi>X</mi></mrow><annotation encoding="application/x-tex">\text {arccosh } X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">arccosh </span></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>atanh X</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>arctanh </mtext><mi>X</mi></mrow><annotation encoding="application/x-tex">\text {arctanh } X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">arctanh </span></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> is a real number.</li>
+</ul>
+<hr>
+<h3 id="characters-operations-methods-and-functions">Characters operations, methods, and functions</h3>
+<h4 id="arithmetic-operations-1">Arithmetic operations</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operator</th><th>Meaning</th><th>Example</th></tr></thead><tbody><tr><td><nobr><code>X + Y</code></nobr></td><td>Addition</td><td><code>'#' (35)  + '$' (36) -> 'G' (71)</code></td></tr><tr><td><nobr><code>X - Y</code></nobr></td><td>Subtraction</td><td><code>'d' (100) - '#' (35) -> 'A' (65)</code></td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo separator="true">,</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X, Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> are characters.</li>
+</ul>
+<h4 id="relational-operations-2">Relational operations</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operator</th><th>Meaning</th></tr></thead><tbody><tr><td><nobr><code>X == Y</code></nobr></td><td>Equals to</td></tr><tr><td><nobr><code>X &#x3C;> Y</code></nobr></td><td>Not equal to</td></tr><tr><td><nobr><code>X > Y</code></nobr></td><td>Greater than</td></tr><tr><td><nobr><code>X &#x3C; Y</code></nobr></td><td>Less than</td></tr><tr><td><nobr><code>X > Y</code></nobr></td><td>Greater than or equal to</td></tr><tr><td><nobr><code>X &#x3C;= Y</code></nobr></td><td>Less than or equal to</td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo separator="true">,</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X, Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> are characters.</li>
+</ul>
+<h4 id="methods-2">Methods</h4>
+<p>The following methods have the same <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Char</mtext><mo>→</mo><mtext>Char</mtext></mrow><annotation encoding="application/x-tex">\text {Char}\rightarrow\text {Char}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Char</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Char</span></span></span></span></span></span> signature.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>Meaning</th></tr></thead><tbody><tr><td><nobr><code>toLower X</code></nobr></td><td>Lower case of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>toUpper X</code></nobr></td><td>Upper case of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> are characters.</li>
+</ul>
+<h4 id="validator-methods">Validator methods</h4>
+<p>The following methods share the same <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Char</mtext><mo>→</mo><mtext>Bool</mtext></mrow><annotation encoding="application/x-tex">\text {Char}\rightarrow\text {Bool}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Char</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Bool</span></span></span></span></span></span> signature.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>Meaning</th></tr></thead><tbody><tr><td><nobr><code>isLower X</code></nobr></td><td>Lower case check on <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>isUpper X</code></nobr></td><td>Upper case check on <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>isAlphanum X</code></nobr></td><td>Alphanumeric check on <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>isAlpha X</code></nobr></td><td>Alphabet check on <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>isDigit X</code></nobr></td><td>Digit check on <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>isOctDigit X</code></nobr></td><td>Octal digit check on <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>isHexDigit X</code></nobr></td><td>Hexadecimal digit check on <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>isAscii X</code></nobr></td><td>Ascii check on <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>isControl X</code></nobr></td><td>Control Character check on <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>isPrint X</code></nobr></td><td>Printibilty check on <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>isSpace X</code></nobr></td><td><code>\t</code>, <code>\n</code>, <code>\r</code>, <code>\f</code>, and <code>\v</code> check on <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> is a character.</li>
+</ul>
+<hr>
+<h3 id="boolean-operations-methodsm-and-functions">Boolean operations, methodsm and functions</h3>
+<h4 id="logical-operators">Logical operators</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operator</th><th>Meaning</th></tr></thead><tbody><tr><td><nobr><code>not X</code></nobr></td><td>Logical Negation</td></tr><tr><td><nobr><code>X &#x26;&#x26; Y</code></nobr></td><td>Logical AND</td></tr><tr><td><nobr><code>X || Y</code></nobr></td><td>Logical OR</td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo separator="true">,</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X, Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> are booleans.</li>
+</ul>
+<hr>
+<h3 id="lists-operations-methods-and-functions">Lists operations, methods and functions</h3>
+<h4 id="standard-operators">Standard operators</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operators</th><th>Meaning</th></tr></thead><tbody><tr><td><nobr><code>X !! i</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span></span>-th element of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span><sup><a href="#user-content-fn-3" id="user-content-fnref-3" data-footnote-ref="" aria-describedby="footnote-label">3</a></sup></td></tr><tr><td><nobr><code>X ++ Y</code></nobr></td><td>Append <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> to <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td></tr><tr><td><nobr><code>X % (i, j)</code></nobr></td><td>Slice <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> from <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span></span> to <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span></span> (inclusive)</td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo separator="true">,</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X, Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> are lists, and</li>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">i, j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span></span> are integers.</li>
+</ul>
+<h4 id="relational-operators">Relational operators</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operator</th><th>Meaning</th></tr></thead><tbody><tr><td><nobr><code>X == Y</code></nobr></td><td>Equals to</td></tr><tr><td><nobr><code>X &#x3C;> Y</code></nobr></td><td>Not equal to</td></tr><tr><td><nobr><code>X > Y</code></nobr></td><td>Greater than</td></tr><tr><td><nobr><code>X &#x3C; Y</code></nobr></td><td>Less than</td></tr><tr><td><nobr><code>X > Y</code></nobr></td><td>Greater than or equal to</td></tr><tr><td><nobr><code>X &#x3C;= Y</code></nobr></td><td>Less than or equal to</td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo separator="true">,</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X, Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> are lists.</li>
+</ul>
+<h4 id="standard-methods">Standard methods</h4>
+<p>The stardard list methods are as follow:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>Meaning</th><th>Signature</th></tr></thead><tbody><tr><td><nobr><code>reverse X</code></nobr></td><td>Reveresed of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>[T] -> [T]</code></nobr></td></tr><tr><td><nobr><code>length X</code></nobr></td><td>Length of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>[T] -> Int</code></nobr></td></tr><tr><td><nobr><code>sum X</code></nobr></td><td>Sum of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>[T] -> T | zero, + T</code></nobr></td></tr><tr><td><nobr><code>prod X</code></nobr></td><td>Product of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>[T] -> T | one, * T</code></nobr></td></tr><tr><td><nobr><code>avg X</code></nobr></td><td>Average of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span><sup><a href="#user-content-fn-4" id="user-content-fnref-4" data-footnote-ref="" aria-describedby="footnote-label">4</a></sup></td><td><nobr><code>[T] -> T | IncDec, / T</code></nobr></td></tr><tr><td><nobr><code>flatten X</code></nobr></td><td>Flattened <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>[[T]] -> [T]</code></nobr></td></tr><tr><td><nobr><code>isEmpty X</code></nobr></td><td>Empty check on <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>[T] -> Bool</code></nobr></td></tr><tr><td><nobr><code>repeat k</code></nobr></td><td>Create an infinite list consisting of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></span></td><td><nobr><code>T -> [T]</code></nobr></td></tr><tr><td><nobr><code>repeatn n k</code></nobr></td><td>Create a list of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></span> with <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></span> elements</td><td><nobr><code>Int T -> [T]</code></nobr></td></tr><tr><td><nobr><code>iterate F k</code></nobr></td><td>Repeatedly applying <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi></mrow><annotation encoding="application/x-tex">F</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span></span></span></span></span> to <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></span></td><td><nobr><code>(T -> T) T -> [T]</code></nobr></td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> is a list of type <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span></span>,</li>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></span> is a generic entity, and</li>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi></mrow><annotation encoding="application/x-tex">F</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span></span></span></span></span> is function with the <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>→</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">T\rightarrow T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span></span> signature.</li>
+</ul>
+<h4 id="lists-manipulation-methods">Lists manipulation methods</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>Meaning</th><th>Signature</th></tr></thead><tbody><tr><td><nobr><code>hd X</code></nobr></td><td>First element of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span><sup><a href="#user-content-fn-4" id="user-content-fnref-4-2" data-footnote-ref="" aria-describedby="footnote-label">4</a></sup></td><td><nobr><code>[T] -> T</code></nobr></td></tr><tr><td><nobr><code>tl X</code></nobr></td><td>All except first element <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span><sup><a href="#user-content-fn-4" id="user-content-fnref-4-3" data-footnote-ref="" aria-describedby="footnote-label">4</a></sup></td><td><nobr><code>[T] -> [T]</code></nobr></td></tr><tr><td><nobr><code>last X</code></nobr></td><td>Last element of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span><sup><a href="#user-content-fn-4" id="user-content-fnref-4-4" data-footnote-ref="" aria-describedby="footnote-label">4</a></sup></td><td><nobr><code>[T] -> T</code></nobr></td></tr><tr><td><nobr><code>init X</code></nobr></td><td>All except last element of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span><sup><a href="#user-content-fn-4" id="user-content-fnref-4-5" data-footnote-ref="" aria-describedby="footnote-label">4</a></sup></td><td><nobr><code>[T] -> [T]</code></nobr></td></tr><tr><td><nobr><code>take n X</code></nobr></td><td>Take the first <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></span> elements of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>Int [T] -> [T]</code></nobr></td></tr><tr><td><nobr><code>takeWhile P X</code></nobr></td><td>Take elements of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> until <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span></span> is false</td><td><nobr><code>(T -> Bool) [T] -> [T]</code></nobr></td></tr><tr><td><nobr><code>drop n X</code></nobr></td><td>Discard the first <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></span> elements of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>Int [T] -> [T]</code></nobr></td></tr><tr><td><nobr><code>dropWhile P X</code></nobr></td><td>Discard elements of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> until <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span></span> is false</td><td><nobr><code>(T -> Bool) [T] -> [T]</code></nobr></td></tr><tr><td><nobr><code>filter P X</code></nobr></td><td>Filter <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> using <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span></span></td><td><nobr><code>(T -> Bool) [T] -> [T]</code></nobr></td></tr><tr><td><nobr><code>map F X</code></nobr></td><td>Apply <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi></mrow><annotation encoding="application/x-tex">F</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span></span></span></span></span> to every element of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>(T -> K) [T] -> [K]</code></nobr></td></tr><tr><td><nobr><code>removeDup X</code></nobr></td><td>Unique elements of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>[T] -> [T]</code></nobr></td></tr><tr><td><nobr><code>insertAt i a X</code></nobr></td><td>Insert <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span></span> into <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> at <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span></span>-th element (shifted right)</td><td><nobr><code>Int T [T] -> [T]</code></nobr></td></tr><tr><td><nobr><code>removeAt i X</code></nobr></td><td>Remove <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span></span>-th element of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>Int [T] -> [T]</code></nobr></td></tr><tr><td><nobr><code>updateAt i a X</code></nobr></td><td>Replace <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span></span>-th element of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> with <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span></span></td><td><nobr><code>Int T [T] -> [T]</code></nobr></td></tr><tr><td><nobr><code>splitAt i X</code></nobr></td><td>Split <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> into two at <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span></span>-th index (right preferred)</td><td><nobr><code>Int [T] -> ([T], [T])</code></nobr></td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> is a list of type <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span></span>,</li>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span></span> has <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span></span> type,</li>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo separator="true">,</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">i, n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span></span></span></span></span> are integers,</li>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span></span> is a predicate with <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>→</mo><mtext>Bool</mtext></mrow><annotation encoding="application/x-tex">T\rightarrow\text{Bool}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Bool</span></span></span></span></span></span> signature, and</li>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi></mrow><annotation encoding="application/x-tex">F</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span></span></span></span></span> is a function with <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>→</mo><mi>K</mi></mrow><annotation encoding="application/x-tex">T\rightarrow K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span></span> signature .</li>
+</ul>
+<h4 id="set-like-methods">Set-like methods</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>Meaning</th><th>Signature</th></tr></thead><tbody><tr><td><nobr><code>isMember a X</code></nobr></td><td>True if <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span></span> is in <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>T [T] -> Bool</code></nobr></td></tr><tr><td><nobr><code>isAnyMember X Y</code></nobr></td><td>True if <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> intersects with <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span></td><td><nobr><code>[T] [T] -> Bool</code></nobr></td></tr><tr><td><nobr><code>removeMember a X</code></nobr></td><td>Remove all <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span></span> from <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>T [T] -> [T]</code></nobr></td></tr><tr><td><nobr><code>removeMembers X Y</code></nobr></td><td>Remove all elements of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> from <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>[T] [T] -> [T]</code></nobr></td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo separator="true">,</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X, Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> are lists of type <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span></span>,</li>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span></span> has <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span></span> type,</li>
+</ul>
+<h4 id="logical-methods">Logical methods</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>Meaning</th><th>Signature</th></tr></thead><tbody><tr><td><nobr><code>and Xb</code></nobr></td><td>True if every element in <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">Xb</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mord mathnormal">b</span></span></span></span></span> is true</td><td><nobr><code>[Bool] -> Bool</code></nobr></td></tr><tr><td><nobr><code>or Xb</code></nobr></td><td>True if some element in <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">Xb</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mord mathnormal">b</span></span></span></span></span> is true</td><td><nobr><code>[Bool] -> Bool</code></nobr></td></tr><tr><td><nobr><code>all P X</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span></span> is true for every element in <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>(T -> Bool) [T] -> Bool</code></nobr></td></tr><tr><td><nobr><code>any P X</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span></span> is true for some element in <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>(T -> Bool) [T] -> Bool</code></nobr></td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">Xb</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mord mathnormal">b</span></span></span></span></span> is a list of type <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Bool</mtext></mrow><annotation encoding="application/x-tex">\text {Bool}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Bool</span></span></span></span></span></span>,</li>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> is a list of type <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span></span>, and</li>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span></span> is a predicate with <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>→</mo><mtext>Bool</mtext></mrow><annotation encoding="application/x-tex">T\rightarrow\text{Bool}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Bool</span></span></span></span></span></span> signature.</li>
+</ul>
+<hr>
+<h3 id="arrays-operations-methods-and-functions">Arrays operations, methods and functions</h3>
+<h4 id="standard-operators-1">Standard operators</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operator</th><th>Meaning</th></tr></thead><tbody><tr><td><nobr><code>X.[i]</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span></span>-th element of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span><sup><a href="#user-content-fn-3" id="user-content-fnref-3-2" data-footnote-ref="" aria-describedby="footnote-label">3</a></sup></td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> is an array, and</li>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span></span> is an integer.</li>
+</ul>
+<h4 id="standard-methods-1">Standard methods</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>Meaning</th><th>Signature</th></tr></thead><tbody><tr><td><nobr><code>size X</code></nobr></td><td>Size of X</td><td><nobr><code>{T} -> Int</code></nobr></td></tr><tr><td><nobr><code>select X i</code></nobr></td><td><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span></span>-th element of X</td><td><nobr><code>{T} Int -> T</code></nobr></td></tr><tr><td><nobr><code>update X i a</code></nobr></td><td>Replace <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span></span>-th element of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> with <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span></span></td><td><nobr><code>{T} Int T -> {T}</code></nobr></td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> is an array,</li>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span></span> has <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span></span> type,</li>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span></span> is an integer.</li>
+</ul>
+<hr>
+<h2 id="tuples-relational-operators">Tuples: Relational operators</h2>
+<p>Relational operations on tuples are the same as on integers.
+The semantic meaning is an element-wise comparison.</p>
+<p>See [[#Integers: Relational operations]].</p>
+<h2 id="tuples-methods">Tuples: Methods</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>Meaning</th><th>Signature</th></tr></thead><tbody><tr><td><nobr><code>fst X</code></nobr></td><td>First element of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>(T, K) -> T</code></nobr></td></tr><tr><td><nobr><code>snd X</code></nobr></td><td>Second element of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span></td><td><nobr><code>(T, K) -> K</code></nobr></td></tr><tr><td><nobr><code>fst3 Y</code></nobr></td><td>First element of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span></td><td><nobr><code>(T, K, V) -> T</code></nobr></td></tr><tr><td><nobr><code>snd3 Y</code></nobr></td><td>Second element of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span></td><td><nobr><code>(T, K, V) -> K</code></nobr></td></tr><tr><td><nobr><code>thd3 Y</code></nobr></td><td>Third element of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span></td><td><nobr><code>(T, K, V) -> V</code></nobr></td></tr></tbody></table>
+<p>Definitions:</p>
+<ul>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> is a two-element tuple, and</li>
+<li><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> is a three-element tuple.</li>
+</ul>
+<hr>
+<h2 id="appendix-b-common-errors">Appendix B: Common errors</h2>
+<h3 id="multiple-entry-points-error">Multiple entry points error</h3>
+<p><strong>Error message</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">Error [...,...,...]: multiply defined</span></span></code></pre>
+<p><strong>Solution</strong>:</p>
+<p>Ensure that your programm has only one <strong>Start</strong>.</p>
+<p><strong>Meaning</strong>:</p>
+<p>In Clean, <strong>Start</strong> is used as the entry point of a programm.
+Consequently, there should be only <strong>Start</strong>.</p>
+<p>In this case, there are more than one <strong>Start</strong> and the compiler is unsure which entry point should be used.</p>
+<p><strong>Example</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">// ... CODE ...</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">Start = invoke X Y      // &#x3C;- Start is defined here</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">// ... CODE ...</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">Start = computeSumOf Z  // &#x3C;- but also here :(</span></span></code></pre>
+<h3 id="incorrect-type-error">Incorrect type error</h3>
+<p><strong>Error message</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">...</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">Type error [</span><span style="color: var(--astro-code-token-keyword)">...,...,...</span><span style="color: var(--astro-code-color-text)">]: ... : cannot unify demanded type with offered type:</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">...</span></span></code></pre>
+<p><strong>Solution</strong>:</p>
+<p>Ensure that expression types and expected types are correct.</p>
+<p><strong>Meaning</strong>:</p>
+<p>This error can be caused by many things, but commonly by a misunderstading of expression types and actualy return types.</p>
+<p><strong>Example</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">intToDigit :: Int -> [Int]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">intToDigit    n   =  ...</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">Start = intToDigit 2.3</span></span></code></pre>
+<hr>
+<h2 id="appendix-c-code-recipes">Appendix C: Code recipes</h2>
+<p>This section contains a collection of common and useful functions.
+Each solution includes the implementation as well as the explanation.</p>
+<h3 id="breaking-an-integer-into-digits">Breaking an integer into digits</h3>
+<p><strong>Signature</strong>: <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Int</mtext><mo>→</mo><mtext>[Int]</mtext></mrow><annotation encoding="application/x-tex">\text{Int}\rightarrow\text{[Int]}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">Int</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">[Int]</span></span></span></span></span></span></p>
+<p><strong>Expected result</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">toDigits 123   // [1, 2, 3]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">toDigits 12321 // [1, 2, 3, 2, 1]</span></span></code></pre>
+<h4 id="using-recursive-function">Using recursive function</h4>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">toDigits :: Int -> [Int]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">toDigits n </span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">| n &#x3C; 10 = [n]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">| otherwise = (toDigits (n / 10)) ++ [last_digit]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">where</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">	last_digit :: Int</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">	last_digit = n rem 10</span></span></code></pre>
+<p><strong>Conversions</strong>: <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Int</mtext><mo>→</mo><mtext>[Int]</mtext></mrow><annotation encoding="application/x-tex">\text{Int}\rightarrow\text{[Int]}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">Int</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">[Int]</span></span></span></span></span></span></p>
+<p><strong>Explanation</strong>:</p>
+<p>Given an integer <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></span>, while <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></span> has more than one digit, extract the last digits by using <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mspace></mspace><mspace width="0.6667em"></mspace><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mn>10</mn></mrow><annotation encoding="application/x-tex">n\mod 10</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.6667em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">10</span></span></span></span></span>.
+The total digits of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></span> is reduced by one.</p>
+<p>If <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></span> has one digits, return <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></span> then stop the recursion.</p>
+<h4 id="using-list-comprehension">Using list comprehension</h4>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">toDigits :: Int -> [Int]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">toDigits n = [(toInt d) - 48 \\ d &#x3C;-: (toString n)]</span></span></code></pre>
+<p><strong>Conversions</strong>: <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Int</mtext><mo>→</mo><mtext>{Char}</mtext><mo>→</mo><mtext>[Int]</mtext></mrow><annotation encoding="application/x-tex">\text{Int}\rightarrow\text{\{Char\}}\rightarrow\text{[Int]}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">Int</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">{Char}</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">[Int]</span></span></span></span></span></span></p>
+<p><strong>Explanation</strong>:</p>
+<p>Since <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></span> is an integer, it has to be converted to a string.
+The reason being that an integer cannot be used as a generator, but a string can.</p>
+<p>Each digits of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></span> is stored in the variable <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span></span> which is converted from <strong>a character</strong> to <strong>an integer</strong> based on its ASCII value.</p>
+<p>To offset the ASCII value, <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>48</mn></mrow><annotation encoding="application/x-tex">48</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">48</span></span></span></span></span> is subtracted from it.</p>
+<h3 id="computing-divisors-of-an-integer">Computing divisors of an integer</h3>
+<p><strong>Signature</strong>: <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Int</mtext><mo>→</mo><mtext>[Int]</mtext></mrow><annotation encoding="application/x-tex">\text{Int}\rightarrow\text{[Int]}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">Int</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">[Int]</span></span></span></span></span></span></p>
+<p><strong>Expected result</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">divisorsOf 9  // [1, 3, 9]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">divisorsOf 16 // [1, 2, 4, 8, 16]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">divisorsOf 2  // [1, 2]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">divisorsOf 0  // [0]</span></span></code></pre>
+<h4 id="using-comprehension">Using comprehension</h4>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">divisorsOf :: Int -> [Int]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">divisorsOf 0 = [0]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">divisorsOf n = filter isDivisor [d \\ d &#x3C;- ds]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">where</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">	ds :: [Int]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">	ds = [2..(n - 1)]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">	isDivisors :: Int -> Bool</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">	isDivisors k = (n rem k) == 0</span></span></code></pre>
+<p><strong>Conversions</strong>: <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Int</mtext><mo>→</mo><mtext>[Int]</mtext></mrow><annotation encoding="application/x-tex">\text{Int}\rightarrow\text{[Int]}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">Int</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">[Int]</span></span></span></span></span></span></p>
+<p><strong>Explanation</strong>:</p>
+<p>For <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>></mo><mn>0</mn></mrow><annotation encoding="application/x-tex">n \gt 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span></span>, a list of integers from <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span></span> to <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></span> is constructed.
+Integers which are not a divisor of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></span> is discarded.</p>
+<h3 id="checking-if-an-integer-is-prime">Checking if an integer is prime</h3>
+<p><strong>Signature</strong>: <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Int</mtext><mo>→</mo><mtext>Bool</mtext></mrow><annotation encoding="application/x-tex">\text{Int} \rightarrow\text{Bool}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">Int</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Bool</span></span></span></span></span></span></p>
+<p><strong>Expected result</strong>:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">isPrime 9 // False</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">isPrime 3 // True</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">isPrime 1 // False</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">isPrime 0 // False</span></span></code></pre>
+<h4 id="counting-divisors-list-comprehension">Counting divisors list (comprehension)</h4>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">// Language: Clean</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">isPrime :: Int -> Bool</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">isPrime 0 = False</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">isPrime 1 = False</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">isPrime n = length (filter isDivisorOfN [d \\ d &#x3C;- ds]) == 0</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">where</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">	ds :: [Int]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">	ds =  [2..(n - 1)]</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)"></span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">	isDivisorOfN :: Int -> Bool</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">	isDivisorOfN k = (n rem k) == 0</span></span></code></pre>
+<p><strong>Conversions</strong>: <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Int</mtext><mo>→</mo><mtext>[Int]</mtext><mo>→</mo><mtext>Int</mtext><mo>→</mo><mtext>Bool</mtext></mrow><annotation encoding="application/x-tex">\text{Int}\rightarrow\text{[Int]}\rightarrow\text{Int}\rightarrow\text{Bool}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">Int</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">[Int]</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">Int</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Bool</span></span></span></span></span></span></p>
+<p><strong>Explanation</strong>:</p>
+<p>For <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>></mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n \gt 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></span>, a list of integers from <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span></span> to <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></span> is constructed.
+The list filtered to only contain divisors of <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></span>.</p>
+<p>If the divisor list is empty, <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></span> is a prime number.</p>
+<h4 id="using-list-of-booleans">Using list of booleans</h4>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"><code><span class="line"><span style="color: var(--astro-code-color-text)">isPrime :: Int -> Bool</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">isPrime 0 = False</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">isPrime 1 = False</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">isPrime n = not (or [n rem d == 0 \\ d &#x3C;- [2..(n - 1)]]) </span></span></code></pre>
+<p><strong>Conversions</strong>: <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Int</mtext><mo>→</mo><mtext>[Int]</mtext><mo>→</mo><mtext>[Bool]</mtext><mo>→</mo><mtext>Bool</mtext></mrow><annotation encoding="application/x-tex">\text{Int}\rightarrow\text{[Int]}\rightarrow\text{[Bool]}\rightarrow\text{Bool}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">Int</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">[Int]</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">[Bool]</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Bool</span></span></span></span></span></span></p>
+<hr>
+<h2 id="about">About</h2>
+<p>If you notice any errors or have suggestions for improvements, please feel free to contact me through the following channels:</p>
+<ul>
+<li>Email: <a href="mailto:b9xp3x@inf.elte.hu">b9xp3x@inf.elte.hu</a></li>
+<li>Instragram: <a href="https://www.instagram.com/_kornthana/">@_kornthana</a></li>
+</ul>
+<section data-footnotes="" class="footnotes"><h2 class="sr-only" id="footnote-label">Footnotes</h2>
+<ol>
+<li id="user-content-fn-1">
+<p>It will throw a run-time error when invoked with a negative power. <a href="#user-content-fnref-1" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩</a></p>
+</li>
+<li id="user-content-fn-2">
+<p>Unlike integers, it will not throw a run-time error when invoked with a negative power. <a href="#user-content-fnref-2" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩</a></p>
+</li>
+<li id="user-content-fn-3">
+<p>It will throw a run-time error if index is out of range.
+Negative indexing is not allowed. <a href="#user-content-fnref-3" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩</a> <a href="#user-content-fnref-3-2" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>2</sup></a></p>
+</li>
+<li id="user-content-fn-4">
+<p>It will throw a run-time error if invoked on an empty list. <a href="#user-content-fnref-4" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩</a> <a href="#user-content-fnref-4-2" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>2</sup></a> <a href="#user-content-fnref-4-3" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>3</sup></a> <a href="#user-content-fnref-4-4" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>4</sup></a> <a href="#user-content-fnref-4-5" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩<sup>5</sup></a></p>
+</li>
+</ol>
+</section>
+    </main>
+  </body></html>

@@ -8,7 +8,7 @@ import relativeLinks from "astro-relative-links";
 export default defineConfig({
   site: "https://eurydia.github.io",
   base: "/practice-concurrent-clean",
-  outDir: "/docs",
+  outDir: "docs/",
   markdown: {
     rehypePlugins: [rehypeKatex],
     remarkPlugins: [remarkMath],
