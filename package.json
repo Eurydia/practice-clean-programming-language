@@ -1,0 +1,19 @@
+{
+  "name": "cleanpedia",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^0.19.0",
+    "astro": "^2.3.0",
+    "rehype-katex": "^6.0.2",
+    "remark-math": "^5.1.1",
+    "yarn": "^1.22.19"
+  }
+}
