@@ -1,8 +1,8 @@
 import { defineConfig } from "astro/config";
-
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
-import mdx from "@astrojs/mdx";
+
+import relativeLinks from "astro-relative-links";
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,4 +15,5 @@ export default defineConfig({
     },
   },
   outDir: "./docs",
+  integrations: [relativeLinks()],
 });

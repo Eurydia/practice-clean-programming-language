@@ -10,10 +10,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^0.19.0",
     "astro": "^2.3.0",
+    "astro-relative-links": "^0.3.3",
     "rehype-katex": "^6.0.2",
-    "remark-math": "^5.1.1",
-    "yarn": "^1.22.19"
+    "remark-math": "^5.1.1"
   }
 }
