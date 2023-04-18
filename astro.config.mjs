@@ -14,6 +14,5 @@ export default defineConfig({
       wrap: true,
     },
   },
-  outDir: "./docs",
   integrations: [relativeLinks()],
 });
