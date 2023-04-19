@@ -73,37 +73,38 @@ h6 {
   font-weight: 900;
 }
 
-main {
-  margin: 0 auto;
-}
-
 @media (min_width: 640px) {
   main {
     width: 80%;
+    margin: 0 auto;
   }
 }
 
 @media (min_width: 768px) {
   main {
     width: 80%;
+    margin: 0 auto;
   }
 }
 
 @media (min_width: 1024px) {
   main {
     width: 75%;
+    margin: 0 auto;
   }
 }
 
 @media (min_width: 1280px) {
   main {
     width: 55%;
+    margin: 0 auto;
   }
 }
 
 @media (min_width: 1536px) {
   main {
     width: 55%;
+    margin: 0 auto;
   }
 }
 
