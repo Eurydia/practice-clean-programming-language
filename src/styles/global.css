@@ -79,7 +79,7 @@ main {
 }
 
 pre {
-  @apply w-4/5 overflow-x-auto rounded-md;
+  @apply w-full overflow-x-auto rounded-md;
   background-color: var(--color-cream-darker);
 }
 
