@@ -74,18 +74,43 @@ h6 {
 }
 
 main {
-  width: 100%;
+  margin: 0 auto;
 }
 
-@media (width >= 1200px) {
+@media (min_width: 640px) {
+  main {
+    width: 80%;
+  }
+}
+
+@media (min_width: 768px) {
+  main {
+    width: 80%;
+  }
+}
+
+@media (min_width: 1024px) {
+  main {
+    width: 75%;
+  }
+}
+
+@media (min_width: 1280px) {
   main {
     width: 55%;
-    margin: 0 auto;
+  }
+}
+
+@media (min_width: 1536px) {
+  main {
+    width: 55%;
   }
 }
 
 pre {
   padding: 1.25rem;
+  overflow-x: auto;
+  min-width: 100%;
 }
 
 code {
@@ -96,8 +121,7 @@ code {
 
 pre > code {
   display: block;
-  overflow-x: auto;
-  min-width: 100%;
+
   border-radius: 0.4rem;
   background-color: var(--color-cream-darker);
 }
