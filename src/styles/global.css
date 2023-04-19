@@ -58,8 +58,8 @@ html {
 }
 
 body {
+  @apply w-full text-lg font-medium;
   font-family: "iA Writer Quattro S", sans-serif;
-  @apply text-lg font-medium;
 
   background-color: var(--color-cream);
   color: var(--color-chocolate);
@@ -75,7 +75,7 @@ h6 {
 }
 
 main {
-  @apply w-full px-4 md:mx-auto md:w-3/5;
+  @apply center w-full px-4 md:mx-auto md:w-3/5;
 }
 
 pre {
