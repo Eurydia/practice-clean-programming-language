@@ -54,12 +54,47 @@ Types can only interact with themselves due to lack of implicit type conversion.
 
 ### Type specification
 
-The syntax for variable annotation is as follow:
+**Variable specification**
+
+The syntax for variable annotation is shown below.
 
 ```
 // Language: Clean
 
-var :: T
+exVar :: T
+```
+
+In a real programm, your variable specifications may look similar to the following:
+
+```
+// Language: Clean
+
+width :: Int
+width =  12
+
+area :: Int
+area =  12 * 12
+```
+
+However, it is important to keep in mind that a variable declaration must immediately follow its type specification.
+
+```
+// Language: Clean
+
+exIntA :: Int
+exIntA =  0      // OK
+
+exIntB :: Int
+
+...some code...
+
+exIntB = 12      // NOT OK
+```
+
+In this case, $\text{exIntB}$ will throw a compilation error with a message states
+
+```
+Error [...]: function body expected.
 ```
 
 The syntax for function signature is as follow:
@@ -67,11 +102,11 @@ The syntax for function signature is as follow:
 ```
 // Language: Clean
 
-func_x :: T -> K
+exFuncX :: T            -> K
 
-func_y :: T K -> V
+exFuncY :: T K          -> V
 
-func_z :: T1 T2 ... Tn -> K
+exFuncZ :: T1 T2 ... Tn -> K
 ```
 
 The $n$-th parameter of $\text{func\_z}$ has the type of $T_{n}$.
