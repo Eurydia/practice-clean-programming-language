@@ -12,7 +12,6 @@ export default defineConfig({
     remarkPlugins: [remarkMath],
     shikiConfig: {
       theme: "css-variables",
-      wrap: true,
     },
   },
   integrations: [relativeLinks()],
