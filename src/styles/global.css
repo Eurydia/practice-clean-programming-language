@@ -101,7 +101,7 @@ a:hover {
 
 table {
   @apply block
-  max-w-full
+w-4/5
   border-collapse
   overflow-x-auto
   whitespace-nowrap
