@@ -97,6 +97,7 @@ code {
 pre > code {
   display: block;
   overflow-x: auto;
+  min-width: 100%;
   border-radius: 0.4rem;
   background-color: var(--color-cream-darker);
 }
