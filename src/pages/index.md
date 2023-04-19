@@ -85,7 +85,7 @@ exInt :: Int
 
 // ...some code...
 
-exInt = 12      // NOT OK
+exInt =  12        // NOT OK :(
 ```
 
 In this case, $\text{exIntB}$ will cause a compilation error with a message which states:
