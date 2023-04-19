@@ -88,7 +88,7 @@ exInt :: Int
 exInt =  12        // NOT OK :(
 ```
 
-In this case, $\text{exIntB}$ will cause a compilation error with a message which states:
+In this case, $\text{exInt}$ will cause a compilation error with a message which states:
 
 ```
 Error [...]: function body expected.
