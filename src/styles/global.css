@@ -79,7 +79,7 @@ main {
 }
 
 pre {
-  @apply mx-4 overflow-x-auto rounded-md;
+  @apply mx-4 w-4/5 overflow-x-auto rounded-md;
   background-color: var(--color-cream-darker);
 }
 
@@ -88,7 +88,7 @@ code {
 }
 
 pre > code {
-  @apply m-4 inline-block;
+  @apply inline-block p-4;
 }
 
 a {
@@ -100,11 +100,12 @@ a:hover {
 }
 
 table {
-  @apply block
-  w-full
+  @apply mx-4
+  block
+  w-4/5
   border-collapse
   overflow-x-auto
-  whitespace-nowrap 
+  whitespace-nowrap
   md:whitespace-normal;
 }
 
