@@ -56,7 +56,7 @@ Types can only interact with themselves due to lack of implicit type conversion.
 
 **Variable specification**
 
-The syntax for variable annotation is shown below.
+The syntax for specifying a variable type is shown below.
 
 ```
 // Language: Clean
@@ -96,7 +96,7 @@ Error [...]: function body expected.
 
 **Function specification**
 
-The syntax for function signature is as follow:
+The syntax for specifying a function type is shown below.
 
 ```
 // Language: Clean
