@@ -75,11 +75,11 @@ h6 {
 }
 
 main {
-  @apply container px-4 md:mx-auto md:w-3/5 md:px-4;
+  @apply w-full px-4 md:mx-auto md:w-3/5;
 }
 
 pre {
-  @apply mx-4 w-4/5 overflow-x-auto rounded-md;
+  @apply w-4/5 overflow-x-auto rounded-md;
   background-color: var(--color-cream-darker);
 }
 
@@ -100,9 +100,8 @@ a:hover {
 }
 
 table {
-  @apply mx-4
-  block
-  w-4/5
+  @apply block
+  max-w-full
   border-collapse
   overflow-x-auto
   whitespace-nowrap
