@@ -847,7 +847,7 @@ Definitions:
 | <nobr>`insertAt i a X`</nobr> | Insert $a$ into $X$ at $i$-th element (shifted right) | <nobr>`Int T [T] -> [T]`</nobr>       |
 | <nobr>`removeAt i X`</nobr>   | Remove $i$-th element of $X$                          | <nobr>`Int [T] -> [T]`</nobr>         |
 | <nobr>`updateAt i a X`</nobr> | Replace $i$-th element of $X$ with $a$                | <nobr>`Int T [T] -> [T]`</nobr>       |
-| <nobr>`splitAt i X`</nobr>    | Split $X$ into two at $i$-th index (right preferred)  | <nobr>`Int [T] -> ([T], [T])`</nobr>  |
+| <nobr>`splitAt i X`</nobr>    | Split $X$ into two at $i$-th index (left preferred)   | <nobr>`Int [T] -> ([T], [T])`</nobr>  |
 
 [^4]: It will throw a run-time error if invoked on an empty list.
 

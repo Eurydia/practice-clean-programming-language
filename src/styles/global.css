@@ -1,8 +1,10 @@
+@tailwind components;
+@tailwind utilities;
+
 /* iA Writer Quattro S */
 @font-face {
   font-family: "iA Writer Quattro S";
-  src: url("/fonts/iAWriterQuattroS-BoldItalic.ttf")
-    format("truetype");
+  src: url("/fonts/iAWriterQuattroS-BoldItalic.ttf") format("truetype");
   font-weight: bold;
   font-style: italic;
   font-display: swap;
@@ -52,13 +54,12 @@
 }
 
 html {
-  font-size: 20px;
+  box-sizing: border-box;
 }
 
 body {
   font-family: "iA Writer Quattro S", sans-serif;
-  font-weight: 500;
-  font-size: 1.2rem;
+  @apply text-lg font-medium;
 
   background-color: var(--color-cream);
   color: var(--color-chocolate);
@@ -70,66 +71,24 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 900;
+  @apply font-extrabold;
 }
 
-@media (min_width: 640px) {
-  main {
-    display: block;
-    max-width: 80%;
-    margin: 0 auto;
-  }
-}
-
-@media (min_width: 768px) {
-  main {
-    display: block;
-    max-width: 100%;
-    margin: 0 auto;
-  }
-}
-
-@media (min_width: 1024px) {
-  main {
-    display: block;
-    max-width: 75%;
-    margin: 0 auto;
-  }
-}
-
-@media (min_width: 1280px) {
-  main {
-    display: block;
-    max-width: 55%;
-    margin: 0 auto;
-  }
-}
-
-@media (min_width: 1536px) {
-  main {
-    display: block;
-    max-width: 55%;
-    margin: 0 auto;
-  }
+main {
+  @apply container px-4 md:mx-auto md:w-3/5 md:px-4;
 }
 
 pre {
-  padding: 1.25rem;
-  overflow-x: auto;
-  min-width: 100%;
+  @apply mx-4 overflow-x-auto rounded-md;
+  background-color: var(--color-cream-darker);
 }
 
 code {
-  font-size: 1.2rem;
-  width: 100%;
   color: var(--color-blue);
 }
 
 pre > code {
-  display: block;
-
-  border-radius: 0.4rem;
-  background-color: var(--color-cream-darker);
+  @apply m-4 inline-block;
 }
 
 a {
@@ -141,21 +100,32 @@ a:hover {
 }
 
 table {
-  border-collapse: collapse;
-  width: 100%;
-  display: block;
-  overflow-x: auto;
-  white-space: nowrap;
+  @apply block
+  w-full
+  border-collapse
+  overflow-x-auto
+  whitespace-nowrap 
+  md:whitespace-normal;
 }
 
 th,
 td {
+  @apply px-4 py-2;
+
   border-width: 1px;
-  border-color: var(--color-chocolate);
   border-style: solid;
-  padding: 0.4rem;
+  border-color: var(--color-chocolate);
 }
 
 th {
   text-align: left;
+}
+
+ul,
+ol {
+  list-style-position: outside;
+}
+
+ol {
+  list-style: decimal;
 }
