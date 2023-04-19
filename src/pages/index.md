@@ -81,21 +81,20 @@ However, it is important to keep in mind that a variable declaration must immedi
 ```
 // Language: Clean
 
-exIntA :: Int
-exIntA =  0      // OK
+exInt :: Int
 
-exIntB :: Int
+// ...some code...
 
-...some code...
-
-exIntB = 12      // NOT OK
+exInt = 12      // NOT OK
 ```
 
-In this case, $\text{exIntB}$ will throw a compilation error with a message which states:
+In this case, $\text{exIntB}$ will cause a compilation error with a message which states:
 
 ```
 Error [...]: function body expected.
 ```
+
+**Function specification**
 
 The syntax for function signature is as follow:
 
