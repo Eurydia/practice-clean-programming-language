@@ -944,7 +944,7 @@ Definitions:
 **Error message**:
 
 ```
-Error [...,...,...]: multiply defined
+Error [..., ... ,...]: multiply defined
 ```
 
 **Solution**:
