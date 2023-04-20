@@ -148,7 +148,7 @@ Therefore the $n$-th paramter of the $\text{exFuncZ}$ has type $T_{n}$.
 
 **Class context**
 
-Class context ensures that oeprations are defined on a generic type.
+Class context ensures that operations are defined on a generic type.
 
 It has the following syntax.
 
@@ -175,29 +175,77 @@ More context can be added by following the same pattern.
 
 **Type annotation**: $\text{Int}$
 
-**Constructions**:
+**Constructions**
+
+There are four methods to construct an integer literal:
+
+- with decimal notation
+
+	```
+	// Language: Clean
+	
+	exIntDec    :: Int
+	exIntDec    =  1919
+	// exIntDec =  191
+	// exIntDec =  19
+	```
+- with octal notation by prefixing the numbers with $0$.
+
+	```
+	// Language: Clean
+	
+	exIntOct    :: Int
+	exIntOct    =  03577 // decimal 1919
+	// exIntOct =  0277  // decimal 191
+	// exIntOct =  023   // decimal 19
+	```
+
+- with hexadecimal notation by prefixing the numbers with $0\text{x}$.
+
+	```
+	// Language: Clean
+	
+	exIntHex    :: Int
+	exIntHex    =  0x77f // decinal 1919
+	// exIntHex =  0xBF  // decimal 191
+	// exIntHex =  0x13  // decimal 19
+	```
+
+ - with scientific notation 
+
+	```
+	// Language: Clean
+	
+	exIntSci    :: Int
+	exIntSci    =  1.919E3
+	// exIntSci =  1.91e2
+	// exIntSci =  1.9E1
+	```
+
+When constructing an integer using scientific notation, it is possible to construct a real number instead.
 
 ```
 // Language: Clean
 
-A :: Int
-A =  42        // decimal notation
-
-B :: Int
-B =  052       // octal notation
-
-C :: Int
-C =  0x2a      // hexadecimal notation
-    
-D :: Int
-D =  4.2E10    // scientific notation
+maybeInt :: Int
+maybeInt =  2E-2
 ```
 
+A compilation error will be thrown with a message which states:
+
+```
+Type error [...]: cannot unify demanded type with offered type:
+Int
+Real
+```
+
+To resolve this issue, ensure that an integer is constructed.
+
 **Operations**:
-- [[#Integers: Arithmetic operations]]
-- [[#Integers: Relational operations]]
-- [[#Integers: Bitwise operations]]
-- [[#Integers: Methods]]
+- arithmetic operations
+- relational operations
+- bitwise operations
+- standard methods
 
 **Explicit type conversion**: 
 
@@ -228,10 +276,10 @@ B =  4E-3    // scientific notation
 Reals cannot be constructed using octal and hexadecimal notations.
 
 **Operations**:
-- [[#Reals: Arithmetic operations]]
-- [[#Reals: Relational operations]]
-- [[#Reals: Methods]]
-- [[#Reals: Trigonometic methods]]
+- arithmetic operations
+- relational operations
+- standard methods
+- trigonometic methods
 
 **Explicit type conversion**: 
 
@@ -257,10 +305,10 @@ A =  'a'
 ```
 
 **Operations**:
-- [[#Characters: Arithmetic operations]]
-- [[#Characters: Relational operations]]
-- [[#Characters: Methods]]
-- [[#Charcters: Validator methods]]
+- arithmetic operations
+- relational operations
+- standard methods
+- validator methods
 
 **Explicit type conversion**: 
 
