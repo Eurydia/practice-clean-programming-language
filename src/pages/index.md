@@ -98,7 +98,7 @@ In this case, $\text{exInt}$ will cause a compilation error with a message which
 Error [...]: function body expected.
 ```
 
-To resolve the error, simply move the variable declaration up.
+To resolve the error, simply move the variable declaration up
 
 ```
 // Language: Clean
@@ -109,7 +109,7 @@ exInt =  12  // OK
 ...code...
 ```
 
-Or move the type specification down.
+or move the type specification down.
 
 ```
 // Language: Clean
@@ -162,20 +162,20 @@ exFuncY :: T K -> V | +, / T
 exFuncZ :: T K -> V | + T & ^ K
 ```
 
-In function $\text{exFuncX}$, "$+$" operator must be defined for generic type $T$.
+In function $\text{exFuncX}$, $+$ operator must be defined for generic type $T$.
 
-Similarly, in function $\text{exFuncY}$,  "$+$" and "$/$" operators must be defined for generic type $T$.
+Similarly, in function $\text{exFuncY}$,  $+$ and $/$ operators must be defined for generic type $T$.
 
-Additionally, in function $\text{exFuncZ}$, "$+$" operator must be defined for generic type $T$ and "$^\wedge$" operator must be defined for generic type $K$.
+Additionally, in function $\text{exFuncZ}$, $+$ operator must be defined for generic type $T$ and $^\wedge$ operator must be defined for generic type $K$.
 More context can be added by following the same pattern.
 
 ### Primitive types
 
-#### Integer type
+#### Integers
 
 **Type annotation**: $\text{Int}$
 
-**Constructios**:
+**Constructions**:
 
 ```
 // Language: Clean
@@ -209,7 +209,7 @@ toInt ::  Real  -> Int
 toInt ::  Char  -> Int    // 'A' -> 65
 ```
 
-#### Real number type
+#### Real numbers
 
 **Type annotation**: $\text{Real}$
 
@@ -243,7 +243,7 @@ toReal :: Int    -> Real
 toReal :: {Char} -> Real    // from string
 ```
 
-#### Character type
+#### Characters
 
 **Type annotation**: $\text{Char}$
 
@@ -271,7 +271,7 @@ toChar :: Char -> Char    // does nothing
 toChar :: Int  -> Char    // 49 -> '1'
 ```
 
-#### Boolean type
+#### Booleans
 
 **Type annotation**: $\text{Bool}$
 
