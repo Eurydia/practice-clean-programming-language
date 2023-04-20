@@ -54,7 +54,9 @@ Types can only interact with themselves due to lack of implicit type conversion.
 
 ### Type specification
 
-**Variable specification**
+#### Variable specification
+
+**Syntax**
 
 The syntax for specifying a variable type is shown below.
 
@@ -76,16 +78,18 @@ area :: Int
 area =  12 * 12
 ```
 
-However, it is important to keep in mind that a variable declaration must immediately follow its type specification.
+**Possible error**
+
+It is important to keep in mind that a variable declaration must immediately follow its type specification.
 
 ```
 // Language: Clean
 
 exInt :: Int
 
-// ...some code...
+...code...
 
-exInt =  12        // NOT OK :(
+exInt =  12 // NOT OK :(
 ```
 
 In this case, $\text{exInt}$ will cause a compilation error with a message which states:
@@ -94,7 +98,31 @@ In this case, $\text{exInt}$ will cause a compilation error with a message which
 Error [...]: function body expected.
 ```
 
-**Function specification**
+To resolve the error, simply move the variable declaration up.
+
+```
+// Language: Clean
+
+exInt :: Int
+exInt =  12  // OK
+
+...code...
+```
+
+Or move the type specification down.
+
+```
+// Language: Clean
+
+...code...
+
+exInt :: Int
+exInt =  12  // OK
+```
+
+### Function specification
+
+**Syntax**
 
 The syntax for specifying a function type is shown below.
 
@@ -108,19 +136,38 @@ exFuncY :: T K          -> V
 exFuncZ :: T1 T2 ... Tn -> K
 ```
 
-The $n$-th parameter of $\text{func\_z}$ has the type of $T_{n}$.
+The function $\text{exFuncX}$ has one parameter of type $T$.
+Its return type is $K$.
 
-To add class context to a function signature, use the following syntax:
+The function $\text{exFuncY}$ has two parameters.
+The first parameters has type $T$, and the second of $K$.
+Its return type is $V$.
+
+The same pattern-matching behavior is repeated.
+Therefore the $n$-th paramter of the function $\text{exFuncZ}$ has type $T_{n}$.
+
+**Class context**
+
+Class context ensures that oeprations are defined on a generic type.
+
+It has the following syntax.
 
 ```
 // Language: Clean
 
-func_x :: T K -> V | + T          // T must have +
+exFuncX :: T   -> K | + T
 
-func_y :: T K -> V | +, / T       // T must have + and /
+exFuncY :: T K -> V | +, / T
 
-func_z :: T K -> V | + T & ^ K    // T must have + and K must have ^
+exFuncZ :: T K -> V | + T & ^ K
 ```
+
+In function $\text{exFuncX}$, "$+$" operator must be defined for generic type $T$.
+
+Similarly, in function $\text{exFuncY}$,  "$+$" and "$/$" operators must be defined for generic type $T$.
+
+Additionally, in function $\text{exFuncZ}$, "$+$" operator must be defined for generic type $T$ and "$^\wedge$" operator must be defined for generic type $K$.
+More context can be added by following the same pattern.
 
 ### Primitive types
 
@@ -224,7 +271,7 @@ toChar :: Char -> Char    // does nothing
 toChar :: Int  -> Char    // 49 -> '1'
 ```
 
-### Boolean type
+#### Boolean type
 
 **Type annotation**: $\text{Bool}$
 
