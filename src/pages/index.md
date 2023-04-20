@@ -181,46 +181,47 @@ There are four methods to construct an integer literal:
 
 - with decimal notation
 
-	```
-	// Language: Clean
-	
-	exIntDec    :: Int
-	exIntDec    =  1919
-	// exIntDec =  191
-	// exIntDec =  19
-	```
+```
+// Language: Clean
+
+exIntDec    :: Int
+exIntDec    =  1919
+// exIntDec =  191
+// exIntDec =  19
+```
+
 - with octal notation by prefixing the numbers with $0$.
 
-	```
-	// Language: Clean
-	
-	exIntOct    :: Int
-	exIntOct    =  03577 // decimal 1919
-	// exIntOct =  0277  // decimal 191
-	// exIntOct =  023   // decimal 19
-	```
+```
+// Language: Clean
+
+exIntOct    :: Int
+exIntOct    =  03577 // decimal 1919
+// exIntOct =  0277  // decimal 191
+// exIntOct =  023   // decimal 19
+```
 
 - with hexadecimal notation by prefixing the numbers with $0\text{x}$.
 
-	```
-	// Language: Clean
-	
-	exIntHex    :: Int
-	exIntHex    =  0x77f // decinal 1919
-	// exIntHex =  0xBF  // decimal 191
-	// exIntHex =  0x13  // decimal 19
-	```
+```
+// Language: Clean
+
+exIntHex    :: Int
+exIntHex    =  0x77f // decinal 1919
+// exIntHex =  0xBF  // decimal 191
+// exIntHex =  0x13  // decimal 19
+```
 
  - with scientific notation 
 
-	```
-	// Language: Clean
-	
-	exIntSci    :: Int
-	exIntSci    =  1.919E3
-	// exIntSci =  1.91e2
-	// exIntSci =  1.9E1
-	```
+```
+// Language: Clean
+
+exIntSci    :: Int
+exIntSci    =  1.919E3 // 1919
+// exIntSci =  1.91e2  // 191
+// exIntSci =  1.9E1   // 19
+```
 
 When constructing an integer using scientific notation, it is possible to construct a real number instead.
 
@@ -228,7 +229,7 @@ When constructing an integer using scientific notation, it is possible to constr
 // Language: Clean
 
 maybeInt :: Int
-maybeInt =  2E-2
+maybeInt =  2E-2 // 0.02 :(
 ```
 
 A compilation error will be thrown with a message which states:
