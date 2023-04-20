@@ -136,15 +136,15 @@ exFuncY :: T K          -> V
 exFuncZ :: T1 T2 ... Tn -> K
 ```
 
-The function $\text{exFuncX}$ has one parameter of type $T$.
+$\text{exFuncX}$ has one parameter of type $T$.
 Its return type is $K$.
 
-The function $\text{exFuncY}$ has two parameters.
+$\text{exFuncY}$ has two parameters.
 The first parameters has type $T$, and the second of $K$.
 Its return type is $V$.
 
 The same pattern-matching behavior is repeated.
-Therefore the $n$-th paramter of the function $\text{exFuncZ}$ has type $T_{n}$.
+Therefore the $n$-th paramter of the $\text{exFuncZ}$ has type $T_{n}$.
 
 **Class context**
 
@@ -162,11 +162,11 @@ exFuncY :: T K -> V | +, / T
 exFuncZ :: T K -> V | + T & ^ K
 ```
 
-In function $\text{exFuncX}$, $+$ operator must be defined for generic type $T$.
+In $\text{exFuncX}$, $+$ must be defined for $T$.
 
-Similarly, in function $\text{exFuncY}$,  $+$ and $/$ operators must be defined for generic type $T$.
+Similarly, in $\text{exFuncY}$,  $+$ and $/$ must be defined for $T$.
 
-Additionally, in function $\text{exFuncZ}$, $+$ operator must be defined for generic type $T$ and $^\wedge$ operator must be defined for generic type $K$.
+Additionally, in $\text{exFuncZ}$, $+$ must be defined for $T$ and $^\wedge$  must be defined for $K$.
 More context can be added by following the same pattern.
 
 ### Primitive types
