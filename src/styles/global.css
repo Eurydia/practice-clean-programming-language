@@ -54,7 +54,7 @@
 }
 
 html {
-  font-size: 20px;
+  font-size: 16px;
   box-sizing: border-box;
 }
 
@@ -100,7 +100,7 @@ h6 {
 }
 
 main {
-  @apply mx-auto w-4/5 px-2 md:w-3/5;
+  @apply mx-auto w-4/5 px-1 md:w-3/5 md:px-2;
 }
 
 pre {
