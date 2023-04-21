@@ -143,14 +143,14 @@ $\text{exFuncY}$ has two parameters.
 The first parameters has type $T$, and the second of $K$.
 Its return type is $V$.
 
-The same pattern-matching behavior is repeated.
-Therefore the $n$-th paramter of the $\text{exFuncZ}$ has type $T_{n}$.
+ $\text{exFuncZ}$ has $n$ parameters.
+ The $n$-th parameter has type $T_{n}$.
 
 **Class context**
 
-Class context ensures that operations are defined on a generic type.
+Class context ensures that operations are available on a generic type.
 
-It has the following syntax.
+It has the following syntax:
 
 ```
 // Language: Clean
@@ -162,11 +162,12 @@ exFuncY :: T K -> V | +, / T
 exFuncZ :: T K -> V | + T & ^ K
 ```
 
-In $\text{exFuncX}$, $+$ must be defined for $T$.
+In $\text{exFuncX}$, $+$ must be available on $T$.
 
-Similarly, in $\text{exFuncY}$,  $+$ and $/$ must be defined for $T$.
+In $\text{exFuncY}$,  $+$ and $/$ must be available on $T$.
 
-Additionally, in $\text{exFuncZ}$, $+$ must be defined for $T$ and $^\wedge$  must be defined for $K$.
+In $\text{exFuncZ}$, $+$ must be available on $T$ and $^\wedge$  must be available on $K$.
+
 More context can be added by following the same pattern.
 
 ### Primitive types
@@ -177,7 +178,7 @@ More context can be added by following the same pattern.
 
 **Constructions**
 
-There are four methods to construct an integer literal:
+There are four methods to construct an $\text{Int}$ literal:
 
 - with decimal notation
 
@@ -190,7 +191,7 @@ exIntDec    =  1919
 // exIntDec =  19
 ```
 
-- with octal notation by prefixing the numbers with $0$
+- with octal notation: prefixing the numbers with $0$
 
 ```
 // Language: Clean
@@ -201,7 +202,7 @@ exIntOct    =  03577 // decimal 1919
 // exIntOct =  023   // decimal 19
 ```
 
-- with hexadecimal notation by prefixing the numbers with $0\text{x}$
+- with hexadecimal notation: prefixing the numbers with $0\text{x}$
 
 ```
 // Language: Clean
@@ -248,33 +249,66 @@ To resolve this issue, ensure that an integer is constructed.
 - bitwise operations
 - standard methods
 
-**Explicit type conversion**: 
+**Type conversions**
+
+Using a built-in function, other types can be explicitly converted to $\text{Int}$.
+It can convert the follow types:
+
+- $\text{Int}\rightarrow\text{Int}$: does nothing
+
+- $\text{Real}\rightarrow\text{int}$: rounds the number
 
 ```
 // Language: Clean
 
-toInt ::  Int   -> Int    // does nothing
-toInt ::  Real  -> Int    
-toInt ::  Char  -> Int    // 'A' -> 65
+toInt -2.7 // -3
+toInt -2.5 // -2
+toInt  2.4 //  2
+toInt  2.9 //  3
+```
+
+- $\text{Char}\rightarrow\text{Int}$: converts the character to its ASCII value
+
+```
+// Language: Clean
+
+toInt 'A' // 65
+toInt 'a' // 97
+toInt '1' // 49
+toInt '-' // 45
 ```
 
 #### Real numbers
 
 **Type annotation**: $\text{Real}$
 
-**Constructions**:
+**Constructions**
+
+There are two methods to construct a $\text{real}$ literal:
+
+- using decimal notation
 
 ```
 // Language: Clean
 
-A :: Real
-A =  42.0    // decimal notation
-
-B :: Int
-B =  4E-3    // scientific notation
+exRealDec    :: Real
+exRealDec    =   1.919
+// exRealDec =  -1.91
+// exRealDec =  19.1
 ```
 
-Reals cannot be constructed using octal and hexadecimal notations.
+- using scientific notation
+
+```
+// Language: Clean
+
+exRealSci    :: Real
+exRealSci    =  1919E-4 //  0.1919
+// exRealSci = -191E-2  // -1.91
+// exRealSci =  19E-3   //  0.019
+```
+
+$\text{Real}$ literals cannot be constructed using octal and hexadecimal notations.
 
 **Operations**:
 - arithmetic operations
@@ -282,21 +316,39 @@ Reals cannot be constructed using octal and hexadecimal notations.
 - standard methods
 - trigonometic methods
 
-**Explicit type conversion**: 
+**Type conversions**
+
+Using a built-in function, other types can be explicitly converted to $\text{Real}$.
+It can convert the follow types:
+
+- $\text{Real}\rightarrow\text{Real}$: does nothing
+
+- $\text{Int}\rightarrow\text{Real}$
 
 ```
 // Language: Clean
 
-toReal :: Real   -> Real    // does nothing
-toReal :: Int    -> Real
-toReal :: {Char} -> Real    // from string
+toReal  19  //   19.0
+toReal -191 // -191.0
+```
+- $\text{\{Char\}}\rightarrow\text{Real}$: converts string to a real number
+
+```
+// Language: Clean
+
+toReal "-19.1"  // -19.1
+toReal "+19.1"  //  19.1
+toReal "191"    // 191.0
+toReal "191.0"  // 191.0
 ```
 
 #### Characters
 
 **Type annotation**: $\text{Char}$
 
-**Constructions**:
+**Constructions**
+
+There is only one method to construct a $\text{Char}$ literal:
 
 ```
 // Language: Clean
@@ -311,13 +363,21 @@ A =  'a'
 - standard methods
 - validator methods
 
-**Explicit type conversion**: 
+**Type conversions** 
+
+Using a built-in function, $\text{Int}$ can be explicitly converted to $\text{Char}$.
+
+- $\text{Char}\rightarrow\text{Char}$: does nothing
+
+- $\text{Int}\rightarrow\text{Char}$: converts the ASCII value to its character
 
 ```
 // Language: Clean
 
-toChar :: Char -> Char    // does nothing
-toChar :: Int  -> Char    // 49 -> '1'
+toChar 49 // '1'
+toChar 89 // 'Y'
+toChar 35 // '#'
+toChar 16 // '►'
 ```
 
 #### Booleans
@@ -787,9 +847,9 @@ The methods below have the same $\text {Real}\rightarrow\text {Real}$ signature.
 | <nobr>`sinh X`</nobr>  | $\sinh X$            |
 | <nobr>`cosh X`</nobr>  | $\cosh X$            |
 | <nobr>`tanh X`</nobr>  | $\tanh X$            |
-| <nobr>`asinh X`</nobr> | $\text {arcsinh } X$ |
-| <nobr>`acosh X`</nobr> | $\text {arccosh } X$ |
-| <nobr>`atanh X`</nobr> | $\text {arctanh } X$ |
+| <nobr>`asinh X`</nobr> | $\text {arcsinh} X$ |
+| <nobr>`acosh X`</nobr> | $\text {arccosh} X$ |
+| <nobr>`atanh X`</nobr> | $\text {arctanh} X$ |
 
 Definitions: 
 - $X$ is a real number.
