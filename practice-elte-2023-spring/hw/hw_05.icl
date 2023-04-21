@@ -13,17 +13,17 @@ This method is called Run-length encoding.
 Your task is to implement "encode" function which does this.
 */
 
+getEncode :: [Char] -> [(Int, Char)]
+getEncode [] = []
+getEncode [c:cs] = [(len + 1, c) : getEncode (drop len cs)]
+where
+	len :: Int
+	len = (length (takeWhile ((==) c) cs))
+	
+
 encode :: String -> [(Int, Char)]
 encode str = getEncode [c \\ c <-: str]
-where
-	getEncode :: [Char] -> [(Int, Char)]
-	getEncode [] = []
-	getEncode [c:cs] = [(len + 1, c) : getEncode (drop len cs)]
-	where
-		len :: Int
-		len = (length (takeWhile ((==) c) cs))
-		
-
+	
 //Start = encode "aaaabbbcaddd" // [(4, 'a'), (3, 'b'), (1, 'c'), (1, 'a'), (3, 'd')]
 //Start = encode "" // []
 //Start = encode "aa" // [(2, 'a')]

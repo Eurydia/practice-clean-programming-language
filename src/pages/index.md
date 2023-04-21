@@ -15,10 +15,10 @@ Data of last revision: 12 APR 2023
 2. Types
 	1. Type specification
 	2. Primitive types
-		1. Integer type
-		2. Real number type
-		3. Character type
-		4. Boolean type
+		1. Integer
+		2. Real numbers
+		3. Characters
+		4. Booleans
 	3. Structured types
 		1. Lists
 		2. Arrays
@@ -33,7 +33,7 @@ Data of last revision: 12 APR 2023
 	1. Function-local definition
 	2. Guard-local definition
 6. Pattern matching
-7. Appendix A: Built-in methods and functions
+7. Appendix A: Built-in operations and functions
 8. Appendix B: Error troubleshooting
 9. Appendix C: CRU (Code Ready to Use)
 
@@ -164,7 +164,7 @@ exFuncZ :: T K -> V | + T & ^ K
 
 In $\text{exFuncX}$, $+$ must be available on $T$.
 
-In $\text{exFuncY}$,  $+$ and $/$ must be available on $T$.
+In $\text{exFuncY}$, $+$ and $/$ must be available on $T$.
 
 In $\text{exFuncZ}$, $+$ must be available on $T$ and $^\wedge$  must be available on $K$.
 
@@ -252,7 +252,7 @@ To resolve this issue, ensure that an integer is constructed.
 **Type conversions**
 
 Using a built-in function, other types can be explicitly converted to $\text{Int}$.
-It can convert the follow types:
+It can convert the following types:
 
 - $\text{Int}\rightarrow\text{Int}$: does nothing
 
@@ -319,7 +319,7 @@ $\text{Real}$ literals cannot be constructed using octal and hexadecimal notatio
 **Type conversions**
 
 Using a built-in function, other types can be explicitly converted to $\text{Real}$.
-It can convert the follow types:
+It can convert the following types:
 
 - $\text{Real}\rightarrow\text{Real}$: does nothing
 
@@ -346,7 +346,7 @@ toReal "191.0"  // 191.0
 
 **Type annotation**: $\text{Char}$
 
-**Constructions**
+**Construction**
 
 There is only one method to construct a $\text{Char}$ literal:
 
@@ -386,23 +386,20 @@ toChar 16 // '►'
 
 **Type annotation**: $\text{Bool}$
 
-**Constructions**:
+**Constructions**
+
+There is one method to construct a $\text{Bool}$ literal:
 
 ```
 // Language: Clean
 
-A :: Bool
-A =  True     // literal 'True'
-
-B :: Bool
-B =  False    // literal 'False'
-
-C :: Bool
-C = 1 == 2
+exBool    :: Bool
+exBool    =  True
+// exBool =  False
 ```
 
 **Operations**:
-- [[#Booleans: Logical operators]]
+- 
 
 **Explicit type conversion**: 
 
@@ -716,17 +713,17 @@ func_y [3, 5, 6]    // x=3; y=5; rest=[6]
 func_y [1]          // run-time error
 ```
 
-## Appendix A: Built-in functions and methods
+## Appendix A: Built-in operations and functions
 
 This part will be referred to by other parts of the reference to increase readability and clarity.
 
-Futhermore, it should be accepted that operators **must** return the same type as their arguments, except relational operators.
+It should be accepted that operators must return the same type as their arguments, except relational operators.
 
 Simply put, operators must have one of the following signatures:
 - $T\rightarrow T$, or
-- $T\phantom{X}T\rightarrow T$.
+- $T\rightarrow T\rightarrow T$.
 
-### Integers operations, methods, and functions
+### $\text{Int}$ built-ins
 
 #### Arithmetic operations
 
@@ -773,7 +770,7 @@ Definitions:
 Definitions: 
 - $X, Y$ are integers.
 
-#### Methods
+#### Standard methods
 
 | Name                    | Meaning               | Signature                      |
 | ----------------------- | --------------------- | ------------------------------ |
@@ -789,7 +786,9 @@ Definitions:
 
 ---
 
-### Reals operations, methods and functions
+### $\text{Real}$ built-ins
+
+#### Arithmetic operations
 
 | Operator             | Meaning            |
 | -------------------- | ------------------ |
@@ -819,7 +818,7 @@ Definitions:
 Definitions: 
 - $X, Y$ are integers
 
-#### Methods
+#### Standard methods
 
 | Name                    | Meaning                 | Signature                   |
 | ----------------------- | ----------------------- | --------------------------- |
@@ -858,7 +857,7 @@ Definitions:
 
 ---
 
-### Characters operations, methods, and functions
+### $\text{Char}$ built-ins
 
 #### Arithmetic operations
 
@@ -884,7 +883,7 @@ Definitions:
 Definitions: 
 - $X, Y$ are characters.
 
-#### Methods
+#### Standard methods
 
 The following methods have the same $\text {Char}\rightarrow\text {Char}$ signature.
 
@@ -919,7 +918,7 @@ Definitions:
 
 ---
 
-### Boolean operations, methodsm and functions
+### $\text{Bool}$ built-ins
 
 #### Logical operators
 
@@ -934,7 +933,7 @@ Definitions:
 
 ---
 
-### Lists operations, methods and functions
+### $\text{[T]}$ built-ins
 
 #### Standard operators
 
