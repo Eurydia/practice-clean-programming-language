@@ -353,8 +353,10 @@ There is only one method to construct a $\text{Char}$ literal:
 ```
 // Language: Clean
 
-A :: Char
-A =  'a'
+exChar    :: Char
+exChar    =  'a'
+// exChar =  '9'
+// exChar =  '+'
 ```
 
 **Operations**:
