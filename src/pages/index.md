@@ -182,47 +182,47 @@ There are four methods to construct an $\text{Int}$ literal:
 
 - with decimal notation
 
-```
-// Language: Clean
-
-exIntDec    :: Int
-exIntDec    =  1919
-// exIntDec =  191
-// exIntDec =  19
-```
+	```
+	// Language: Clean
+	
+	exIntDec    :: Int
+	exIntDec    =  1919
+	// exIntDec =  191
+	// exIntDec =  19
+	```
 
 - with octal notation: prefixing the numbers with $0$
 
-```
-// Language: Clean
-
-exIntOct    :: Int
-exIntOct    =  03577 // decimal 1919
-// exIntOct =  0277  // decimal 191
-// exIntOct =  023   // decimal 19
-```
+	```
+	// Language: Clean
+	
+	exIntOct    :: Int
+	exIntOct    =  03577 // decimal 1919
+	// exIntOct =  0277  // decimal 191
+	// exIntOct =  023   // decimal 19
+	```
 
 - with hexadecimal notation: prefixing the numbers with $0\text{x}$
 
-```
-// Language: Clean
-
-exIntHex    :: Int
-exIntHex    =  0x77f // decinal 1919
-// exIntHex =  0xBF  // decimal 191
-// exIntHex =  0x13  // decimal 19
-```
+	```
+	// Language: Clean
+	
+	exIntHex    :: Int
+	exIntHex    =  0x77f // decinal 1919
+	// exIntHex =  0xBF  // decimal 191
+	// exIntHex =  0x13  // decimal 19
+	```
 
  - with scientific notation 
 
-```
-// Language: Clean
-
-exIntSci    :: Int
-exIntSci    =  1.919E3 // 1919
-// exIntSci =  1.91E2  // 191
-// exIntSci =  1.9E1   // 19
-```
+	```
+	// Language: Clean
+	
+	exIntSci    :: Int
+	exIntSci    =  1.919E3 // 1919
+	// exIntSci =  1.91E2  // 191
+	// exIntSci =  1.9E1   // 19
+	```
 
 When constructing an integer using scientific notation, it is possible to construct a real number instead.
 
@@ -258,25 +258,25 @@ It can convert the following types:
 
 - $\text{Real}\rightarrow\text{int}$: rounds the number
 
-```
-// Language: Clean
-
-toInt -2.7 // -3
-toInt -2.5 // -2
-toInt  2.4 //  2
-toInt  2.9 //  3
-```
+	```
+	// Language: Clean
+	
+	toInt -2.7 // -3
+	toInt -2.5 // -2
+	toInt  2.4 //  2
+	toInt  2.9 //  3
+	```
 
 - $\text{Char}\rightarrow\text{Int}$: converts the character to its ASCII value
 
-```
-// Language: Clean
-
-toInt 'A' // 65
-toInt 'a' // 97
-toInt '1' // 49
-toInt '-' // 45
-```
+	```
+	// Language: Clean
+	
+	toInt 'A' // 65
+	toInt 'a' // 97
+	toInt '1' // 49
+	toInt '-' // 45
+	```
 
 #### Real numbers
 
@@ -288,25 +288,25 @@ There are two methods to construct a $\text{real}$ literal:
 
 - using decimal notation
 
-```
-// Language: Clean
-
-exRealDec    :: Real
-exRealDec    =   1.919
-// exRealDec =  -1.91
-// exRealDec =  19.1
-```
+	```
+	// Language: Clean
+	
+	exRealDec    :: Real
+	exRealDec    =   1.919
+	// exRealDec =  -1.91
+	// exRealDec =  19.1
+	```
 
 - using scientific notation
 
-```
-// Language: Clean
-
-exRealSci    :: Real
-exRealSci    =  1919E-4 //  0.1919
-// exRealSci = -191E-2  // -1.91
-// exRealSci =  19E-3   //  0.019
-```
+	```
+	// Language: Clean
+	
+	exRealSci    :: Real
+	exRealSci    =  1919E-4 //  0.1919
+	// exRealSci = -191E-2  // -1.91
+	// exRealSci =  19E-3   //  0.019
+	```
 
 $\text{Real}$ literals cannot be constructed using octal and hexadecimal notations.
 
@@ -325,22 +325,23 @@ It can convert the following types:
 
 - $\text{Int}\rightarrow\text{Real}$
 
-```
-// Language: Clean
-
-toReal  19  //   19.0
-toReal -191 // -191.0
-```
+	```
+	// Language: Clean
+	
+	toReal  19  //   19.0
+	toReal -191 // -191.0
+	```
+	
 - $\text{\{Char\}}\rightarrow\text{Real}$: converts string to a real number
 
-```
-// Language: Clean
-
-toReal "-19.1"  // -19.1
-toReal "+19.1"  //  19.1
-toReal "191"    // 191.0
-toReal "191.0"  // 191.0
-```
+	```
+	// Language: Clean
+	
+	toReal "-19.1"  // -19.1
+	toReal "+19.1"  //  19.1
+	toReal "191"    // 191.0
+	toReal "191.0"  // 191.0
+	```
 
 #### Characters
 
@@ -373,14 +374,14 @@ Using a built-in function, $\text{Int}$ can be explicitly converted to $\text{Ch
 
 - $\text{Int}\rightarrow\text{Char}$: converts the ASCII value to its character
 
-```
-// Language: Clean
-
-toChar 49 // '1'
-toChar 89 // 'Y'
-toChar 35 // '#'
-toChar 16 // '►'
-```
+	```
+	// Language: Clean
+	
+	toChar 49 // '1'
+	toChar 89 // 'Y'
+	toChar 35 // '#'
+	toChar 16 // '►'
+	```
 
 #### Booleans
 
