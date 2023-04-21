@@ -100,7 +100,7 @@ h6 {
 }
 
 main {
-  @apply mx-auto w-full md:w-3/5;
+  @apply mx-auto w-4/5 px-2 md:w-3/5;
 }
 
 pre {
