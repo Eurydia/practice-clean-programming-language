@@ -190,7 +190,7 @@ exIntDec    =  1919
 // exIntDec =  19
 ```
 
-- with octal notation by prefixing the numbers with $0$.
+- with octal notation by prefixing the numbers with $0$
 
 ```
 // Language: Clean
@@ -201,7 +201,7 @@ exIntOct    =  03577 // decimal 1919
 // exIntOct =  023   // decimal 19
 ```
 
-- with hexadecimal notation by prefixing the numbers with $0\text{x}$.
+- with hexadecimal notation by prefixing the numbers with $0\text{x}$
 
 ```
 // Language: Clean
@@ -219,7 +219,7 @@ exIntHex    =  0x77f // decinal 1919
 
 exIntSci    :: Int
 exIntSci    =  1.919E3 // 1919
-// exIntSci =  1.91e2  // 191
+// exIntSci =  1.91E2  // 191
 // exIntSci =  1.9E1   // 19
 ```
 
@@ -232,7 +232,7 @@ maybeInt :: Int
 maybeInt =  2E-2 // 0.02 :(
 ```
 
-A compilation error will be thrown with a message which states:
+In such a case, a compilation error will be thrown with a message which states:
 
 ```
 Type error [...]: cannot unify demanded type with offered type:
