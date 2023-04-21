@@ -59,7 +59,7 @@ html {
 }
 
 body {
-  @apply text-base font-medium;
+  @apply text-base  font-medium;
   font-family: "iA Writer Quattro S", sans-serif;
 
   background-color: var(--color-cream);
@@ -100,7 +100,7 @@ h6 {
 }
 
 main {
-  @apply mx-auto w-4/5 px-1 md:w-3/5 md:px-2;
+  @apply mx-auto w-11/12 md:w-5/12 md:px-2;
 }
 
 pre {
