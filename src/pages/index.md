@@ -66,7 +66,7 @@ The syntax for specifying a variable type is shown below.
 exVar :: T
 ```
 
-In a real programm, your variable specifications may look similar to the following:
+Practically, variable specifications may look similar to the following:
 
 ```
 // Language: Clean
@@ -75,7 +75,7 @@ width :: Int
 width =  12
 
 area :: Int
-area =  12 * 12
+area =  width * width
 ```
 
 **Possible error**
@@ -180,7 +180,7 @@ More context can be added by following the same pattern.
 
 There are four methods to construct an $\text{Int}$ literal:
 
-- with decimal notation
+- with decimal notation,
 
 	```
 	// Language: Clean
@@ -191,7 +191,7 @@ There are four methods to construct an $\text{Int}$ literal:
 	// exIntDec =  19
 	```
 
-- with octal notation: prefixing the numbers with $0$
+- with octal notation: prefixing the numbers with $0$,
 
 	```
 	// Language: Clean
@@ -202,7 +202,7 @@ There are four methods to construct an $\text{Int}$ literal:
 	// exIntOct =  023   // decimal 19
 	```
 
-- with hexadecimal notation: prefixing the numbers with $0\text{x}$
+- with hexadecimal notation: prefixing the numbers with $0\text{x}$, and
 
 	```
 	// Language: Clean
@@ -213,7 +213,7 @@ There are four methods to construct an $\text{Int}$ literal:
 	// exIntHex =  0x13  // decimal 19
 	```
 
- - with scientific notation 
+ - with scientific notation.
 
 	```
 	// Language: Clean
@@ -244,19 +244,19 @@ Real
 To resolve this issue, ensure that an integer is constructed.
 
 **Operations**:
-- arithmetic operations
-- relational operations
-- bitwise operations
-- standard methods
+- arithmetic operations,
+- relational operations,
+- bitwise operations, and
+- standard methods.
 
 **Type conversions**
 
 Using a built-in function, other types can be explicitly converted to $\text{Int}$.
 It can convert the following types:
 
-- $\text{Int}\rightarrow\text{Int}$: does nothing
+- $\text{Int}\rightarrow\text{Int}$: does nothing,
 
-- $\text{Real}\rightarrow\text{int}$: rounds the number
+- $\text{Real}\rightarrow\text{Int}$: rounds the number, and
 
 	```
 	// Language: Clean
@@ -267,7 +267,7 @@ It can convert the following types:
 	toInt  2.9 //  3
 	```
 
-- $\text{Char}\rightarrow\text{Int}$: converts the character to its ASCII value
+- $\text{Char}\rightarrow\text{Int}$: converts the character to its ASCII value.
 
 	```
 	// Language: Clean
@@ -284,9 +284,9 @@ It can convert the following types:
 
 **Constructions**
 
-There are two methods to construct a $\text{real}$ literal:
+There are two methods to construct a $\text{Real}$ literal:
 
-- using decimal notation
+- using decimal notation, and
 
 	```
 	// Language: Clean
@@ -297,7 +297,7 @@ There are two methods to construct a $\text{real}$ literal:
 	// exRealDec =  19.1
 	```
 
-- using scientific notation
+- using scientific notation.
 
 	```
 	// Language: Clean
@@ -308,22 +308,22 @@ There are two methods to construct a $\text{real}$ literal:
 	// exRealSci =  19E-3   //  0.019
 	```
 
-$\text{Real}$ literals cannot be constructed using octal and hexadecimal notations.
+$\text{Real}$ literals cannot be constructed using octal or hexadecimal notation.
 
 **Operations**:
-- arithmetic operations
-- relational operations
-- standard methods
-- trigonometic methods
+- arithmetic operations,
+- relational operations,
+- standard methods, and
+- trigonometic methods.
 
 **Type conversions**
 
 Using a built-in function, other types can be explicitly converted to $\text{Real}$.
 It can convert the following types:
 
-- $\text{Real}\rightarrow\text{Real}$: does nothing
+- $\text{Real}\rightarrow\text{Real}$: does nothing,
 
-- $\text{Int}\rightarrow\text{Real}$
+- $\text{Int}\rightarrow\text{Real}$ and,
 
 	```
 	// Language: Clean
@@ -332,7 +332,7 @@ It can convert the following types:
 	toReal -191 // -191.0
 	```
 	
-- $\text{\{Char\}}\rightarrow\text{Real}$: converts string to a real number
+- $\text{\{Char\}}\rightarrow\text{Real}$: converts the string to a real number.
 
 	```
 	// Language: Clean
@@ -361,18 +361,18 @@ exChar    =  'a'
 ```
 
 **Operations**:
-- arithmetic operations
-- relational operations
-- standard methods
-- validator methods
+- arithmetic operations,
+- relational operations,
+- standard methods, and
+- validator methods.
 
 **Type conversions** 
 
 Using a built-in function, $\text{Int}$ can be explicitly converted to $\text{Char}$.
 
-- $\text{Char}\rightarrow\text{Char}$: does nothing
+- $\text{Char}\rightarrow\text{Char}$: does nothing, and
 
-- $\text{Int}\rightarrow\text{Char}$: converts the ASCII value to its character
+- $\text{Int}\rightarrow\text{Char}$: converts the ASCII value to its character.
 
 	```
 	// Language: Clean
@@ -399,8 +399,8 @@ exBool    =  True
 // exBool =  False
 ```
 
-**Operations**:
-- 
+**Operation**:
+- logical operations.
 
 **Explicit type conversion**: 
 
