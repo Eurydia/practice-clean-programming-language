@@ -37,26 +37,37 @@ e.g [[1.3, 5.2, 7.7, -2.3, 23.45] , [3.0,8.4] ] ->  avg of [1.3, 5.2, 7.7, -2.3,
 similarly, avg of [3.0,8.4] is 5.7  so the closest value from the list is  3.0
 */
 
-findClosest :: [Real] -> Real
-findClosest ls = minOf (sortData (differences ls target))
-where
-    target :: Real
-    target = avg ls
+// findClosest :: [Real] -> Real
+// findClosest ls = minOf (sortData (differences ls target))
+// where
+//     target :: Real
+//     target = avg ls
 
-    differences :: [Real] Real -> [(Real, Int)]
-    differences ns t = [(abs (t - n), i) \\ i <- (indexList ns) & n <- ns]
+//     differences :: [Real] Real -> [(Real, Int)]
+//     differences ns t = [(abs (t - n), i) \\ i <- (indexList ns) & n <- ns]
 
-    sortData :: [(Real, Int)] -> [(Real, Int)]
-    sortData ns = sortBy rule ns
+//     sortData :: [(Real, Int)] -> [(Real, Int)]
+//     sortData ns = sortBy rule ns
     
-    rule :: (Real, Int) (Real, Int) -> Bool
-    rule (ax, _) (bx, _) = ax < bx
+//     rule :: (Real, Int) (Real, Int) -> Bool
+//     rule (ax, _) (bx, _) = ax < bx
 
-    minOf :: [(Real, Int)] -> Real
-    minOf ns = ls !! (snd (hd ns))
+//     minOf :: [(Real, Int)] -> Real
+//     minOf ns = ls !! (snd (hd ns))
+
+findClosest :: [Real] -> Real
+findClosest    ls     = hd candidates
+where
+    candidates :: [Real]
+    candidates =  [n \\ n <- ls | abs (avgL - n) == closest]
+    closest    :: Real
+    closest    =  hd (sort [abs (avgL - n) \\ n <- ls])
+    avgL       :: Real
+    avgL       =  avg ls
 
 closestToAvg :: [[Real]] -> [Real]
 closestToAvg lls = map findClosest lls
+
 
 
 //Start = closestToAvg [[1.3, 5.2, 7.7, -2.3, 23.45] , [3.0,8.4] ] //  [7.7,3]

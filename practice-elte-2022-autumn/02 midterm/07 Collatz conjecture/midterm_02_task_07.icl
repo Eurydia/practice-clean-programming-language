@@ -16,14 +16,15 @@ import StdEnv
       output: 4 recursive calls
 */
 
+doCollatz :: Int Int -> Int
+doCollatz num step
+| num == 2 = step
+| isOdd num = doCollatz ((num * 3) + 1) (step + 1)
+| isEven num = doCollatz (num / 2) (step + 1)
+
+
 collatz :: Int -> Int
 collatz n = doCollatz n 0
-where
-	doCollatz :: Int Int -> Int
-	doCollatz num accu
-	| num == 2 = accu
-	| isOdd num = doCollatz ((num * 3) + 1) (accu + 1)
-	| isEven num = doCollatz (num / 2) (accu + 1)
 	
 //Start = collatz 10 // 4
 //Start = collatz 20000000 // 144

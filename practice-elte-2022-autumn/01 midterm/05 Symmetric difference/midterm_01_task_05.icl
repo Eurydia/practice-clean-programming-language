@@ -51,8 +51,8 @@ import StdEnv
 // --------------------------------------------------------
 //SOLUTION #2
 
-//symmetricDif :: [Int] [Int] -> [Int]
-//symmetricDif a b = (removeMembers a b) ++ (removeMembers b a)
+symmetricDif :: [Int] [Int] -> [Int]
+symmetricDif a b = (removeMembers a b) ++ (removeMembers b a)
 
 //SOLUTION #2 END
 // --------------------------------------------------------

@@ -21,7 +21,7 @@ where
 
 
 elementInInterval :: [(Int,Int,[Int])]-> [[Int]]
-elementInInterval ts = map getElement ts
+elementInInterval ts = [getElement t \\ t <- ts]
 
 
 //Start = elementInInterval [(2,5,[1..10])] //[[3,4,5,6]]

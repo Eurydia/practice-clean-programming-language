@@ -13,7 +13,7 @@ isPrime 2 = True
 isPrime n = all (\(k) = not (n rem k == 0)) [2..(n - 1)]
 
 removeNotPrime :: [Int] -> [Int]
-removeNotPrime ns =  filter (\(n) = not (isPrime n)) ns
+removeNotPrime ns =  filter (not o isPrime) ns
 
 //Start = removeNotPrime [1..10] // [1,4,6,8,9,10]
 //Start = removeNotPrime [13..20] // [14,15,16,18,20]

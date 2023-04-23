@@ -14,7 +14,7 @@ createSymmetric :: [Int] -> [Int]
 createSymmetric ls = ls ++ (reverse ls)
 
 symSumGreater10 :: [[Int]] -> [[Int]]
-symSumGreater10 lls = map createSymmetric (filter (\(ls) = (sum ls) > 10) lls)
+symSumGreater10 lls = [createSymmetric ls \\ ls <- lls | sum ls > 10 ]
 
 //Start = symSumGreater10 [[1,2,3],[3,4,5,6],[4,5,1,2]] // [[3,4,5,6,6,5,4,3],[4,5,1,2,2,1,5,4]]
 //Start = symSumGreater10 [] // []
