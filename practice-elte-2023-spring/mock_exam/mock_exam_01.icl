@@ -240,15 +240,3 @@ where
 //Start = twinPrimes 0 2 // 0
 //Start = twinPrimes 0 -5 // 0
 
-x :: int
-(toDigits x) :: [Int]
-(countOnes (toDigits x)) :: Int
-
-removeMembers X Y
-[1,2,3] [2]
-[1,3]
-
-removeMembers x y \\x <- list1 & y <- list2
-([1,2,3], [4,5,6])
-
-
