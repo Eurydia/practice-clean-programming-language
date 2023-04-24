@@ -14,7 +14,7 @@ Examples:
 */
 
 isHarshad :: Int -> Bool
-isHarshad n = n rem (sum [((toInt d) - 48) \\ d <-: (toString n )]) == 0
+isHarshad n = (n rem (sum [((toInt d) - 48) \\ d <-: (toString n )])) == 0
 
 harshadNums :: [Int] -> [Int]
 harshadNums ns = filter isHarshad ns

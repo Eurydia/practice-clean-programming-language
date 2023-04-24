@@ -9,16 +9,30 @@ import StdEnv
 */
 
 isPowerOf :: Int Int -> Bool
-isPowerOf n k = checkPower zero
+isPowerOf    n   k   =  checkPower 0
 where
 	checkPower :: Int -> Bool
-	checkPower p
-	| n ^ p < k = checkPower (p + 1)
-	| n ^ p > k = False
-	| otherwise = True
+	checkPower    p
+	| (n ^ p) < k       = checkPower (p + 1)
+	| (n ^ p) > k       = False
+	| otherwise       = True
+
+// n = 9; k = 2;
+// p = 0; (2 ^ 0) < 9
+// p = 1; (2 ^ 1) < 9
+// p = 2; (2 ^ 2) < 9
+// p = 3; (2 ^ 3) < 9
+// p = 4; (2 ^ 4) > 9
+
+// n = 8; k = 2;
+// p = 0; (2 ^ 0) < 8
+// p = 1; (2 ^ 1) < 8
+// p = 2; (2 ^ 2) < 8
+// p = 3; (2 ^ 3) == 8
+
 
 powersList :: [Int] Int -> [Int]
-powersList ns k = filter (\(n) = isPowerOf k n) ns
+powersList    ns    k   =  [n \\ n <- ns | isPowerOf n k]
 
 Start = powersList [2,4,8,16,32,33,55] 2 // [2,4,8,16,32]
 //Start = powersList [] 3 // []

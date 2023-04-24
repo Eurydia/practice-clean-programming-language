@@ -14,16 +14,27 @@ import StdEnv
  For example if L1=[1,2,3] and L2=[3,5], then L1-L2=[1,2].
 */
 
-notInList :: Int [Int] -> Bool
-notInList n xs = not (any (\(x) = n == x) xs)
+// --------------------------------------------------
+// SOLUTION #1
+// notInList :: Int [Int] -> Bool
+// notInList n xs = not (any (\(x) = n == x) xs)
+
+// diff :: [Int] [Int] -> [Int]
+// diff as bs = filter (\(a) = notInList a bs) as
+
+// difference :: [[Int]] [[Int]] -> [[Int]]
+// difference als bls = map (\(index) = diff (als !! index) (bls !! index)) [0..((length als) - 1)]
+// SOLUTION #1 END
+// --------------------------------------------------
 
 
-diff :: [Int] [Int] -> [Int]
-diff as bs = filter (\(a) = notInList a bs) as
-
-
+// --------------------------------------------------
+// SOLUTION #2
 difference :: [[Int]] [[Int]] -> [[Int]]
-difference als bls = map (\(index) = diff (als !! index) (bls !! index)) [0..((length als) - 1)]
+difference    als     bls     =  [removeMembers a b \\ a <- als & b <- bls]
+// SOLUTION #2 END
+// --------------------------------------------------
+
 
 //Start = difference [[1..5]] [[4..7]] // [[1,2,3]]
 //Start = difference [[1..10] , [10..15] , [1..4]] [[1..10] , [11..20] , [5]] // [[],[10],[1,2,3,4]]

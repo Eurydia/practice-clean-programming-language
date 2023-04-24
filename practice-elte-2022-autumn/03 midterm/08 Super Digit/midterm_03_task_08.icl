@@ -21,16 +21,23 @@ import StdEnv
  of every number in the list.  
 */
 
-getSuper :: Int -> Int
-getSuper n
-| size == 1 = n
-| otherwise = getSuper (sum n_digits)
+toDigits :: Int -> [Int]
+toDigits    n   =  [((toInt d) - 48) \\ d <-: (toString n)]
+//  n = 123
+// ['1', '2', '3']
+// [49, 50, 51]
+// [1, 2, 3]
+
+getSuper :: Int   -> Int
+getSuper    n
+| length n_digits = n
+| otherwise       = getSuper (sum n_digits)
 where 
-	n_digits = [((toInt d) - 48) \\ d <-: (toString n)]
-	size = length n_digits
+    n_digits :: [Int]
+	n_digits =  toDigits n
 
 super_digit :: [Int] -> [Int]
-super_digit ns = map getSuper ns
+super_digit    ns    =  map getSuper ns
 
 //Start = super_digit [148148148 , 9875] // [3,2]
 //Start = super_digit [884555 , 456 , 2351 , 21587 , 88 ] // [8,6,2,5,7]

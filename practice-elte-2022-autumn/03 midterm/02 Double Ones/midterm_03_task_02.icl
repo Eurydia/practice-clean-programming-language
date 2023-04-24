@@ -12,15 +12,14 @@ import StdEnv
 */
 
 hasDoubleOnes :: Int -> Bool
-hasDoubleOnes n = length (filter (\(d) = d == '1') digits)  >= 2
+hasDoubleOnes    n   =  length (filter ((==) '1') digits) >= 2
 where
-	digits = [d \\ d <-: (toString n)]
+	digits :: [Char]
+	digits =  [d \\ d <-: (toString n)]
 
 
 doubleOne :: [Int] -> [Int]
-doubleOne ns = filter hasDoubleOnes ns
-
-
+doubleOne    ns    =  filter hasDoubleOnes ns
 
 //Start = doubleOne [1,2,21,121,11,234131,111111,123,0,334] // [121,11,234131,111111]
 //Start = doubleOne [12,1,11,33] // [11]

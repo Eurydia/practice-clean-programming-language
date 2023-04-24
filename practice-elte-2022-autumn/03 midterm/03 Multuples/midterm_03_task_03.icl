@@ -9,7 +9,7 @@ import StdEnv
 */
 
 multiple :: Int -> [Int]
-multiple n = [n * m \\ m <- [2..n]]
+multiple    n   =  [n * m \\ m <- [2..n]]
 
 //Start = multiple 5 // [10,15,20,25]
 //Start = multiple 2 // [2]
