@@ -14,12 +14,7 @@ A number cannot be a side if it is negative or 0.
 */
 
 isValid :: (Int, Int, Int) -> Bool
-isValid t = (a > 0) && (b > 0) && (c > 0) && (a + b > c) && (a + c > b) &&(b + c > a)
-where 
-	a = fst3 t
-	b = snd3 t
-	c = thd3 t
-
+isValid (a,b,c) = (a > 0) && (b > 0) && (c > 0) && (a + b > c) && (a + c > b) &&(b + c > a)
 
 validTriangles :: [(Int,Int,Int)] -> [Bool]
 validTriangles ts = map isValid ts
