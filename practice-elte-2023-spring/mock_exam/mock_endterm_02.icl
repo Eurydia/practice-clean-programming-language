@@ -1,4 +1,4 @@
-module endterm2
+module mock_endterm_02
 import StdEnv
 
 /*---------------------------------------------------------------
@@ -35,7 +35,11 @@ L shifted by 3 -> O, because O comes 3 positions after L in the set of English c
 ...
 */
 
-//shiftCipher:: String Int -> String
+ALPHA :: [Char]
+ALPHA =: ['A'..'Z']
+
+shiftCipher:: String Int -> String
+shiftCipher   str    d   =  {ALPHA !! (((toInt c) - 65 + d) rem 26) \\ c <-: str}
 
 //Start = shiftCipher "HELLOWORLD" 3 // "KHOORZRUOG"
 //Start = shiftCipher "CLEANISFUN" 1 // "DMFBOJTGVO"
@@ -77,7 +81,11 @@ tool4_location ={x =100.0, y = 200.0}
 * Hint: distance = square_root((x_2-x_1)^2+(y_2-y_1)^2) between any two points.
 */
 
-//check :: Circle {Point} -> Bool
+dist :: Point Point -> Real
+dist    a     b     => sqrt (((a.x - b.x) ^ 2.0) + ((a.y - b.y) ^ 2.0))
+
+check :: Circle {Point}      -> Bool
+check    {center, radius} ps => and [(dist center p) < radius \\ p <-: ps] 
 
 //Start = check broadcaster {car_location,bus_location} // True
 //Start = check broadcaster {tool1_location,tool2_location} // False
@@ -122,7 +130,12 @@ lib6 = {lib_name = "lib6" , books ={b4,b4,b2,b1}}
 * (Whether the books can be borrowed does not matter when comparing them.)
 */
 
-//==
+// ==
+
+instance == Book
+where
+	(==) a b => a.title == b.title && a.author == b.author && a.pyear == b.pyear && a.num_of_pages == b.num_of_pages
+	
 
 //Start = b1 == b1 // True
 //Start = b1 == b2 // False
@@ -134,6 +147,10 @@ lib6 = {lib_name = "lib6" , books ={b4,b4,b2,b1}}
 */
 
 //<
+
+instance < Book
+where
+	(<) a b => a.pyear < b.pyear
 
 //Start = b1 < b2 // False
 //Start = b3 < b2 // True
@@ -147,6 +164,17 @@ lib6 = {lib_name = "lib6" , books ={b4,b4,b2,b1}}
 
 //+
 
+instance + Library
+where
+	(+) a b = {lib_name=(a.lib_name +++ b.lib_name) , books=unified}
+	where
+		abooks :: [Book]
+		abooks = [b \\ b <-: a.books]
+		bbooks :: [Book]
+		bbooks = [b \\ b <-: b.books]
+		unified :: {Book}
+		unified = {b \\ b <- sort (removeDup (bbooks ++ abooks))} 
+
 //Start = lib1 + lib1
 //(Library "lib1lib1" {(Book "Functional Programming" "Andrey" 1999 1250 True),(Book "C Programming Language" "Abel" 2022 1501 False)})
 //Start = lib1 + lib2
@@ -159,6 +187,10 @@ lib6 = {lib_name = "lib6" , books ={b4,b4,b2,b1}}
 */
 
 //==
+
+instance == Library
+where
+	(==) a b => (sort [b \\ b <-: a.books]) == (sort [b \\ b <-: b.books])
 
 //Start = lib1 == lib1 // True
 //Start = lib3 == lib6 // False
@@ -179,8 +211,26 @@ lib6 = {lib_name = "lib6" , books ={b4,b4,b2,b1}}
 * Example: {"hello","ABC","CD"}+{"World","AB","Abod"}->{"hWeolrllod","AABBC","CADbod"}
 */
 
-
+instance + String
+where
+	(+) a  b = toString (join aList bList [])
+	where
+		aList :: [Char]
+		aList =  [c \\ c <-: a]
+	
+		bList :: [Char]
+		bList =  [c \\ c <-: b]
+		
+		join :: [Char] [Char] [Char] -> [Char]
+		join    []     []     acc    =  acc
+		join    x      []     acc    =  acc ++ x
+		join    []     y      acc    =  acc ++ y
+		join    [x:xs] [y:ys] acc    =  join xs ys (acc ++ [x] ++ [y])
+		
 // +
+instance + {String}
+where
+	(+) a b => {astr + bstr \\ astr <-: a & bstr <-: b}
 
 //Start :: {String} // this is needed at each start
 //Start = {"hello","ABC","CD"} + {"World","AB","Abod"} //{"hWeolrllod","AABBC","CADbod"}
@@ -209,8 +259,8 @@ the heights of the two children subtrees of 4 is > 1.
 5
 / \
 4 6
-\
-7 => True
+   \
+    7 => True
 
 It satisfies the Avl-property because for each node in the tree, the difference
 between the left subtree's height and the right subtree's height is at most 1.
@@ -223,8 +273,13 @@ tree2 = Node 5 (Node 4 (Node 3 (Node 1 Leaf Leaf) Leaf) Leaf) (Node 6 Leaf Leaf)
 tree3 = Node 3 (Node 0 (Node -1 Leaf Leaf) (Node 1 Leaf Leaf)) tree1
 tree4 = Node 15 (tree3) (Node 20 Leaf (Node 23 Leaf (Node 25 Leaf Leaf)))
 
+depth :: (Tree a)     -> Int
+depth    (Leaf)       => 0
+depth    (Node _ l r) = (max (depth l) (depth r)) + 1
 
-//AVL_prop_check :: (Tree Int) -> Bool
+AVL_prop_check :: (Tree Int)   -> Bool
+AVL_prop_check    (Leaf)       => True
+AVL_prop_check    (Node _ l r) => ((abs ((depth l) - (depth r))) <= 1) && (AVL_prop_check l) && (AVL_prop_check r)
 
 //Start = AVL_prop_check tree1 // True
 //Start = AVL_prop_check tree2 // False
@@ -238,8 +293,8 @@ tree4 = Node 15 (tree3) (Node 20 Leaf (Node 23 Leaf (Node 25 Leaf Leaf)))
 * Given a binary search tree, change the BST to a binary Tree such that a key
 * of a node becomes original key plus sum of all greater keys in the given BST.
 * Example: Input:
-5
-/ \
+ 5
+ / \
 / \
 / \
 3 8
@@ -267,7 +322,17 @@ and the original number is 38: 2 + 3 + 4 + 5 + 6 + 8 + 10 = 38
 BsTree1 = (Node 5 (Node 3 (Node 2 Leaf Leaf) (Node 4 Leaf Leaf)) (Node 8 (Node 6 Leaf Leaf) (Node 10 Leaf Leaf) ))
 BsTree2 = (Node 4 (Node 3 (Node 3 (Node 2 (Node 1 Leaf Leaf) Leaf) Leaf) (Node 4 Leaf Leaf)) (Node 5 (Node 5 Leaf Leaf) (Node 6 Leaf Leaf)))
 
-//transform :: (Tree Int) -> (Tree Int)
+treeToList :: (Tree a)     -> [a]
+treeToList    (Leaf)       => []
+treeToList    (Node x l r) => [x] ++ (treeToList l) ++ (treeToList r)
+
+transform :: (Tree Int) -> (Tree Int)
+transform    (Leaf)     => (Leaf)
+transform    tree       => replace tree (treeToList tree)
+where
+	replace :: (Tree Int)   [Int] -> (Tree Int)
+	replace    (Leaf)       _     =  Leaf
+	replace    (Node x l r) ls    =  Node (x + (sum [v \\ v <- ls | v > x])) (replace l ls) (replace r ls)
 
 //Start = transform BsTree1
 //(Node 29 (Node 36 (Node 38 Leaf Leaf) (Node 33 Leaf Leaf)) (Node 18 (Node 24 Leaf Leaf) (Node 10 Leaf Leaf)))
@@ -292,7 +357,26 @@ c) Multiply the smalles unique tuple with the array elements.
 (-1,3,2) {(-3,-1,-2), (-1,3,2)} => {(3,-3,-4), (1,9,4)}
 */
 
-//alterArray :: {(Int, Int, Int)} -> {(Int, Int, Int)}
+:: IntT :== (Int, Int, Int)
+
+sumIntT :: IntT   -> Int
+sumIntT   (x,y,z) => x + y + z
+
+findSmallest :: [IntT] IntT -> IntT
+findSmallest    []     res  =  res
+findSmallest    [x:xs] res
+| abs (sumIntT x) < abs (sumIntT res) = findSmallest xs x
+| otherwise                           = findSmallest xs res  
+
+alterArray :: {(Int, Int, Int)} -> {(Int, Int, Int)}
+alterArray    arr               => {(x * a, y * b, z * c) \\ (x,y,z) <-: arr}
+where
+	l :: [IntT]
+	l =  [e \\ e=:(x,y,z) <-: arr | [x,y,z] == (removeDup [x,y,z])]
+
+	
+	(a,b,c) =  findSmallest (tl l) (hd l)
+	
 
 //Start = alterArray {(-1,3,2), (-3,-1,-2)} // {(1,9,4),(3,-3,-4)}
 //Start = alterArray {(1,-1,0), (-1,3,2), (-3,-1,-2)} // {(1,1,0),(-1,-3,0),(-3,1,0)}
@@ -326,7 +410,22 @@ Leon = {fullName = "Leon Kennedy", yearOfMarriage = 2000}
 Ada :: EngagedPerson
 Ada = {fullName = "Ada Kennedy", yearOfMarriage = 2000}
 
-//getOldestMarriage :: {(EngagedPerson, EngagedPerson)} -> String
+instance == EngagedPerson
+where
+	(==) a b => a.yearOfMarriage == b.yearOfMarriage
+
+instance < EngagedPerson
+where
+	(<) a b => a.yearOfMarriage < b.yearOfMarriage
+
+getOldestMarriage :: {(EngagedPerson, EngagedPerson)} -> String
+getOldestMarriage    arr                              => toString (tl (dropWhile ((<>) ' ') fullname))
+where
+	l :: [EngagedPerson] 
+	l =  [e \\ (e,_) <-: arr]
+	
+	fullname :: [Char]
+	fullname = [c \\ c <-: (hd (sort l)).fullName]
 
 //Start = getOldestMarriage { (Leon, Ada), (Mike, Edna)} // "Kennedy"
 //Start = getOldestMarriage { (Leon, Ada), (Homer, Marge)} // "Simpson"
@@ -344,7 +443,17 @@ Ada = {fullName = "Ada Kennedy", yearOfMarriage = 2000}
 
 :: Color = Red | Orange | Yellow | Green | Blue | Indigo | Violet
 
-//neighbours :: [Color] -> [Color]
+getNeighbor :: Color    -> Color
+getNeighbor (Red)    => Yellow
+getNeighbor (Orange) => Green
+getNeighbor (Yellow) => Blue
+getNeighbor (Green)  => Indigo
+getNeighbor (Blue)   => Violet
+getNeighbor (Indigo) => Red
+getNeighbor (Violet) => Orange
+
+neighbours :: [Color] -> [Color]
+neighbours    colors  => [getNeighbor c \\ c <- colors]
 
 //Start = neighbours [Red,Orange,Yellow,Green,Blue,Indigo,Violet] //[Yellow,Green,Blue,Indigo,Violet,Red,Orange]
 //Start = neighbours [Blue] //[Violet]
@@ -387,7 +496,14 @@ bt22 = (BTNode2 (BTNode2 BTLeaf2 BTLeaf2) (BTNode2 BTLeaf2 BTLeaf2))
 bt23 = (BTNode2 (BTNode2 bt22 bt21) (BTNode2 BTLeaf2 bt22))
 bt24 = (BTNode2 (BTNode2 bt23 bt21) (BTNode2 BTLeaf2 bt22))
 
-//getBTDiameter :: BinaryTree2 -> Int
+
+getDepth :: BinaryTree2   -> Int
+getDepth    (BTLeaf2)     => 1
+getDepth    (BTNode2 l r) => (max (getDepth l) (getDepth r)) + 1
+
+getBTDiameter :: BinaryTree2   -> Int
+getBTDiameter    (BTLeaf2)     => 1
+getBTDiameter    (BTNode2 l r) => 1 + (getDepth l) + (getDepth r)
 
 //Start = getBTDiameter BTLeaf2 // 1
 //Start = getBTDiameter bt21 // 4
