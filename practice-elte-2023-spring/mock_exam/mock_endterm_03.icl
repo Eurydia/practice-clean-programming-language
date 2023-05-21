@@ -1,4 +1,4 @@
-module endterm3
+module mock_endterm_03
 import StdEnv
 
 /*---------------------------------------------------------------
@@ -31,7 +31,11 @@ import StdEnv
 Given an array of integers, remove the elements that have even occurances in the array.
 */
 
-// removeOcc :: {Int} -> {Int}
+getOcc :: {Int} Int -> Int
+getOcc    xArr  x   => length (filter ((==) x) [x \\ x <-: xArr])
+
+removeOcc :: {Int} -> {Int}
+removeOcc    xArr  => {x \\ x <-: xArr | (getOcc xArr x ) rem 2 == 1  } 
 
 //Start = removeOcc {1,1,2,2,2,3,3,4,5,6,6,6,6} //{2,2,2,4,5}
 //Start = removeOcc {1,1} // {}
@@ -45,7 +49,8 @@ Given a positive integer value n, generate an array that for n=10
 has as elements 1,2,2,3,3,3,4,4,4,4,...,10,...,10.
 */
 
-// generate :: Int -> {Int}
+generate :: Int -> {Int}
+generate    n   => {i \\ i <- (flatten [repeatn i i \\ i <- [1..n]])}
 
 //Start :: {Int} // this is needed
 //Start = generate 10 // {1,2,2,3,3,3,4,4,4,4,...,10,...,10}
@@ -77,11 +82,18 @@ Note : if there is more than one cheap shop in the array, return the first one.
 Assume that the given array is not empty.
 */
 
-// cheapestShop :: {Shop} -> (String,City)
+instance < Shop
+where
+    (<) a b => sum [price \\ {price} <-: a.products] < sum [price \\ {price} <-: b.products]
 
-// Start = cheapestShop {aldi,spar,lidl,abc} // ("abc",GYOR)
-// Start = cheapestShop {aldi,spar} // ("spar",GYOR)
-// Start = cheapestShop {lidl,aldi} // ("lidl",BUDAPEST)
+cheapestShop :: {Shop} -> (String,City)
+cheapestShop    shops  => (shopName, location) 
+where
+    {shopName, location} = hd (sort [s \\ s <-: shops])
+
+//Start = cheapestShop {aldi,spar,lidl,abc} // ("abc",GYOR)
+//Start = cheapestShop {aldi,spar} // ("spar",GYOR)
+//Start = cheapestShop {lidl,aldi} // ("lidl",BUDAPEST)
 
 //---------------
 
@@ -109,20 +121,22 @@ pushBack is a function that takes a vector and an element and
 adds the element to the end of the vector
 */
 
-// pushBack :: (Vector a) a -> (Vector a)
+pushBack :: (Vector a) a -> (Vector a)
+pushBack    v          x => v ++ [x]
 
-// Start = pushBack [1,2,3] 4 //[1,2,3,4]
-// Start = pushBack [1,0,213] 10000 //[1,0,213,10000]
+//Start = pushBack [1,2,3] 4 //[1,2,3,4]
+//Start = pushBack [1,0,213] 10000 //[1,0,213,10000]
 
 /* 4.2 5 points
 pushFront is a function that takes a vector and an element and
 adds the element to the beginning of the vector
 */
 
-// pushFront :: (Vector a) a -> (Vector a)
+pushFront :: (Vector a) a -> (Vector a)
+pushFront    v          x => [x] ++ v
 
-// Start = pushFront [1,0,213] 10000 //[10000,1,0,213]
-// Start = pushFront [1,2,3] 4 //[4,1,2,3]
+//Start = pushFront [1,0,213] 10000 //[10000,1,0,213]
+//Start = pushFront [1,2,3] 4 //[4,1,2,3]
 
 /* 4.3 5 points
 remove is a function that takes a vector and an element and
@@ -130,10 +144,19 @@ removes the element from the vector
 If it exists, and returns it. Otherwise it returns an error.
 */
 
-// remove :: (Vector a) a -> (Vector a)
+// Assumption: Remove the first occurence
+remove :: (Vector a) a -> (Vector a) | Eq a
+remove    v          a
+| isMember a v 			=> find v a
+| otherwise 			=> abort "Element does not exist"
+where
+	find :: (Vector a) a -> (Vector a) | Eq a
+	find    [x:xs]     a
+	| x == a               => xs
+	| otherwise            => [x : (remove xs a)]
 
-// Start = remove [1,2,3] 2 //[1,3]
-// Start = remove [1,0,213] 10000 //"Element does not exist"
+//Start = remove [1,2,3] 2 //[1,3]
+//Start = remove [1,0,213] 10000 //"Element does not exist"
 
 /* 4.4 5 points
 indexOf is a function that takes a vector and an element
@@ -141,20 +164,37 @@ and returns the element's index in the vector (counting from 0)
 If it exists otherwise it returns an error.
 */
 
-// indexOf :: (Vector a) a -> Int
+// Assumption: Return the first index
+indexOf :: (Vector a) a -> Int | Eq a
+indexOf    v          a  
+| isMember a v 			=> indexOfAcc v a 0
+| otherwise				=> abort "Element does not exist"   
+where 
+    indexOfAcc :: (Vector a) a Int -> Int | == a
+    indexOfAcc    [x:xs]     a acc
+    | x == a                     => acc
+    | otherwise                  => indexOfAcc xs a (acc + 1)
 
-// Start = indexOf [1,2,3] 2 // 1
-// Start = indexOf [1,0,213] 10000 //"Element does not exist"
+//Start = indexOf [1,2,3] 2 // 1
+//Start = indexOf [1,0,213] 10000 //"Element does not exist"
 
 /* 4.4 10 points
 swap is a function that takes a vector and two elements and swaps the two elements in the vector
 if they both exist, otherwise it returns an error
 */
 
-// swap :: (Vector a) a -> (Vector a)
+swap :: (Vector a) a a -> (Vector a) | Eq a
+swap    v          x y
+| not (isMember x v) || not (isMember y v) => abort "Element does not exist"
+| otherwise                                => updateAt yIndex x (updateAt xIndex y v)
+where
+    xIndex :: Int
+    xIndex =  indexOf v x
+    yIndex :: Int
+    yIndex =  indexOf v y
 
-// Start = swap [1,2,4,5,6,3,888,9,7] 1 3 // [3,2,4,5,6,1,888,9,7]
-// Start = swap [1,0,213] 10000 0 //"Element does not exist"
+//Start = swap [1,2,4,5,6,3,888,9,7] 1 3 // [3,2,4,5,6,1,888,9,7]
+//Start = swap [1,0,213] 10000 0 //"Element does not exist"
 
 //---------------
 
@@ -163,7 +203,8 @@ For a given n generate a list of triple pairs with numbers for 1 to n,
 their cubes and triples.
 */
 
-//triples :: Int -> [(Int,Int,Int)]
+triples :: Int -> [(Int,Int,Int)]
+triples     n   =  [(i, i ^ 3, i * 3) \\ i <- [1..n]]
 
 //Start = triples 2 // [(1,1,3),(2,8,6)]
 //Start = triples 4 // [(1,1,3),(2,8,6),(3,27,9),(4,64,12)]
@@ -186,10 +227,29 @@ After that create an instance for [Int].
 
 */
 
-// class Merge..
+class Merge a
+where
+    sorted :: a a -> a
+    mess :: a a-> a
+    Empty :: a
 
-// instance Merge..
-
+instance Merge [Int]
+where
+    Empty = []
+    sorted a b => merge (sortOrEmpty a) (sortOrEmpty b)
+    where
+        sortOrEmpty :: [Int] -> [Int]
+        sortOrEmpty    x
+        | (sort x) == x      => x
+        | otherwise          => Empty
+    mess a b                 => (flatten [[x, y] \\ x <- a & y <- bReversed]) ++ (drop minSize a) ++ (drop minSize bReversed)
+    where
+    	minSize :: Int
+    	minSize =  min (length a) (length b)
+    	bReversed :: [Int]
+    	bReversed =  reverse b
+    	
+ 
 //Start = mess [1,2,3,5] [9,8,10] // [1,10,2,8,3,9,5]
 //Start = sorted [1..10] [7..15] // [1,2,3,4,5,6,7,7,8,8,9,9,10,10,11,12,13,14,15]
 //Start = sorted [3..7] Empty // [3,4,5,6,7]
@@ -203,9 +263,18 @@ Write a binary search tree type. Build from an arbitrary list a binary search tr
 then collect from the tree the elements (which by this would be sorted)
 */
 
-// bsearch :: [Int] -> ...
+:: BT a = N a (BT a) (BT a)
+        |  L
 
-// bcollect :: ... -> [Int]
+bsearch :: [Int] -> (BT Int)
+bsearch    ls    => toTree (sort ls)
+where
+    toTree :: [Int] -> (BT Int)
+    toTree    [x:xs]    => N x L (toTree xs)
+
+bcollect :: (BT Int)    -> [Int] 
+bcollect    (L)         => []
+bcollect    (N x l r)   => [x] ++ (bcollect l) ++ (bcollect r)
 
 
 //---------------
@@ -243,9 +312,9 @@ After converting it to the list with these rules we get:
  
 
 :: FlexTree a = TernaryNode a (FlexTree a) (FlexTree a) (FlexTree a)
-                            | BinaryNode a (FlexTree a) (FlexTree a)
-                            | UnaryNode a (FlexTree a)
-                            | TerminalNode
+            | BinaryNode a (FlexTree a) (FlexTree a)
+            | UnaryNode a (FlexTree a)
+            | TerminalNode
 
 ftree1 = UnaryNode 1 (BinaryNode 2 TerminalNode TerminalNode)
 ftree2 = BinaryNode 1 TerminalNode ftree1
@@ -254,13 +323,17 @@ ftree4 = TernaryNode 1 ftree2 TerminalNode (BinaryNode 2 (TernaryNode 1 Terminal
 
  
 
-// flexTreeToList :: (FlexTree a) -> [a]
+flexTreeToList :: (FlexTree a)          -> [a]
+flexTreeToList    (TerminalNode)        => []
+flexTreeToList    (UnaryNode x c)       => [x] ++ (flexTreeToList c)
+flexTreeToList    (BinaryNode x l r)    => (flexTreeToList l) ++ [x] ++ (flexTreeToList r)
+flexTreeToList    (TernaryNode x l m r) => (flexTreeToList l) ++ [x] ++ (flexTreeToList m) ++ (flexTreeToList r)
 
-// Start = flexTreeToList TerminalNode // []
-// Start = flexTreeToList ftree1 // [1,2]
-// Start = flexTreeToList ftree2 // [1,1,2]
-// Start = flexTreeToList ftree3 // [3,3,3]
-// Start = flexTreeToList ftree4 // [1,1,2,1,1,2,1,1,2,2,3,3,3]
+//Start = flexTreeToList TerminalNode // []
+//Start = flexTreeToList ftree1 // [1,2]
+//Start = flexTreeToList ftree2 // [1,1,2]
+//Start = flexTreeToList ftree3 // [3,3,3]
+//Start = flexTreeToList ftree4 // [1,1,2,1,1,2,1,1,2,2,3,3,3]
 
 //---------------
 
