@@ -244,7 +244,17 @@ Insert    (Pointer a ll)      str    =  (Pointer a (Insert ll str))
 * and returns a reversed version of it.
 */
 
-//Reverse :: (LinkedList String) -> (LinkedList String)
+llToList :: (LinkedList a) ->  [a]
+llToList    (Nil)          =   []
+llToList    (Pointer a ll) =   [a : (llToList ll)]
+
+listToLL :: [a]      -> (LinkedList a)
+listToLL    []       =  Nil
+listToLL    [x:xs]   =  (Pointer x (listToLL xs)) 
+
+Reverse :: (LinkedList String) -> (LinkedList String)
+Reverse    (Nil)               =  Nil
+Reverse    ll                  =  listToLL (reverse (llToList ll))
 
 //Start = Reverse linkedlist1 //(Pointer "H" (Pointer "e" (Pointer "l" (Pointer "l" (Pointer "o" Nil)))))
 //Start = Reverse (Insert linkedlist1 "World") //(Pointer "World" (Pointer "H" (Pointer "e" (Pointer "l" (Pointer "l" (Pointer "o" Nil))))))
@@ -258,7 +268,8 @@ Insert    (Pointer a ll)      str    =  (Pointer a (Insert ll str))
 * and removes the first occurrence of the given value if it exists.
 */
 
-//delete ::(LinkedList String) String -> (LinkedList String)
+delete :: (LinkedList String) String -> (LinkedList String)
+delete    ll                  str    =  listToLL (removeMembers (llToList ll) [toString e \\ e <-: str])
 
 //Start = delete linkedlist1 "h" //(Pointer "o" (Pointer "l" (Pointer "l" (Pointer "e" (Pointer "H" Nil)))))
 //Start = delete linkedlist1 "H" // (Pointer "o" (Pointer "l" (Pointer "l" (Pointer "e" Nil))))
@@ -272,7 +283,8 @@ Insert    (Pointer a ll)      str    =  (Pointer a (Insert ll str))
 * concatenates the second to the end of first.
 */
 
-//concat ::(LinkedList String) (LinkedList String) -> (LinkedList String)
+concat :: (LinkedList String) (LinkedList String) -> (LinkedList String)
+concat    lla                 llb                 =  listToLL ((llToList lla) ++ (llToList llb))
 
 //Start = concat linkedlist1 linkedlist2 // (Pointer "o" (Pointer "l" (Pointer "l" (Pointer "e" (Pointer "H" (Pointer "y" (Pointer "e" (Pointer "H" Nil))))))))
 //Start = concat linkedlist2 linkedlist2 // (Pointer "y" (Pointer "e" (Pointer "H" (Pointer "y" (Pointer "e" (Pointer "H" Nil))))))
@@ -311,7 +323,20 @@ fakePer1 = {name = "A", age=12, inQueue=True, ip = 100025}
 posssibleFake :: BasicPersonAccount
 posssibleFake = {name = "C", age=18, inQueue=True, ip = 12205}
 
-//findFakes :: {BasicPersonAccount} -> {BasicPersonAccount}
+:: BPA :== BasicPersonAccount
+
+hasFakes :: [BPA]    BPA                  -> Bool
+hasFakes    accounts {name=oName, ip=oIP} =  [1 \\ {name, ip} <- accounts | name == oName && ip == oIP ] == []
+
+rmvFakes :: [BPA]    BPA                  -> [BPA]
+rmvFakes    accounts {name=oName, ip=oIP} =  [acc \\ acc=:{name, ip} <- accounts | (name <> oName) || (ip <> oIP)]
+
+findFakesL :: [BPA]  -> [BPA]
+findFakesL    []     =  []
+findFakesL    [x:xs] =  [{x & inQueue=(not (hasFakes xs x))} : rmvFakes xs x]
+
+findFakes :: {BPA} -> {BPA}
+findFakes    arr   =  {x \\ x <- (findFakesL [e \\ e <-: arr]) }
 
 //Start = findFakes {per1, fakePer1, per2, per3, fakePer1, posssibleFake}
 //{(BasicPersonAccount "A" 45 False 100025),(BasicPersonAccount "B" 22 True 755542),(BasicPersonAccount "C" 18 True 155200),(BasicPersonAccount "C" 18 True 12205)}
@@ -335,7 +360,19 @@ Mat2 = [[3,3,3], [0,0,0], [1,1,1]]
 Mat3 = [[3,3,3,3], [3,3,3,3], [3,3,3,3], [3,3,3,3]]
 Mat4 = [[3,3,3,3], [3,(-3),3,3], [3,3,(-3),3], [3,3,10,3]]
 
-//largestMat :: {[[Int]]} -> [[Int]]
+sumMat :: [[Int]] -> Int
+sumMat    mat     =  sum [(mat !! i) !! i \\ i <- (indexList mat)]
+
+findMax :: [[[Int]]] [[Int]]   -> [[Int]]
+findMax    []        result    =  result
+findMax    [x:xs]    result
+| (sumMat x) > (sumMat result) =  findMax xs x
+| otherwise                    =  findMax xs result
+
+largestMat :: {[[Int]]} -> [[Int]]
+largestMat    arr    =  findMax [el \\ el <- xs] x
+where
+	[x:xs] = [e \\ e <-: arr]
 
 //Start = largestMat {Mat1, Mat2} // [[1,2,3],[1,1,1],[3,3,3]]
 //Start = largestMat {Mat1, Mat3} // [[3,3,3,3],[3,3,3,3],[3,3,3,3],[3,3,3,3]]
@@ -364,7 +401,18 @@ list2 = Elem 2 (Elem 6 (Elem 6 (Elem 8 (list1) ) ) )
 list3 :: (MyList Int)
 list3 = Empty
 
-//toString
+toList :: (MyList a)   -> [a]
+toList (Empty)       = []
+toList (Elem a next) = [a: (toList next)]
+
+instance toString (MyList Int)
+where
+    toString xs = toStringAcc (toList xs) "["
+    where
+	   	toStringAcc :: [Int] String -> String
+	   	toStringAcc    []    acc    =  acc +++ "]"
+	   	toStringAcc    [x]   acc    =  toStringAcc [] (acc +++ (toString x))
+	    toStringAcc    [x:xs]   acc =  toStringAcc xs (acc +++ (toString x) +++ ",")
 
 //Start = toString list1 // "[4,3,2,1]"
 //Start = toString list2 // "[2,6,6,8,4,3,2,1]"
@@ -394,7 +442,11 @@ treeNone :: (Tree (TypeName String))
 treeNone = Leaf
 
 
-//firstAndMiddle :: (Tree (TypeName String)) -> [String]
+firstAndMiddle :: (Tree (TypeName String))  -> [String]
+firstAndMiddle    (Leaf)                    =  []
+firstAndMiddle    (Node (FirstName x) l r)  =  [x] ++ (firstAndMiddle l) ++ (firstAndMiddle r)
+firstAndMiddle    (Node (MiddleName x) l r) =  [x] ++ (firstAndMiddle l) ++ (firstAndMiddle r)
+firstAndMiddle    (Node _ l r)              =  (firstAndMiddle l) ++ (firstAndMiddle r)
 
 //Start = firstAndMiddle treeBig // ["Tariq","Beka","Mohido"]
 //Start = firstAndMiddle treeRight // ["A","C","D"]
@@ -414,7 +466,13 @@ treeNone = Leaf
 
 :: OneOf a b = A a | B b
 
-//findWhich :: [(OneOf String Char)] -> Int
+instance toInt (OneOf String Char)
+where
+    toInt (A a) = size a
+    toInt _     = 1
+
+findWhich :: [(OneOf String Char)] -> Int
+findWhich    ls                    =  sum [toInt x \\ x <- ls]
 
 //Start = findWhich [(A "Hello"), (B 'h'), (A "This is new")] // 17
 //Start = findWhich [(A "H"), (A "e"), (A "l")] // 3
