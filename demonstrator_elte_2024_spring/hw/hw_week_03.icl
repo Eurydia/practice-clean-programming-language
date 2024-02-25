@@ -27,7 +27,7 @@ import StdEnv
 // (BEGIN FIXED)
 // Task: 2/2
 // Implement a function to convert an integer to its octal representation.
-// Let's also assume that the input integer is non-negative.
+// Let's also assume that the input integer is non-negative. The solution is still accpeted if it has leading zeros.
 
 // fromDecToOct :: Int -> String
 // (END FIXED)
@@ -36,5 +36,5 @@ import StdEnv
 // Start = fromDecToOct 5   // Expected: "5"
 // Start = fromDecToOct 448 // Expected: "700"
 // Start = fromDecToOct 34  // Expected: "42"
-// Start = fromDecToOct 0   // Expected: 0
+// Start = fromDecToOct 0   // Expected: "0"
 // (END FIXED)
