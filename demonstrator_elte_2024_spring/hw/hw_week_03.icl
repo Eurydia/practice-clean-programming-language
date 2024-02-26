@@ -8,6 +8,22 @@ import StdEnv
 // (END FIXED)
 
 // Task: 1/2
+// A banana in Lapland costs 3 Lapland eurodollar (LED),
+// but if one buy six, one gets one banana for free.
+// Implement a function which takes the number of bananas bought,
+// and compute the cost.
+
+// computeBananaCost :: Int -> Int
+
+
+// (BEGIN FIXED)
+// Start = computeBananaCost 6 // Expected: 18
+// Start = computeBananaCost 7 // Expected: 18
+// Start = computeBananaCost 14 // Expected: 36
+// Start = computeBananaCost 23 // Expected: 60
+// (END FIXED)
+
+// Task: 2/2
 // Implement a function to convert an octal string to its decimal representation.
 // For context, an octal representation of a number consists eight digits (0-7). To convert an octal representation to a decimal representation, consider the following examples:
 // "5" in octal:
@@ -27,31 +43,4 @@ import StdEnv
 // Start = fromOctToDec "700" // Expected: 448
 // Start = fromOctToDec "42"  // Expected: 34
 // Start = fromOctToDec "0"   // Expected: 0
-// (END FIXED)
-
-// Task: 2/2
-// Implement a function which takes an event natural number (n > 2), and returns two prime numbers whose sum is equal to the given number. 
-// CONTEXT:
-// Goldbach's conjecture states that every even natural number greater than two can be represented as the sum of two prime number.
-// For example:
-// 6   = 3  + 3
-// 28  = 11 + 17
-// 34  = 11 + 23
-// 448 = 89 + 359
-// The conjecture does not explicitly state that the prime numbers are unique, so any valid pair of prime numbers is accepted.
-// For all intents and purposes, let's also assume that every input is valid, so input validation is not needed.
-
-// Feel free to implement your own prime validation function :D
-isPrime :: Int -> Bool
-isPrime    0   => False
-isPrime    1   => False
-isPrime    n   => and [(n rem d) <> 0 \\ d <- [2..(n-1)]]
-
-// goldbach :: Int -> [Int]
-
-// (BEGIN FIXED)
-// Start = goldbach 6   // Expected: [3, 3]
-// Start = goldbach 28  // Expected: [11, 17] OR [17, 11] OR any other valid solution
-// Start = goldbach 34  // Expected: [11, 23] OR [11, 23]
-// Start = goldbach 448 // Expected: [89, 359] OR [359, 89]
 // (END FIXED)
