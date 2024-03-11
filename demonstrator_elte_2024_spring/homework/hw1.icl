@@ -1,4 +1,4 @@
-module hw01
+module hw1
 import StdEnv
 
 
