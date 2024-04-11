@@ -24,15 +24,23 @@ import StdEnv
 // - []           -> []
 
 
-// findMinFrequency :: [Int] -> [Int]
+count :: Int [Int] -> Int
+count    n   ls    => length (filter ((==)n) ls)
+
+freqList :: [Int] -> [Int]
+freqList    ls    =  [count n ls \\ n <- (removeDup ls)]
+
+findMinFrequency :: [Int] -> [Int]
+findMinFrequency    []    =  []
+findMinFrequency    ls    =  [n \\ n <- ls | (count n ls) == (minList (freqList ls))]
 
 
 // (BEGIN FIXED)
-// Start = findMinFrequency []             // Expected: []
-// Start = findMinFrequency [1, 1, 1, 2]   // Expected: [2]
-// Start = findMinFrequency [1, 2, 2, 2]   // Expected: [1]
-// Start = findMinFrequency [1, 2, 3, 3]   // Expected: [1, 2]
-// Start = findMinFrequency [1, 2, 3]      // Expected: [1, 2, 3]
+//Start = findMinFrequency []             // Expected: []
+//Start = findMinFrequency [1, 1, 1, 2]   // Expected: [2]
+//Start = findMinFrequency [1, 2, 2, 2]   // Expected: [1]
+//Start = findMinFrequency [1, 2, 3, 3]   // Expected: [1, 2]
+//Start = findMinFrequency [1, 2, 3]      // Expected: [1, 2, 3]
 // (END FIXED)
 
 
@@ -54,13 +62,19 @@ import StdEnv
 // - [13.0, 21.0, 38.0, 19.0, 30.0, 7.0] -> 20.0
 
 
-// findMedian :: [Real] -> Real
+findMedian :: [Real] -> Real
+findMedian    ls
+| isOdd l            =  (sort ls) !! (l/ 2)
+| otherwise          =  avg ((sort ls) % ((l/2)-1, (l/2)))
+where 
+  l :: Int
+  l =  length ls
 
 
 // (BEGIN FIXED)
-// Start = findMedian [0.0, 10.0, 20.0, 40.0, 50.0]       // Expected: 20.0
-// Start = findMedian [10.0, 40.0, 20.0, 50.0]            // Expected 30.0
-// Start = findMedian [1.0, 2.0, 3.0]                     // Expected 2.0
-// Start = findMedian [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] // Expected 0.0
-// Start = findMedian [13.0, 21.0, 38.0, 19.0, 30.0, 7.0] // Expected 20.0
+//Start = findMedian [0.0, 10.0, 20.0, 40.0, 50.0]       // Expected: 20.0
+//Start = findMedian [10.0, 40.0, 20.0, 50.0]            // Expected 30.0
+//Start = findMedian [1.0, 2.0, 3.0]                     // Expected 2.0
+//Start = findMedian [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] // Expected 0.0
+//Start = findMedian [13.0, 21.0, 38.0, 19.0, 30.0, 7.0] // Expected 20.0
 // (END FIXED)

@@ -20,7 +20,11 @@ import StdEnv
 //      Expected: [[1,0], [0,1]]
 //      Neither sublists are removed since they contain equal number of odd and even numbers.
 
-// removeOddSublist :: [[Int]] -> [[Int]]
+isOddSublist :: [Int] -> Bool
+isOddSublist    ls    =  (length (filter isEven ls)) >= (length (filter isOdd ls))
+
+removeOddSublist :: [[Int]] -> [[Int]]
+removeOddSublist    lls     =  filter isOddSublist lls
 
 // (BEGIN FIXED)
 //Start = removeOddSublist []                     				// Expected: []
@@ -38,7 +42,14 @@ import StdEnv
 // 175 is a Disarium number: (1^1) + (7^2) + (5^3) -> 1 + 49 + 125 -> 175
 // 11 is NOT a Disarium number: (1^1) + (1^2) -> 1 + 1 -> 2
 
-// listDisariumBetween :: Int Int -> [Int]
+toDigits :: Int -> [Int]
+toDigits    n   =  [digitToInt chDigit \\ chDigit <-: (toString n)]
+
+isDisarium :: Int -> Bool
+isDisarium    n   =  (sum [d^p \\ d <- (toDigits n) & p <- [1..]]) == n
+
+listDisariumBetween :: Int Int -> [Int]
+listDisariumBetween    x   y   =  [n \\ n <- [x..y] | isDisarium n]
 
 // (BEGIN FIXED)
 //Start = listDisariumBetween 5 10       // Expected: [5,6,7,8,9]

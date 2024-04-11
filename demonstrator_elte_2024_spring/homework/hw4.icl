@@ -23,12 +23,22 @@ import StdEnv
 //    Output: [('a', 'z')]
 //    Explanation: If shifting backward would go below 'a', the shifted letter should wrap to 'z'.
 
+shiftBy :: Int Char -> Char
+shiftBy    pos ch
+| shiftedCh > 'z'  	= shiftedCh - (toChar 26)
+| shiftedCh < 'a'  	= shiftedCh + (toChar 26)
+| otherwise         = shiftedCh
+where 
+  shiftedCh :: Char
+  shiftedCh =  (toChar (pos rem 26)) + ch
+
 // (BEGIN FIXED)
-// shiftChar :: Int [Char] -> [(Char, Char)]
+shiftChar :: Int [Char] -> [(Char, Char)]
+shiftChar    pos ls     => [(ch, shiftBy pos ch) \\ ch <- ls]
 // (END FIXED)
 
 // (BEGIN FIXED)
-//Start = shiftChar  0 ['a', 'z'] // [('a','a'), ('z', 'z')]
+//Start = shiftChar  0 ['a', 'z'] // [('a','a'), ('z',  'z')]
 //Start = shiftChar  5 ['a'..'c'] // [('a','f'),('b','g'),('c','h')]
 //Start = shiftChar -5 ['a'..'c'] // [('a','v'),('b','w'),('c','x')]
 //Start = shiftChar  5 ['x'..'z'] // [('x','c'),('y','d'),('z','e')]
@@ -51,8 +61,12 @@ import StdEnv
 //    Input: 11 0
 //    Output: []
 
+isPrime :: Int -> Bool
+isPrime    x   =  (length [1 \\ d <- [1..x] |( x rem d) == 0]) == 2
+
 // (BEGIN FIXED)
-// nextNPrimes :: Int Int -> [Int]
+nextNPrimes :: Int Int -> [Int]
+nextNPrimes    s   n   =  take n [x \\ x <- [(s+1)..] | isPrime x]
 // (END FIXED)
 
 // (BEGIN FIXED)
@@ -60,5 +74,5 @@ import StdEnv
 //Start = nextNPrimes 4 4    // [5, 7, 11, 13]
 //Start = nextNPrimes 0 5    // [2, 3, 5 ,7, 11]
 //Start = nextNPrimes 11 0   // []
-//Start = nextNPrimes 1001 3 // [1009,1013,1019]
+Start = nextNPrimes 1001 3 // [1009,1013,1019]
 // (END FIXED)

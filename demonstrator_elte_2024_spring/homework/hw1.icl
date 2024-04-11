@@ -13,14 +13,15 @@ import StdEnv
 // Implement a function which takes the number of bananas bought,
 // and compute the cost.
 
-// computeBananaCost :: Int -> Int
+computeBananaCost :: Int -> Int
+computeBananaCost    n   =  (n - (n/7)) * 3
 
 
 // (BEGIN FIXED)
-// Start = computeBananaCost 6 // Expected: 18
-// Start = computeBananaCost 7 // Expected: 18
-// Start = computeBananaCost 14 // Expected: 36
-// Start = computeBananaCost 23 // Expected: 60
+//Start = computeBananaCost 6 // Expected: 18
+//Start = computeBananaCost 7 // Expected: 18
+//Start = computeBananaCost 14 // Expected: 36
+//Start = computeBananaCost 23 // Expected: 60
 // (END FIXED)
 
 // Task: 2/2
@@ -36,11 +37,17 @@ import StdEnv
 // (0 * 1) = 0
 // Let's assume that input string is valid, and the output should be a non-negative.
 
-// fromOctToDec :: String -> Int
+octToDecHelper :: Int Int -> Int
+octToDecHelper    x   p
+| x < 10 = (x * (8^p))
+| otherwise = ((x rem 10) * (8^p)) + (octToDecHelper (x / 10) (p + 1))
+
+fromOctToDec :: String -> Int
+fromOctToDec    str    =  octToDecHelper (toInt str) 0
 
 // (BEGIN FIXED)
-// Start = fromOctToDec "5"   // Expected: 5
-// Start = fromOctToDec "700" // Expected: 448
-// Start = fromOctToDec "42"  // Expected: 34
-// Start = fromOctToDec "0"   // Expected: 0
+//Start = fromOctToDec "5"   // Expected: 5
+//Start = fromOctToDec "700" // Expected: 448
+//Start = fromOctToDec "42"  // Expected: 34
+//Start = fromOctToDec "0"   // Expected: 0
 // (END FIXED)
