@@ -11,6 +11,7 @@ import StdEnv
 
 // Task 1/2
 // Given a binary tree, implement a function which sum the nodes with only one leaf.
+// EDIT: To clarify, the function should count the sum of nodes which has exactly one leaf as its direct children.
 
 // (BEGIN FIXED)
 :: Tree a = Node a (Tree a) (Tree a) | Leaf
@@ -35,15 +36,16 @@ tree5 = Node 1 tree3 tree4
 //leavesSum :: (Tree Int) -> Int
 // (END FIXED)
 
-//Start = leavesSum tree1 // Expected: 49
-//Start = leavesSum tree2 // Expected: 110
-//Start = leavesSum tree3 // Expected: 90
-//Start = leavesSum tree4 // Expected: 359
-//Start = leavesSum tree5 // Expected: 449
+//Start = leavesSum tree1 // Expected: 20
+//Start = leavesSum tree2 // Expected: 86
+//Start = leavesSum tree3 // Expected: 47
+//Start = leavesSum tree4 // Expected: 239
+//Start = leavesSum tree5 // Expected: 286
 
 
 // Task 2/2
 // Given an array of students, find the University which has the highest average of student average GPA.
+// EDIT: If the there is no student from a particular university, then the student average GPA of that university is effectively 0.0.
 
 // (BEGIN FIXED)
 :: University = ELTE | BME | Corvinus
@@ -70,12 +72,12 @@ Oliver = {name="Oliver",uni=ELTE,grades=[2,3,3,4,3,2,1,3,2,3]}
 // (END FIXED)
 
 // (BEGIN FIXED)
-//uniWithLowestAverage :: {Student} -> University
+//highestAverageGPA :: {Student} -> University
 // (END FIXED)
 
 // (BEGIN FIXED)
-//Start = uniWithLowestAverage {Rose,Harry,Isabella,Oliver,James,Noah,Lily,Peter,Eros} // Corvinus
-//Start = uniWithLowestAverage {Rose,Harry,Isabella} // Corvinus
-//Start = uniWithLowestAverage {Oliver, Noah,James,Lily} // BME
-//Start = uniWithLowestAverage {Peter, Eros, Harry} // ELTE
+//Start = highestAverageGPA {Rose,Harry,Isabella,Oliver,James,Noah,Lily,Peter,Eros} // ELTE
+//Start = highestAverageGPA {Rose,Harry,Isabella} // BME
+//Start = highestAverageGPA {Oliver, Noah,James,Lily} // ELTE
+//Start = highestAverageGPA {Peter, Eros, Harry} // Corvinus
 // (END FIXED)
