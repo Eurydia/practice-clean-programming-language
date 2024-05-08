@@ -27,9 +27,10 @@ import StdEnv
 //    Input:  6 [1, 2, 3] 
 //    Output: [1, 2, 3]
 
-// (BEGIN FIXED)
-//dropEvery :: Int [Int] -> [Int]
-// (END FIXED)
+// SAMPLE SOLUTION
+dropEvery :: Int [Int] -> [Int]
+dropEvery    n   xs    => [x \\ x <- xs & i <- [1..] | i rem n <> 0]
+
 
 // (BEGIN FIXED)
 //Start = dropEvery 1  [1,3..20] 	// Expected: []
@@ -56,14 +57,19 @@ import StdEnv
 //    Input: [2..5] [1..10]
 //    Output: [1,6,7,8,9,10]
 
-// (BEGIN FIXED)
-//symmetricDiff :: [Int] [Int] -> [Int]
-// (END FIXED)
+// SAMPLE SOLUTION
+symmetricDiff :: [Int] [Int] -> [Int]
+symmetricDiff    ls    rs    =  left ++ right
+where
+  left :: [Int]
+  left =  [l \\ l <- ls | not (isMember l rs)] 
+  right :: [Int]
+  right =  [r \\ r <- rs | not (isMember r ls)]
 
 // (BEGIN FIXED)
 //Start = symmetricDiff [1..3] [2..4]    // Expected: [1,4]
 //Start = symmetricDiff [] [2..4]    // Expected: [2,3,4]
 //Start = symmetricDiff [1..3] [] // Expected: [1,2,3]
 //Start = symmetricDiff [] [] // Expexted: []
-//Start = symmetricDiff [1,3..10] [9,7..0] // []
+Start = symmetricDiff [1,3..10] [9,7..0] // []
 // (END FIXED)

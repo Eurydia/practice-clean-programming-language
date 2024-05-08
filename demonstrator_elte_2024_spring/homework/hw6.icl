@@ -15,6 +15,18 @@ import StdEnv
 //isSubstring :: String String -> Bool
 // (END FIXED)
 
+// SAMPLE SOLUTION
+isSubstring :: String String -> Bool
+isSubstring    ""     ""     = True
+isSubstring    sstr   main   =  isMember sstr candidates
+where
+  candidates :: [String]
+  candidates =  [toString (take l (drop i lMain)) \\ i <- (indexList lMain)]
+  lMain :: [Char]
+  lMain =  [ch \\ ch <-: main]
+  l :: Int
+  l = size sstr 
+
 // (BEGIN FIXED)
 //Start = isSubstring "cat" "catch" // Expected: True
 //Start = isSubstring "apple" "applepie"  // Expected: True
@@ -46,6 +58,12 @@ import StdEnv
 // (BEGIN FIXED)
 //stringBuilder :: [(Int, Char)] -> [String]
 // (END FIXED)
+
+// SAMPLE SOLUTION
+stringBuilder :: [(Int, Char)] -> [String]
+stringBuilder    ts
+| or ([n < 0 \\ (n,_) <- ts]) = abort "Invalid, an integer appears to be negative"
+| otherwise = [toString (repeatn n ch) \\ (n,ch) <- ts | isEven n]
 
 // (BEGIN FIXED)
 //Start = stringBuilder [(4,'c'), (3, 'a')] // - Expected Output: ["cccc"]

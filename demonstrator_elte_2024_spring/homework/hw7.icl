@@ -17,6 +17,13 @@ import StdEnv
 // isValidPhoneNumber :: String -> Bool
 // (END FIXED)
 
+// SAMPLE SOLUTION
+isValidPhoneNumber :: String -> Bool
+isValidPhoneNumber    str    = ((take 3 lStr) == ['+36']) && (all isDigit (drop 1 lStr)) && ((size str) == 9 || (size str) == 10)
+where
+  lStr :: [Char]
+  lStr = [ch \\ ch <-: str]
+
 // (BEGIN FIXED)
 //Start = isValidPhoneNumber "+36123456" // Expected: true
 //Start = isValidPhoneNumber "+361234567" // Expected: true
@@ -38,9 +45,7 @@ import StdEnv
 // 2. filter out those students whose score is not between 50 and 75 (inclusive),
 // 3. sort the students bases on their name in ascending alphabetical order.
 
-// (BEGIN FIXED)
-// :: Student =
-// (END FIXED)
+:: Student = {name::String, score::Int, retake::Bool }
 
 // (BEGIN FIXED)
 s1 :: Student
@@ -63,10 +68,19 @@ s8 = {name="VVVV", score=75, retake=True}
 // getRetakeThirdQuadrant :: [Student] -> [Student]
 // (END FIXED)
 
+
+// SAMPLE SOLUTION
+instance < Student
+where
+  (<) l r = l.name < r.name
+  
+getRetakeThirdQuadrant :: [Student] -> [Student]
+getRetakeThirdQuadrant    students  = sort [s \\ s <- students | s.retake && s.score >= 50 && s.score <= 75]
+
 // (BEGIN FIXED)
-// Start = getRetakeThirdQuadrant [s7,s2,s1,s4] // Expected: [(Student "CCCC" 50 True)]
-// Start = getRetakeThirdQuadrant [s7,s3, s6, s2,s1,s4] // Expected: [(Student "CCCC" 50 True),(Student "DDDD" 60 True)]
-// Start = getRetakeThirdQuadrant [s6, s2,s1,s4,s7,s8] // Expected: [(Student "CCCC" 50 True),(Student "VVVV" 75 True)]
+//Start = getRetakeThirdQuadrant [s7,s2,s1,s4] // Expected: [(Student "CCCC" 50 True)]
+//Start = getRetakeThirdQuadrant [s7,s3, s6, s2,s1,s4] // Expected: [(Student "CCCC" 50 True),(Student "DDDD" 60 True)]
+//Start = getRetakeThirdQuadrant [s6, s2,s1,s4,s7,s8] // Expected: [(Student "CCCC" 50 True),(Student "VVVV" 75 True)]
 //Start = getRetakeThirdQuadrant [s1, s2,s3,s4,s6,s7,s8] // Expected: [(Student "CCCC" 50 True),(Student "DDDD" 60 True),(Student "VVVV" 75 True)]
 //Start = getRetakeThirdQuadrant [s8, s7,s6,s4,s3,s2,s1] // Expected: [(Student "CCCC" 50 True),(Student "DDDD" 60 True),(Student "VVVV" 75 True)]
 // (END FIXED)

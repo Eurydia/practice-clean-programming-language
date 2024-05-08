@@ -36,6 +36,14 @@ tree5 = Node 1 tree3 tree4
 //leavesSum :: (Tree Int) -> Int
 // (END FIXED)
 
+// SAMPLE SOLUTION
+leavesSum :: (Tree Int)       	-> Int
+leavesSum    Leaf             	=  0
+leavesSum    (Node x Leaf Leaf) =  0
+leavesSum    (Node x Leaf r)  	=  x + (leavesSum r)
+leavesSum    (Node x l Leaf)  	=  x + (leavesSum l)
+leavesSum    (Node x l r)     	=  (leavesSum l) + (leavesSum r)
+
 //Start = leavesSum tree1 // Expected: 20
 //Start = leavesSum tree2 // Expected: 86
 //Start = leavesSum tree3 // Expected: 47
@@ -75,9 +83,32 @@ Oliver = {name="Oliver",uni=ELTE,grades=[2,3,3,4,3,2,1,3,2,3]}
 //highestAverageGPA :: {Student} -> University
 // (END FIXED)
 
+// SAMPLE SOLUTION
+instance == University
+where
+  (==) ELTE ELTE = True
+  (==) BME BME = True
+  (==) Corvinus Corvinus = True
+  (==) _ _ = False
+
+UniGPA :: University {Student} -> Real
+UniGPA    u          ls
+| isEmpty rStudents 			= 0.0
+| otherwise   					= avg [avg (map toReal grades) \\ {grades, uni} <- rStudents]
+where
+	rStudents :: [Student]
+	rStudents =  [s \\ s <-: ls | s.uni == u]
+	
+sortByScore :: (University, Real) (University, Real) -> Bool
+sortByScore    (_, l) (_, r)                         = l > r
+
+highestAverageGPA :: {Student} -> University
+highestAverageGPA    students  => fst (hd (sortBy sortByScore [(u, UniGPA u students) \\ u <- [ELTE,BME, Corvinus]]))
+
 // (BEGIN FIXED)
 //Start = highestAverageGPA {Rose,Harry,Isabella,Oliver,James,Noah,Lily,Peter,Eros} // ELTE
 //Start = highestAverageGPA {Rose,Harry,Isabella} // BME
 //Start = highestAverageGPA {Oliver, Noah,James,Lily} // ELTE
 //Start = highestAverageGPA {Peter, Eros, Harry} // Corvinus
 // (END FIXED)
+
