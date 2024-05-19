@@ -30,10 +30,18 @@ While James can send five invitations and guarantee that all of his friend will 
 he only needs to send two; one for the fourth and one for the fifth.
 */
 
-// miniummInvitations :: {Int} -> Int
+miniummInvitations :: {Int} -> Int
+miniummInvitations    arr
+| or [ (ls !! (x-1)) == i \\  x <- ls & i <- [1..]]  => 2
+| otherwise                             => 3
+where
+  ls :: [x \\ x<-: arr]
 
 
-//Start = miniummInvitations {1,2} // Expected: 2
+
+
+
+//Start = miniummInvitations {1, 2} // Expected: 2
 //Start = miniummInvitations {2, 3, 1} // Expected: 3
 //Start = miniummInvitations {3, 1, 2} // Expected: 3
 //Start = miniummInvitations {2, 1, 4, 3} // Expected: 2
