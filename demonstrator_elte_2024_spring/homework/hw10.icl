@@ -22,7 +22,8 @@ Hint: do not overthink!
 */
 
 // (BEING FIXED)
-// neededLetters :: String -> Int
+neededLetters :: String -> Int
+neededLetters    str    => maxList [(toInt (ch - 'a')) + 1 \\ ch <-: str]
 // (END FIXED)
 
 //Start = neededLetters "a" // Expected: 1
